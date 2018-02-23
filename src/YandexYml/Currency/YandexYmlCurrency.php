@@ -39,7 +39,7 @@ class YandexYmlCurrency {
   }
 
   /**
-   * @return int
+   * @return string
    */
   public function getId() {
     return $this->id;

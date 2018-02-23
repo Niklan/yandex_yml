@@ -2,4 +2,9 @@ services:
   yandex_yml.generator:
     class: Drupal\yandex_yml\YandexYmlGenerator
     arguments: []
-
+  yandex_yml.currency:
+    class: Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency
+    arguments: []
+  yandex_yml.category:
+    class: Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory
+    arguments: []
