@@ -18,3 +18,35 @@ services:
     class: Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBase
     arguments: []
     abstract: true
+  yandex_yml.offer.simple:
+    class: Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferSimple
+    arguments: []
+    scope: 'prototype'
+  yandex_yml.offer.custom:
+    class: Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferCustom
+    arguments: []
+    scope: 'prototype'
+  yandex_yml.offer.medicine:
+    class: Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferMedicine
+    arguments: []
+    scope: 'prototype'
+  yandex_yml.offer.book:
+    class: Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBook
+    arguments: []
+    scope: 'prototype'
+  yandex_yml.offer.audiobook:
+    class: Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferAudiobook
+    arguments: []
+    scope: 'prototype'
+  yandex_yml.offer.music_video:
+    class: Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferMusicVideo
+    arguments: []
+    scope: 'prototype'
+  yandex_yml.offer.event_ticket:
+    class: Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferEventTicket
+    arguments: []
+    scope: 'prototype'
+  yandex_yml.offer.tour:
+    class: Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferTour
+    arguments: []
+    scope: 'prototype'

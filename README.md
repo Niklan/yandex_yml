@@ -7,5 +7,13 @@ Add services for:
 - [x] Currency
 - [x] Category
 - [x] Delivery
-- [ ] ShopInfo
+- [x] ShopInfo
 - [ ] Offers
+    - [ ] Simple
+    - [ ] Custom
+    - [ ] Medicine
+    - [ ] Book
+    - [ ] Audiobook
+    - [ ] MusicVideo
+    - [ ] EventTicket
+    - [ ] Tour
