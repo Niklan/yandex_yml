@@ -10,5 +10,7 @@
     "issues": "https://www.drupal.org/project/issues/yandex_yml",
     "source": "http://cgit.drupalcode.org/yandex_yml"
   },
-  "require": { }
+  "require": {
+    "php": ">=5.6"
+  }
 }

@@ -1,0 +1,5 @@
+services:
+  yandex_yml.generator:
+    class: Drupal\yandex_yml\YandexYmlGenerator
+    arguments: []
+
