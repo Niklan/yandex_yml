@@ -8,4 +8,4 @@ Add services for:
 - [x] Category
 - [x] Delivery
 - [ ] ShopInfo
-
+- [ ] Offers

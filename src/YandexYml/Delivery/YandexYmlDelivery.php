@@ -47,6 +47,13 @@ class YandexYmlDelivery {
   }
 
   /**
+   * @return int
+   */
+  public function getCost() {
+    return $this->cost;
+  }
+
+  /**
    * Set estimated delivery time.
    *
    * - If can be delivered today, set it to 0.
