@@ -5,9 +5,16 @@ services:
   yandex_yml.currency:
     class: Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency
     arguments: []
+    scope: 'prototype'
   yandex_yml.category:
     class: Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory
     arguments: []
+    scope: 'prototype'
   yandex_yml.delivery:
     class: Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery
     arguments: []
+    scope: 'prototype'
+  yandex_yml.offer:
+    class: Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBase
+    arguments: []
+    abstract: true
