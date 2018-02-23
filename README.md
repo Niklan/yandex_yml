@@ -6,6 +6,6 @@ Add services for:
 
 - [x] Currency
 - [x] Category
-- [ ] Delivery
+- [x] Delivery
 - [ ] ShopInfo
 
