@@ -7,6 +7,7 @@ use Drupal\Core\Datetime\DateFormatter;
 use Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory;
 use Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency;
 use Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery;
+use Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBase;
 use Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop;
 
 /**
@@ -55,6 +56,11 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   private $deliveryOptions = [];
 
   /**
+   * @var array
+   */
+  private $offers = [];
+
+  /**
    * Constructs a new YandexYmlGenerator object.
    */
   public function __construct(Time $date_time, DateFormatter $date_formatter) {
@@ -79,6 +85,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writeCurrencies();
     $this->writeCategories();
     $this->writeDeliveryOptions();
+    $this->writeOffers();
     $this->writeFooter();
     $this->writer->endDocument();
     file_unmanaged_copy($this->tempFilePath, 'public://test-yandex-yml.xml', FILE_EXISTS_REPLACE);
@@ -146,6 +153,19 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   }
 
   /**
+   * Write offers.
+   */
+  protected function writeOffers() {
+    if (!empty($this->offers)) {
+      $this->writer->startElement('offers');
+      foreach ($this->offers as $offer) {
+        $this->writeElementFromArray($offer->toArray());
+      }
+      $this->writer->endElement();
+    }
+  }
+
+  /**
    * Write document footer.
    */
   protected function writeFooter() {
@@ -159,16 +179,24 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    * Write element according to YandexYml annotation.
    */
   protected function writeElementFromArray(array $value) {
-    $element_name = key($value);
-    $content = !empty($value[$element_name]['content']) ? $value[$element_name]['content'] : NULL;
-    $properties = !empty($value[$element_name]['properties']) ? $value[$element_name]['properties'] : NULL;
+    $element_name = $value['element'];
+    $content = !empty($value['content']) ? $value['content'] : NULL;
+    $properties = !empty($value['properties']) ? $value['properties'] : NULL;
+    $childrens = !empty($value['childrens']) ? $value['childrens'] : NULL;
     $this->writer->startElement($element_name);
     if ($properties) {
       foreach ($properties as $name => $value) {
         $this->writer->writeAttribute($name, $value);
       }
     }
-    $this->writer->text($content);
+    if ($content) {
+      $this->writer->text($content);
+    }
+    if ($childrens) {
+      foreach ($childrens as $children) {
+        $this->writeElementFromArray($children);
+      }
+    }
     $this->writer->endElement();
   }
 
@@ -233,6 +261,20 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    */
   public function getDeliveryOptions() {
     return $this->deliveryOptions;
+  }
+
+  /**
+   * @param \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBase $offer
+   */
+  public function addOffer(YandexYmlOfferBase $offer) {
+    $this->offers[] = $offer;
+  }
+
+  /**
+   * @return array
+   */
+  public function getOffers() {
+    return $this->offers;
   }
 
 }

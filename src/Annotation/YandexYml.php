@@ -46,4 +46,13 @@ class YandexYml extends Plugin {
    */
   public $propertyName;
 
+  /**
+   * Parent element name.
+   *
+   * If set, this element will be children for parent.
+   *
+   * @var string
+   */
+  public $parentElement;
+
 }

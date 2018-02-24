@@ -3,53 +3,112 @@
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
 use Drupal\Component\Utility\Unicode;
+use Drupal\yandex_yml\Annotation\YandexYml;
+use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 
 /**
  * Base object for other offers.
+ *
+ * @see https://yandex.ru/support/partnermarket/offers.html
  */
 abstract class YandexYmlOfferBase {
 
+  use YandexYmlToArrayTrait;
+
   /**
+   * @YandexYml(
+   *   elementName = "offer",
+   *   type = "property",
+   *   propertyName = "id"
+   * )
+   *
    * @var string
    */
   protected $id;
 
   /**
+   * @YandexYml(
+   *   elementName = "offer",
+   *   type = "property",
+   *   propertyName = "cbid"
+   * )
+   *
    * @var int
    */
   protected $cbid;
 
   /**
+   * @YandexYml(
+   *   elementName = "offer",
+   *   type = "property",
+   *   propertyName = "bid"
+   * )
+   *
    * @var int
    */
   protected $bid;
 
   /**
+   * @YandexYml(
+   *   elementName = "offer",
+   *   type = "property",
+   *   propertyName = "fee"
+   * )
+   *
    * @var int
    */
   protected $fee;
 
   /**
+   * @YandexYml(
+   *   elementName = "offer",
+   *   type = "property",
+   *   propertyName = "available"
+   * )
+   *
    * @var bool
    */
   protected $available;
 
   /**
+   * @YandexYml(
+   *   elementName = "url",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
    * @var string
    */
   protected $url;
 
   /**
+   * @YandexYml(
+   *   elementName = "price",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var int
    */
   protected $price;
 
   /**
+   * @YandexYml(
+   *   elementName = "price",
+   *   type = "property",
+   *   propertyName = "from"
+   * )
+   *
    * @var bool
    */
   protected $priceFrom;
 
   /**
+   * @YandexYml(
+   *   elementName = "oldprice",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var int
    */
   protected $oldPrice;
