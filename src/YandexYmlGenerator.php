@@ -4,6 +4,7 @@ namespace Drupal\yandex_yml;
 
 use Drupal\Component\Datetime\Time;
 use Drupal\Core\Datetime\DateFormatter;
+use Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency;
 use Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop;
 
 /**
@@ -37,6 +38,11 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   private $dateFormatter;
 
   /**
+   * @var array
+   */
+  private $currencies = [];
+
+  /**
    * Constructs a new YandexYmlGenerator object.
    */
   public function __construct(Time $date_time, DateFormatter $date_formatter) {
@@ -58,6 +64,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   public function generateFile() {
     $this->writeHeader();
     $this->writeShopInfo();
+    $this->writeCurrencies();
     $this->writeFooter();
     $this->writer->endDocument();
     file_unmanaged_copy($this->tempFilePath, 'public://test-yandex-yml.xml', FILE_EXISTS_REPLACE);
@@ -86,6 +93,20 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   }
 
   /**
+   * Write currencies.
+   */
+  protected function writeCurrencies() {
+    if (!empty($this->currencies)) {
+      $this->writer->startElement('currencies');
+      ksm($this->currencies);
+      foreach ($this->currencies as $currency) {
+        $this->writeElementFromArray($currency->toArray());
+      }
+      $this->writer->endElement();
+    }
+  }
+
+  /**
    * Write document footer.
    */
   protected function writeFooter() {
@@ -93,6 +114,23 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writer->fullEndElement();
     // yml_catalog
     $this->writer->fullEndElement();
+  }
+
+  /**
+   * Write element according to YandexYml annotation.
+   */
+  protected function writeElementFromArray(array $value) {
+    $element_name = key($value);
+    $content = !empty($value[$element_name]['content']) ? $value[$element_name]['content'] : NULL;
+    $properties = !empty($value[$element_name]['properties']) ? $value[$element_name]['properties'] : NULL;
+    $this->writer->startElement($element_name);
+    if ($properties) {
+      foreach ($properties as $name => $value) {
+        $this->writer->writeAttribute($name, $value);
+      }
+    }
+    $this->writer->text($content);
+    $this->writer->endElement();
   }
 
   /**
@@ -110,6 +148,25 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    */
   public function getShopInfo() {
     return $this->shopInfo;
+  }
+
+  /**
+   * @param \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency $currency
+   *
+   * @return YandexYmlGenerator
+   */
+  public function addCurrency(YandexYmlCurrency $currency) {
+    // @todo Clone used cuz php store the first object for each entry. If you
+    // know workaround, pls help.
+    $this->currencies[$currency->getId()] = clone $currency;
+    return $this;
+  }
+
+  /**
+   * @return array
+   */
+  public function getCurrencies() {
+    return $this->currencies;
   }
 
 }

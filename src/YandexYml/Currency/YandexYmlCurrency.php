@@ -2,6 +2,9 @@
 
 namespace Drupal\yandex_yml\YandexYml\Currency;
 
+use Drupal\yandex_yml\Annotation\YandexYml;
+use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
+
 /**
  * Class YandexYmlCurrency.
  *
@@ -9,8 +12,16 @@ namespace Drupal\yandex_yml\YandexYml\Currency;
  */
 class YandexYmlCurrency {
 
+  use YandexYmlToArrayTrait;
+
   /**
    * Currency code available in YML file.
+   *
+   * @YandexYml(
+   *   elementName = "currency",
+   *   type = "property",
+   *   propertyName = "id"
+   * )
    *
    * @var string
    *   Currency code name.
@@ -19,6 +30,12 @@ class YandexYmlCurrency {
 
   /**
    * Currency exchange rate for the unit.
+   *
+   * @YandexYml(
+   *   elementName = "currency",
+   *   type = "property",
+   *   propertyName = "rate"
+   * )
    *
    * @var mixed
    */

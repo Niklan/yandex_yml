@@ -44,8 +44,16 @@ trait YandexYmlToArrayTrait {
       $annotation = $reader->getPropertyAnnotation($property, 'Drupal\yandex_yml\Annotation\YandexYml');
       if ($annotation) {
         $property_info = $annotation->get();
-        // @todo handle properties and content separately.
-        $result[$property_info['elementName']][$property_info['type']] = $value;
+
+        switch ($property_info['type']) {
+          case 'content':
+            $result[$property_info['elementName']]['content'] = $value;
+            break;
+
+          case 'property':
+            $result[$property_info['elementName']]['properties'][$property_info['propertyName']] = $value;
+            break;
+        }
       }
     }
     return $result;
