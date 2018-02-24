@@ -177,7 +177,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   public function addCurrency(YandexYmlCurrency $currency) {
     // @todo Clone used cuz php store the first object for each entry. If you
     // know workaround, pls help.
-    $this->currencies[$currency->getId()] = clone $currency;
+    $this->currencies[$currency->getId()] = $currency;
     return $this;
   }
 
@@ -192,7 +192,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    * @param array $categories
    */
   public function addCategory(YandexYmlCategory $category) {
-    $this->categories[$category->getId()] = clone $category;
+    $this->categories[$category->getId()] = $category;
     return $this;
   }
 
