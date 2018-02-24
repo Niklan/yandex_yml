@@ -1,7 +1,7 @@
 services:
   yandex_yml.generator:
     class: Drupal\yandex_yml\YandexYmlGenerator
-    arguments: []
+    arguments: ['@datetime.time', '@date.formatter']
   yandex_yml.currency:
     class: Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency
     arguments: []
@@ -48,5 +48,9 @@ services:
     scope: 'prototype'
   yandex_yml.offer.tour:
     class: Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferTour
+    arguments: []
+    scope: 'prototype'
+  yandex_yml.shop:
+    class: Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
     arguments: []
     scope: 'prototype'

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\yandex_yml\YandexYml\Delivery;
+namespace Drupal\yandex_yml\YandexYml\Shop;
 
 /**
  * Class YandexYmlShop.

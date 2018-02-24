@@ -17,3 +17,4 @@ Add services for:
     - [ ] MusicVideo
     - [ ] EventTicket
     - [ ] Tour
+- [ ] Array trait to convert objects to array.
