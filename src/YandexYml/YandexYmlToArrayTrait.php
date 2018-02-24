@@ -13,10 +13,18 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 trait YandexYmlToArrayTrait {
 
   /**
-   * Convert data to array.
+   * Convert data to structured array based on YandexYml annotation.
    *
-   * @todo I think it's better to implement custom annotation for parsing
-   * properties.
+   * @example
+   * array(
+   *   'category' => array(
+   *     'content' => 'Books',
+   *     'properties' => array(
+   *       'id' => 17,
+   *       'parentId' => 1,
+   *     ),
+   *   ),
+   * );
    */
   public function toArray() {
     $result = [];
@@ -36,6 +44,7 @@ trait YandexYmlToArrayTrait {
       $annotation = $reader->getPropertyAnnotation($property, 'Drupal\yandex_yml\Annotation\YandexYml');
       if ($annotation) {
         $property_info = $annotation->get();
+        // @todo handle properties and content separately.
         $result[$property_info['elementName']][$property_info['type']] = $value;
       }
     }

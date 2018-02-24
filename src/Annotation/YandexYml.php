@@ -17,7 +17,7 @@ class YandexYml extends Plugin {
   /**
    * Type of value.
    *
-   * This denotes where this value will be set.
+   * Denotes where this value will be set.
    *
    * Allowed values:
    *  - content: Value of property will be set as content of element.
