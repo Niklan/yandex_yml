@@ -73,6 +73,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writer->endDTD();
     $this->writer->startElement('yml_catalog');
     $this->writer->writeAttribute('date', $date);
+    $this->writer->startElement('shop');
   }
 
   /**
@@ -88,6 +89,8 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    * Write document footer.
    */
   protected function writeFooter() {
+    // shop
+    $this->writer->fullEndElement();
     // yml_catalog
     $this->writer->fullEndElement();
   }
