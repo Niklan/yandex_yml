@@ -2,6 +2,9 @@
 
 namespace Drupal\yandex_yml\YandexYml\Category;
 
+use Drupal\yandex_yml\Annotation\YandexYml;
+use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
+
 /**
  * Class YandexYmlCategory.
  *
@@ -9,8 +12,16 @@ namespace Drupal\yandex_yml\YandexYml\Category;
  */
 class YandexYmlCategory {
 
+  use YandexYmlToArrayTrait;
+
   /**
    * The category ID.
+   *
+   * @YandexYml(
+   *   elementName = "category",
+   *   type = "property",
+   *   propertyName = "id"
+   * )
    *
    * @var int
    */
@@ -19,12 +30,23 @@ class YandexYmlCategory {
   /**
    * The category parent ID.
    *
+   * @YandexYml(
+   *   elementName = "category",
+   *   type = "property",
+   *   propertyName = "parentId"
+   * )
+   *
    * @var int
    */
   private $parentId;
 
   /**
    * The category name.
+   *
+   * @YandexYml(
+   *   elementName = "category",
+   *   type = "content"
+   * )
    *
    * @var string
    */

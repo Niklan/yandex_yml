@@ -4,6 +4,7 @@ namespace Drupal\yandex_yml;
 
 use Drupal\Component\Datetime\Time;
 use Drupal\Core\Datetime\DateFormatter;
+use Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory;
 use Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency;
 use Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop;
 
@@ -43,6 +44,11 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   private $currencies = [];
 
   /**
+   * @var array
+   */
+  private $categories = [];
+
+  /**
    * Constructs a new YandexYmlGenerator object.
    */
   public function __construct(Time $date_time, DateFormatter $date_formatter) {
@@ -65,6 +71,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writeHeader();
     $this->writeShopInfo();
     $this->writeCurrencies();
+    $this->writeCategories();
     $this->writeFooter();
     $this->writer->endDocument();
     file_unmanaged_copy($this->tempFilePath, 'public://test-yandex-yml.xml', FILE_EXISTS_REPLACE);
@@ -98,9 +105,21 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   protected function writeCurrencies() {
     if (!empty($this->currencies)) {
       $this->writer->startElement('currencies');
-      ksm($this->currencies);
       foreach ($this->currencies as $currency) {
         $this->writeElementFromArray($currency->toArray());
+      }
+      $this->writer->endElement();
+    }
+  }
+
+  /**
+   * Write categories.
+   */
+  protected function writeCategories() {
+    if (!empty($this->categories)) {
+      $this->writer->startElement('categories');
+      foreach ($this->categories as $category) {
+        $this->writeElementFromArray($category->toArray());
       }
       $this->writer->endElement();
     }
@@ -167,6 +186,21 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    */
   public function getCurrencies() {
     return $this->currencies;
+  }
+
+  /**
+   * @param array $categories
+   */
+  public function addCategory(YandexYmlCategory $category) {
+    $this->categories[$category->getId()] = clone $category;
+    return $this;
+  }
+
+  /**
+   * @return array
+   */
+  public function getCategories() {
+    return $this->categories;
   }
 
 }
