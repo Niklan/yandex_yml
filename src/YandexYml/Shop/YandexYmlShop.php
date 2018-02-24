@@ -2,12 +2,16 @@
 
 namespace Drupal\yandex_yml\YandexYml\Shop;
 
+use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
+
 /**
  * Class YandexYmlShop.
  *
  * @see https://yandex.ru/support/partnermarket/export/yml.html
  */
 class YandexYmlShop {
+
+  use YandexYmlToArrayTrait;
 
   /**
    * @var string
