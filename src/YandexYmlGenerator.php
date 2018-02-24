@@ -79,8 +79,8 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    * Write ShopInfo.
    */
   protected function writeShopInfo() {
-    foreach ($this->getShopInfo()->toArray() as $name => $value) {
-      $this->writer->writeElement($name, $value);
+    foreach ($this->getShopInfo()->toArray() as $element_name => $data) {
+      $this->writer->writeElement($element_name, $data['content']);
     }
   }
 

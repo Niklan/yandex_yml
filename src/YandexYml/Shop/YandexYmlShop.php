@@ -2,6 +2,7 @@
 
 namespace Drupal\yandex_yml\YandexYml\Shop;
 
+use Drupal\yandex_yml\Annotation\YandexYml;
 use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 
 /**
@@ -14,41 +15,81 @@ class YandexYmlShop {
   use YandexYmlToArrayTrait;
 
   /**
+   * @YandexYml(
+   *   type = "content",
+   *   elementName = "name"
+   * )
+   *
    * @var string
    */
   private $name;
 
   /**
+   * @YandexYml(
+   *   type = "content",
+   *   elementName = "company"
+   * )
+   *
    * @var string
    */
   private $company;
 
   /**
+   * @YandexYml(
+   *   type = "content",
+   *   elementName = "url"
+   * )
+   *
    * @var string
    */
   private $url;
 
   /**
+   * @YandexYml(
+   *   type = "content",
+   *   elementName = "platform"
+   * )
+   *
    * @var string
    */
   private $platform;
 
   /**
+   * @YandexYml(
+   *   type = "content",
+   *   elementName = "version"
+   * )
+   *
    * @var string
    */
   private $version;
 
   /**
+   * @YandexYml(
+   *   type = "content",
+   *   elementName = "agency"
+   * )
+   *
    * @var string
    */
   private $agency;
 
   /**
+   * @YandexYml(
+   *   type = "content",
+   *   elementName = "email"
+   * )
+   *
    * @var string
    */
   private $email;
 
   /**
+   * @YandexYml(
+   *   type = "content",
+   *   elementName = "cpa"
+   * )
+   *
    * @var int
    */
   private $cpa;
