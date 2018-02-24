@@ -73,5 +73,60 @@ foreach ($categories_array as $category_id => $category_data) {
   $generator->addCategory($category);
 }
 
+// Delivery options.
+$delivery_options = [
+  ['cost' => 300, 'days' => 1],
+  ['cost' => 300, 'days' => '1-3'],
+  ['cost' => 300, 'days' => 1, 'order-before' => 14],
+];
+foreach ($delivery_options as $delivery_option) {
+  /** @var \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery $delivery */
+  $delivery = \Drupal::service('yandex_yml.delivery')
+    ->setCost($delivery_option['cost'])
+    ->setDays($delivery_option['days']);
+  if (isset($delivery_option['order-before'])) {
+    $delivery->setOrderBefore($delivery_option['order-before']);
+  }
+  $generator->addDeliveryOption($delivery);
+}
+
 $generator->generateFile();
+```
+
+Result
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE yml_catalog
+SYSTEM "shops.dtd">
+<yml_catalog date="2018-02-24 19:23">
+	<shop>
+		<name>Example shop name</name>
+		<company>Fullname of the store</company>
+		<url>http://localhost</url>
+		<platform>Drupal</platform>
+		<version>8.4.0</version>
+		<agency>https://niklan.net</agency>
+		<email>hello@niklan.net</email>
+		<cpa>0</cpa>
+		<currencies>
+			<currency id="RUB" rate="1"></currency>
+			<currency id="USD" rate="CBRF"></currency>
+		</currencies>
+		<categories>
+			<category id="1">Books</category>
+			<category id="2" parentId="1">Detectives</category>
+			<category id="3" parentId="1">Action</category>
+			<category id="4">Video</category>
+			<category id="5" parentId="4">Comedy</category>
+			<category id="6">Printers</category>
+			<category id="7">Office equipment</category>
+		</categories>
+		<delivery-options>
+			<option cost="300" days="1"></option>
+			<option cost="300" days="1-3"></option>
+			<option cost="300" days="1" order-before="14"></option>
+		</delivery-options>
+	</shop>
+</yml_catalog>
 ```

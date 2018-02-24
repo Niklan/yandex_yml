@@ -6,6 +6,7 @@ use Drupal\Component\Datetime\Time;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory;
 use Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency;
+use Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery;
 use Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop;
 
 /**
@@ -49,6 +50,11 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   private $categories = [];
 
   /**
+   * @var array
+   */
+  private $deliveryOptions = [];
+
+  /**
    * Constructs a new YandexYmlGenerator object.
    */
   public function __construct(Time $date_time, DateFormatter $date_formatter) {
@@ -72,6 +78,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writeShopInfo();
     $this->writeCurrencies();
     $this->writeCategories();
+    $this->writeDeliveryOptions();
     $this->writeFooter();
     $this->writer->endDocument();
     file_unmanaged_copy($this->tempFilePath, 'public://test-yandex-yml.xml', FILE_EXISTS_REPLACE);
@@ -120,6 +127,19 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
       $this->writer->startElement('categories');
       foreach ($this->categories as $category) {
         $this->writeElementFromArray($category->toArray());
+      }
+      $this->writer->endElement();
+    }
+  }
+
+  /**
+   * Write delivery options.
+   */
+  protected function writeDeliveryOptions() {
+    if (!empty($this->deliveryOptions)) {
+      $this->writer->startElement('delivery-options');
+      foreach ($this->deliveryOptions as $delivery_option) {
+        $this->writeElementFromArray($delivery_option->toArray());
       }
       $this->writer->endElement();
     }
@@ -175,8 +195,6 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    * @return YandexYmlGenerator
    */
   public function addCurrency(YandexYmlCurrency $currency) {
-    // @todo Clone used cuz php store the first object for each entry. If you
-    // know workaround, pls help.
     $this->currencies[$currency->getId()] = $currency;
     return $this;
   }
@@ -201,6 +219,20 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    */
   public function getCategories() {
     return $this->categories;
+  }
+
+  /**
+   * @param array $deliveryOptions
+   */
+  public function addDeliveryOption(YandexYmlDelivery $delivery_option) {
+    $this->deliveryOptions[] = $delivery_option;
+  }
+
+  /**
+   * @return array
+   */
+  public function getDeliveryOptions() {
+    return $this->deliveryOptions;
   }
 
 }
