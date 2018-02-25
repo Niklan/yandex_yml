@@ -24,6 +24,8 @@ class YandexYml extends Plugin {
    *  - property: Value of property will be set as attribute value of element.
    *  - children: Value will be childrens with processing. Must be an array of
    *              any objects with YandexYmlToArrayTrait.
+   *  - array_map: An array value will be transformed to elements according to
+   *               mapping.
    *
    * @var string
    */
@@ -56,5 +58,12 @@ class YandexYml extends Plugin {
    * @var string
    */
   public $parentElement;
+
+  /**
+   * Mapping for array values.
+   *
+   * @var array
+   */
+  public $array_map;
 
 }

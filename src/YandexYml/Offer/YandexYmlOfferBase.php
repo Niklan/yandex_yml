@@ -303,8 +303,13 @@ abstract class YandexYmlOfferBase {
   /**
    * @YandexYml(
    *   elementName = "param",
-   *   type = "content",
-   *   parentElement = "offer"
+   *   type = "array_map",
+   *   parentElement = "offer",
+   *   array_map = {
+   *    "name": "property",
+   *    "value": "property",
+   *    "unit": "property"
+   *   }
    * )
    *
    * @var array
@@ -887,7 +892,7 @@ abstract class YandexYmlOfferBase {
    * @return YandexYmlOfferBase
    */
   public function setParam($name, $value, $unit = NULL) {
-    $this->param = ['name' => $name, 'value' => $value, 'unit' => $unit];
+    $this->param[] = ['name' => $name, 'value' => $value, 'unit' => $unit];
     return $this;
   }
 

@@ -26,8 +26,8 @@ trait YandexYmlToArrayTrait {
    *   ),
    * );
    *
-   * @todo improve it by remove keys as element names in first level of array.
-   * Possible can be conflicts.
+   * @todo improve it. Multiple elements with same name is not allowed because
+   * of keys of array uses. Find workaround.
    */
   public function toArray() {
     $result = [];
@@ -69,6 +69,11 @@ trait YandexYmlToArrayTrait {
                 $result[$element_name]['childrens'][] = $item;
               }
             }
+            break;
+
+          case 'array_map':
+            // @todo for <param>
+            ksm($annotation_data, $value);
             break;
         }
         if (!empty($annotation_data['parentElement'])) {
