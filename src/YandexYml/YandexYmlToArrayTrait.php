@@ -68,7 +68,7 @@ trait YandexYmlToArrayTrait {
     }
 
     $result = $this->buildTree($result);
-    return reset($result);
+    return $result;
   }
 
   /**

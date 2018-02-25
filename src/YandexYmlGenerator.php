@@ -108,9 +108,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    * Write ShopInfo.
    */
   protected function writeShopInfo() {
-    foreach ($this->getShopInfo()->toArray() as $element_name => $data) {
-      $this->writer->writeElement($element_name, $data['content']);
-    }
+    $this->writeElementFromArray($this->getShopInfo()->toArray());
   }
 
   /**
@@ -178,26 +176,26 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   /**
    * Write element according to YandexYml annotation.
    */
-  protected function writeElementFromArray(array $value) {
-    $element_name = $value['element'];
-    $content = !empty($value['content']) ? $value['content'] : NULL;
-    $properties = !empty($value['properties']) ? $value['properties'] : NULL;
-    $childrens = !empty($value['childrens']) ? $value['childrens'] : NULL;
-    $this->writer->startElement($element_name);
-    if ($properties) {
-      foreach ($properties as $name => $value) {
-        $this->writer->writeAttribute($name, $value);
+  protected function writeElementFromArray(array $values) {
+    foreach ($values as $value) {
+      $element_name = $value['element'];
+      $content = !empty($value['content']) ? $value['content'] : NULL;
+      $properties = !empty($value['properties']) ? $value['properties'] : NULL;
+      $childrens = !empty($value['childrens']) ? $value['childrens'] : NULL;
+      $this->writer->startElement($element_name);
+      if ($properties) {
+        foreach ($properties as $name => $value) {
+          $this->writer->writeAttribute($name, $value);
+        }
       }
-    }
-    if ($content) {
-      $this->writer->text($content);
-    }
-    if ($childrens) {
-      foreach ($childrens as $children) {
-        $this->writeElementFromArray($children);
+      if ($content) {
+        $this->writer->text($content);
       }
+      if ($childrens) {
+        $this->writeElementFromArray($childrens);
+      }
+      $this->writer->endElement();
     }
-    $this->writer->endElement();
   }
 
   /**
