@@ -25,6 +25,9 @@ trait YandexYmlToArrayTrait {
    *     ),
    *   ),
    * );
+   *
+   * @todo improve it by remove keys as element names in first level of array.
+   * Possible can be conflicts.
    */
   public function toArray() {
     $result = [];
@@ -57,6 +60,16 @@ trait YandexYmlToArrayTrait {
           case 'property':
             $result[$element_name]['properties'][$annotation_data['propertyName']] = $value;
             break;
+
+          case 'children':
+            foreach ($value as $item) {
+              $data = $item->toArray();
+              foreach ($data as $item) {
+                $item['parentElement'] = $element_name;
+                $result[$element_name]['childrens'][] = $item;
+              }
+            }
+            break;
         }
         if (!empty($annotation_data['parentElement'])) {
           $result[$element_name]['parentElement'] = $annotation_data['parentElement'];
@@ -76,7 +89,7 @@ trait YandexYmlToArrayTrait {
    */
   private function buildTree(array $elements, $parent = NULL) {
     $tree = [];
-    foreach ($elements as $key => $element) {
+    foreach ($elements as $element) {
       if ($element['parentElement'] == $parent) {
         $children = $this->buildTree($elements, $element['element']);
         if ($children) {

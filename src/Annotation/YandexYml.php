@@ -22,6 +22,8 @@ class YandexYml extends Plugin {
    * Allowed values:
    *  - content: Value of property will be set as content of element.
    *  - property: Value of property will be set as attribute value of element.
+   *  - children: Value will be childrens with processing. Must be an array of
+   *              any objects with YandexYmlToArrayTrait.
    *
    * @var string
    */

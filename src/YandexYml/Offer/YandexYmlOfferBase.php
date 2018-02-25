@@ -114,91 +114,199 @@ abstract class YandexYmlOfferBase {
   protected $oldPrice;
 
   /**
+   * @YandexYml(
+   *   elementName = "vat",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var string
    */
   protected $vat;
 
   /**
+   * @YandexYml(
+   *   elementName = "currencyId",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var string
    */
   protected $currencyId;
 
   /**
+   * @YandexYml(
+   *   elementName = "categoryId",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var int
    */
   protected $categoryId;
 
   /**
+   * @YandexYml(
+   *   elementName = "picture",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var string
    */
   protected $picture;
 
   /**
+   * @YandexYml(
+   *   elementName = "delivery",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var bool
    */
   protected $delivery;
 
   /**
+   * @YandexYml(
+   *   elementName = "delivery-options",
+   *   type = "children",
+   *   parentElement = "offer"
+   * )
+   *
    * @var array of \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery
    */
   protected $deliveryOptions;
 
   /**
+   * @YandexYml(
+   *   elementName = "pickup",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var bool
    */
   protected $pickup;
 
   /**
+   * @YandexYml(
+   *   elementName = "store",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var bool
    */
   protected $store;
 
   /**
+   * @YandexYml(
+   *   elementName = "description",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var string
    */
   protected $description;
 
   /**
+   * @YandexYml(
+   *   elementName = "sales_notes",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var string
    */
   protected $salesNotes;
 
   /**
+   * @YandexYml(
+   *   elementName = "min-quantity",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var int
    */
   protected $minQuantity;
 
   /**
+   * @YandexYml(
+   *   elementName = "step-quantity",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var int
    */
   protected $stepQuantity;
 
   /**
+   * @YandexYml(
+   *   elementName = "manufacturer_warranty",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var bool
    */
   protected $manufacturerWarranty;
 
   /**
+   * @YandexYml(
+   *   elementName = "country_of_origin",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var string
    */
   protected $countryOfOrigin;
 
   /**
+   * @YandexYml(
+   *   elementName = "adult",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var bool
    */
   protected $adult;
 
   /**
+   * @YandexYml(
+   *   elementName = "barcode",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var string
    */
   protected $barcode;
 
   /**
+   * @YandexYml(
+   *   elementName = "cpa",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var int
    */
   protected $cpa;
 
   /**
+   * @YandexYml(
+   *   elementName = "param",
+   *   type = "content",
+   *   parentElement = "offer"
+   * )
+   *
    * @var array
    */
   protected $param;
@@ -592,9 +700,8 @@ abstract class YandexYmlOfferBase {
    * @return YandexYmlOfferBase
    */
   public function setDescription($description) {
-    $description = strip_tags($description);
     $description = Unicode::truncate($description, 3000);
-    $this->description = strip_tags($description);
+    $this->description = $description;
     return $this;
   }
 

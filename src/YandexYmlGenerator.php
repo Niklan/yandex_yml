@@ -185,17 +185,38 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
       $this->writer->startElement($element_name);
       if ($properties) {
         foreach ($properties as $name => $value) {
+          $this->preprocessValue($value);
           $this->writer->writeAttribute($name, $value);
         }
       }
       if ($content) {
-        $this->writer->text($content);
+        if ($element_name == 'description') {
+          $this->writer->writeCData($content);
+        }
+        else {
+          $this->preprocessValue($content);
+          $this->writer->text($content);
+        }
       }
       if ($childrens) {
         $this->writeElementFromArray($childrens);
       }
       $this->writer->endElement();
     }
+  }
+
+  /**
+   * Several additional processes for values.
+   */
+  protected function preprocessValue(&$value) {
+    if (is_bool($value)) {
+      $value = $value ? 'true' : 'false';
+    }
+    str_replace('"', '&quot;', $value);
+    str_replace('&', '&amp;', $value);
+    str_replace('>', '&gt;', $value);
+    str_replace('<', '&lt;', $value);
+    str_replace("'", '&apos;', $value);
   }
 
   /**
