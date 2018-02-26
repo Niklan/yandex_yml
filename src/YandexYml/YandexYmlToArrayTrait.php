@@ -30,9 +30,19 @@ trait YandexYmlToArrayTrait {
    * of keys of array uses. Find workaround.
    */
   public function toArray() {
+    $result = $this->parseAnnotations($this);
+    $result = $this->buildTree($result);
+    ksm($result);
+    return $result;
+  }
+
+  /**
+   * Parse YaandexYml annotations.
+   */
+  private function parseAnnotations($class) {
     $result = [];
     // Get all defined properties which is no NULL.
-    $properties = get_object_vars($this);
+    $properties = get_object_vars($class);
     unset($properties['_serviceId']);
     $properties = array_filter($properties, function ($value) {
       return $value !== NULL;
@@ -46,7 +56,7 @@ trait YandexYmlToArrayTrait {
     AnnotationRegistry::registerLoader('class_exists');
 
     foreach ($properties as $name => $value) {
-      $property = new \ReflectionProperty($this, $name);
+      $property = new \ReflectionProperty($class, $name);
       $annotation = $reader->getPropertyAnnotation($property, 'Drupal\yandex_yml\Annotation\YandexYml');
       if ($annotation) {
         $annotation_data = $annotation->get();
@@ -63,17 +73,25 @@ trait YandexYmlToArrayTrait {
 
           case 'children':
             foreach ($value as $item) {
-              $data = $item->toArray();
-              foreach ($data as $item) {
-                $item['parentElement'] = $element_name;
-                $result[$element_name]['childrens'][] = $item;
-              }
+              $result[$element_name]['childrens'][] = reset($item->toArray());
             }
             break;
 
           case 'array_map':
-            // @todo for <param>
-            ksm($annotation_data, $value);
+            $array_map = $annotation_data['array_map'];
+            foreach ($value as $item) {
+              foreach ($item as $k => $v) {
+                foreach ($array_map as $name => $type) {
+                  if ($k == $name) {
+                    switch ($type) {
+                      case 'property':
+                        $result[$element_name]['properties'][$k] = $v;
+                        break;
+                    }
+                  }
+                }
+              }
+            }
             break;
         }
         if (!empty($annotation_data['parentElement'])) {
@@ -84,8 +102,6 @@ trait YandexYmlToArrayTrait {
         }
       }
     }
-
-    $result = $this->buildTree($result);
     return $result;
   }
 

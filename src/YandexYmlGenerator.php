@@ -199,6 +199,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
         }
       }
       if ($childrens) {
+        ksm($childrens, $element_name);
         $this->writeElementFromArray($childrens);
       }
       $this->writer->endElement();
