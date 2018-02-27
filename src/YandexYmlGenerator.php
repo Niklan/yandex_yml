@@ -67,7 +67,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->dateTime = $date_time;
     $this->dateFormatter = $date_formatter;
     // Prepare temporary file.
-    $this->tempFilePath = \Drupal::service('file_system')
+    $this->tempFilePath = @\Drupal::service('file_system')
       ->tempnam('yandex_yml', 'yml_');
     // Initialization of file.
     $this->writer = new \XMLWriter();
@@ -157,6 +157,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     if (!empty($this->offers)) {
       $this->writer->startElement('offers');
       foreach ($this->offers as $offer) {
+        ksm($offer->toArray());
         $this->writeElementFromArray($offer->toArray());
       }
       $this->writer->endElement();
@@ -178,29 +179,23 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    */
   protected function writeElementFromArray(array $values) {
     foreach ($values as $value) {
-      $element_name = $value['element'];
-      $content = !empty($value['content']) ? $value['content'] : NULL;
-      $properties = !empty($value['properties']) ? $value['properties'] : NULL;
-      $childrens = !empty($value['childrens']) ? $value['childrens'] : NULL;
+      $element_name = $value['name'];
+      $element_value = !empty($value['value']) ? $value['value'] : NULL;
+      $element_attributes = !empty($value['attributes']) ? $value['attributes'] : NULL;
+      $element_child = !empty($value['child']) ? $value['child'] : NULL;
       $this->writer->startElement($element_name);
-      if ($properties) {
-        foreach ($properties as $name => $value) {
-          $this->preprocessValue($value);
-          $this->writer->writeAttribute($name, $value);
+      if ($element_attributes) {
+        foreach ($element_attributes as $element_attribute) {
+          $this->preprocessValue($element_attribute['value']);
+          $this->writer->writeAttribute($element_attribute['name'], $element_attribute['value']);
         }
       }
-      if ($content) {
-        if ($element_name == 'description') {
-          $this->writer->writeCData($content);
-        }
-        else {
-          $this->preprocessValue($content);
-          $this->writer->text($content);
-        }
+      if ($element_value) {
+        $this->preprocessValue($element_value);
+        $this->writer->text($element_value);
       }
-      if ($childrens) {
-        ksm($childrens, $element_name);
-        $this->writeElementFromArray($childrens);
+      if ($element_child) {
+        $this->writeElementFromArray($element_child);
       }
       $this->writer->endElement();
     }

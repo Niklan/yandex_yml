@@ -3,7 +3,8 @@
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
 use Drupal\Component\Utility\Unicode;
-use Drupal\yandex_yml\Annotation\YandexYml;
+use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
+use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
 use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 
 /**
@@ -16,83 +17,57 @@ abstract class YandexYmlOfferBase {
   use YandexYmlToArrayTrait;
 
   /**
-   * @YandexYml(
-   *   elementName = "offer",
-   *   type = "property",
-   *   propertyName = "id"
-   * )
+   * @YandexYmlAttribute()
    *
    * @var string
    */
   protected $id;
 
   /**
-   * @YandexYml(
-   *   elementName = "offer",
-   *   type = "property",
-   *   propertyName = "cbid"
-   * )
+   * @YandexYmlAttribute()
    *
    * @var int
    */
   protected $cbid;
 
   /**
-   * @YandexYml(
-   *   elementName = "offer",
-   *   type = "property",
-   *   propertyName = "bid"
-   * )
+   * @YandexYmlAttribute()
    *
    * @var int
    */
   protected $bid;
 
   /**
-   * @YandexYml(
-   *   elementName = "offer",
-   *   type = "property",
-   *   propertyName = "fee"
-   * )
+   * @YandexYmlAttribute()
    *
    * @var int
    */
   protected $fee;
 
   /**
-   * @YandexYml(
-   *   elementName = "offer",
-   *   type = "property",
-   *   propertyName = "available"
-   * )
+   * @YandexYmlAttribute()
    *
    * @var bool
    */
   protected $available;
 
   /**
-   * @YandexYml(
-   *   elementName = "url",
-   *   type = "content",
-   *   parentElement = "offer"
-   * )
+   * @YandexYmlElementWrapper()
+   *
    * @var string
    */
   protected $url;
 
   /**
-   * @YandexYml(
-   *   elementName = "price",
-   *   type = "content",
-   *   parentElement = "offer"
-   * )
+   * @YandexYmlElementWrapper()
    *
    * @var int
    */
   protected $price;
 
   /**
-   * @YandexYml(
+   * @TODO
+   * YandexYml(
    *   elementName = "price",
    *   type = "property",
    *   propertyName = "from"
@@ -103,10 +78,8 @@ abstract class YandexYmlOfferBase {
   protected $priceFrom;
 
   /**
-   * @YandexYml(
-   *   elementName = "oldprice",
-   *   type = "content",
-   *   parentElement = "offer"
+   * @YandexYmlElementWrapper(
+   *   name = "oldprice"
    * )
    *
    * @var int
@@ -114,62 +87,43 @@ abstract class YandexYmlOfferBase {
   protected $oldPrice;
 
   /**
-   * @YandexYml(
-   *   elementName = "vat",
-   *   type = "content",
-   *   parentElement = "offer"
-   * )
+   * @YandexYmlElementWrapper()
    *
    * @var string
    */
   protected $vat;
 
   /**
-   * @YandexYml(
-   *   elementName = "currencyId",
-   *   type = "content",
-   *   parentElement = "offer"
-   * )
+   * @YandexYmlElementWrapper()
    *
    * @var string
    */
   protected $currencyId;
 
   /**
-   * @YandexYml(
-   *   elementName = "categoryId",
-   *   type = "content",
-   *   parentElement = "offer"
-   * )
+   * @YandexYmlElementWrapper()
    *
    * @var int
    */
   protected $categoryId;
 
   /**
-   * @YandexYml(
-   *   elementName = "picture",
-   *   type = "content",
-   *   parentElement = "offer"
-   * )
+   * @YandexYmlElementWrapper()
    *
    * @var string
    */
   protected $picture;
 
   /**
-   * @YandexYml(
-   *   elementName = "delivery",
-   *   type = "content",
-   *   parentElement = "offer"
-   * )
+   * @YandexYmlElementWrapper()
    *
    * @var bool
    */
   protected $delivery;
 
   /**
-   * @YandexYml(
+   * @TODO
+   * YandexYml(
    *   elementName = "delivery-options",
    *   type = "children",
    *   parentElement = "offer"
@@ -180,43 +134,29 @@ abstract class YandexYmlOfferBase {
   protected $deliveryOptions;
 
   /**
-   * @YandexYml(
-   *   elementName = "pickup",
-   *   type = "content",
-   *   parentElement = "offer"
-   * )
+   * @YandexYmlElementWrapper()
    *
    * @var bool
    */
   protected $pickup;
 
   /**
-   * @YandexYml(
-   *   elementName = "store",
-   *   type = "content",
-   *   parentElement = "offer"
-   * )
+   * @YandexYmlElementWrapper()
    *
    * @var bool
    */
   protected $store;
 
   /**
-   * @YandexYml(
-   *   elementName = "description",
-   *   type = "content",
-   *   parentElement = "offer"
-   * )
+   * @YandexYmlElementWrapper()
    *
    * @var string
    */
   protected $description;
 
   /**
-   * @YandexYml(
-   *   elementName = "sales_notes",
-   *   type = "content",
-   *   parentElement = "offer"
+   * @YandexYmlElementWrapper(
+   *   name = "sales_notes"
    * )
    *
    * @var string
@@ -224,10 +164,8 @@ abstract class YandexYmlOfferBase {
   protected $salesNotes;
 
   /**
-   * @YandexYml(
-   *   elementName = "min-quantity",
-   *   type = "content",
-   *   parentElement = "offer"
+   * @YandexYmlElementWrapper(
+   *   name = "min-quantity"
    * )
    *
    * @var int
@@ -235,10 +173,8 @@ abstract class YandexYmlOfferBase {
   protected $minQuantity;
 
   /**
-   * @YandexYml(
-   *   elementName = "step-quantity",
-   *   type = "content",
-   *   parentElement = "offer"
+   * @YandexYmlElementWrapper(
+   *   name = "step-quantity"
    * )
    *
    * @var int
@@ -246,10 +182,8 @@ abstract class YandexYmlOfferBase {
   protected $stepQuantity;
 
   /**
-   * @YandexYml(
-   *   elementName = "manufacturer_warranty",
-   *   type = "content",
-   *   parentElement = "offer"
+   * @YandexYmlElementWrapper(
+   *   name = "manufacturer_warranty"
    * )
    *
    * @var bool
@@ -257,10 +191,8 @@ abstract class YandexYmlOfferBase {
   protected $manufacturerWarranty;
 
   /**
-   * @YandexYml(
-   *   elementName = "country_of_origin",
-   *   type = "content",
-   *   parentElement = "offer"
+   * @YandexYmlElementWrapper(
+   *   name = "country_of_origin"
    * )
    *
    * @var string
@@ -268,40 +200,29 @@ abstract class YandexYmlOfferBase {
   protected $countryOfOrigin;
 
   /**
-   * @YandexYml(
-   *   elementName = "adult",
-   *   type = "content",
-   *   parentElement = "offer"
-   * )
+   * @YandexYmlElementWrapper()
    *
    * @var bool
    */
   protected $adult;
 
   /**
-   * @YandexYml(
-   *   elementName = "barcode",
-   *   type = "content",
-   *   parentElement = "offer"
-   * )
+   * @YandexYmlElementWrapper()
    *
    * @var string
    */
   protected $barcode;
 
   /**
-   * @YandexYml(
-   *   elementName = "cpa",
-   *   type = "content",
-   *   parentElement = "offer"
-   * )
+   * @YandexYmlElementWrapper()
    *
    * @var int
    */
   protected $cpa;
 
   /**
-   * @YandexYml(
+   * @TODO
+   * YandexYml(
    *   elementName = "param",
    *   type = "array_map",
    *   parentElement = "offer",

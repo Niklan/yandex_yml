@@ -2,11 +2,17 @@
 
 namespace Drupal\yandex_yml\YandexYml\Delivery;
 
-use Drupal\yandex_yml\Annotation\YandexYml;
+use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
+use Drupal\yandex_yml\Annotation\YandexYmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlValue;
 use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 
 /**
  * Class YandexYmlDelivery.
+ *
+ * @YandexYmlElement(
+ *   name = "option"
+ * )
  *
  * @see https://yandex.ru/support/partnermarket/elements/delivery-options.html
  */
@@ -17,11 +23,7 @@ class YandexYmlDelivery {
   /**
    * Delivery cost.
    *
-   * @YandexYml(
-   *   elementName = "option",
-   *   type = "property",
-   *   propertyName = "cost"
-   * )
+   * @YandexYmlAttribute()
    *
    * @var int
    */
@@ -30,11 +32,7 @@ class YandexYmlDelivery {
   /**
    * Duration of delivery.
    *
-   * @YandexYml(
-   *   elementName = "option",
-   *   type = "property",
-   *   propertyName = "days"
-   * )
+   * @YandexYmlAttribute()
    *
    * @var mixed
    */
@@ -43,10 +41,8 @@ class YandexYmlDelivery {
   /**
    * Time of order.
    *
-   * @YandexYml(
-   *   elementName = "option",
-   *   type = "property",
-   *   propertyName = "order-before"
+   * @YandexYmlAttribute(
+   *   name = "order-before"
    * )
    *
    * @var int

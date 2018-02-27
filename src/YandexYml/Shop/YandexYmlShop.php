@@ -2,7 +2,7 @@
 
 namespace Drupal\yandex_yml\YandexYml\Shop;
 
-use Drupal\yandex_yml\Annotation\YandexYml;
+use Drupal\yandex_yml\Annotation\YandexYmlElement;
 use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 
 /**
@@ -15,9 +15,8 @@ class YandexYmlShop {
   use YandexYmlToArrayTrait;
 
   /**
-   * @YandexYml(
-   *   type = "content",
-   *   elementName = "name"
+   * @YandexYmlElement(
+   *   name = "name"
    * )
    *
    * @var string
@@ -25,9 +24,8 @@ class YandexYmlShop {
   private $name;
 
   /**
-   * @YandexYml(
-   *   type = "content",
-   *   elementName = "company"
+   * @YandexYmlElement(
+   *   name = "company"
    * )
    *
    * @var string
@@ -35,9 +33,8 @@ class YandexYmlShop {
   private $company;
 
   /**
-   * @YandexYml(
-   *   type = "content",
-   *   elementName = "url"
+   * @YandexYmlElement(
+   *   name = "url"
    * )
    *
    * @var string
@@ -45,9 +42,8 @@ class YandexYmlShop {
   private $url;
 
   /**
-   * @YandexYml(
-   *   type = "content",
-   *   elementName = "platform"
+   * @YandexYmlElement(
+   *   name = "url"
    * )
    *
    * @var string
@@ -55,9 +51,8 @@ class YandexYmlShop {
   private $platform;
 
   /**
-   * @YandexYml(
-   *   type = "content",
-   *   elementName = "version"
+   * @YandexYmlElement(
+   *   name = "version"
    * )
    *
    * @var string
@@ -65,9 +60,8 @@ class YandexYmlShop {
   private $version;
 
   /**
-   * @YandexYml(
-   *   type = "content",
-   *   elementName = "agency"
+   * @YandexYmlElement(
+   *   name = "agency"
    * )
    *
    * @var string
@@ -75,9 +69,8 @@ class YandexYmlShop {
   private $agency;
 
   /**
-   * @YandexYml(
-   *   type = "content",
-   *   elementName = "email"
+   * @YandexYmlElement(
+   *   name = "email"
    * )
    *
    * @var string
@@ -85,9 +78,8 @@ class YandexYmlShop {
   private $email;
 
   /**
-   * @YandexYml(
-   *   type = "content",
-   *   elementName = "cpa"
+   * @YandexYmlElement(
+   *   name = "cpa"
    * )
    *
    * @var int

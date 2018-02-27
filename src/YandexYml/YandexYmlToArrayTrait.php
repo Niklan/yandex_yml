@@ -13,6 +13,13 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 trait YandexYmlToArrayTrait {
 
   /**
+   * @var AnnotationReader
+   */
+  private $reader;
+
+  private $properties;
+
+  /**
    * Convert data to structured array based on YandexYml annotation.
    *
    * @example
@@ -25,84 +32,140 @@ trait YandexYmlToArrayTrait {
    *     ),
    *   ),
    * );
-   *
-   * @todo improve it. Multiple elements with same name is not allowed because
-   * of keys of array uses. Find workaround.
    */
   public function toArray() {
-    $result = $this->parseAnnotations($this);
-    $result = $this->buildTree($result);
-    ksm($result);
+    $result = $this->parseAnnotations();
+    //$result = $this->buildTree($result);
     return $result;
   }
 
   /**
-   * Parse YaandexYml annotations.
+   * Parse YandexYml annotations.
    */
-  private function parseAnnotations($class) {
+  private function parseAnnotations() {
     $result = [];
     // Get all defined properties which is no NULL.
-    $properties = get_object_vars($class);
+    $properties = get_object_vars($this);
     unset($properties['_serviceId']);
-    $properties = array_filter($properties, function ($value) {
+    $this->properties = array_filter($properties, function ($value) {
       return $value !== NULL;
     });
 
-    // Parse annotations.
-    $reader = new AnnotationReader();
+    $this->reader = new AnnotationReader();
     // Clear the annotation loaders of any previous annotation classes.
     AnnotationRegistry::reset();
     // Register the namespaces of classes that can be used for annotations.
     AnnotationRegistry::registerLoader('class_exists');
 
-    foreach ($properties as $name => $value) {
-      $property = new \ReflectionProperty($class, $name);
-      $annotation = $reader->getPropertyAnnotation($property, 'Drupal\yandex_yml\Annotation\YandexYml');
-      if ($annotation) {
-        $annotation_data = $annotation->get();
-        $element_name = $annotation_data['elementName'];
-        $result[$element_name]['element'] = $element_name;
-        switch ($annotation_data['type']) {
-          case 'content':
-            $result[$element_name]['content'] = $value;
-            break;
+    $element = $this->getElementFromObject();
+    // If found element than object is an element.
+    if ($element) {
+      // Looking for value.
+      $value = $this->getElementValue();
+      if ($value) {
+        $element['value'] = $value;
+      }
 
-          case 'property':
-            $result[$element_name]['properties'][$annotation_data['propertyName']] = $value;
-            break;
+      // Looking for attributes.
+      $attributes = $this->getElementAttributes();
+      $element['attributes'] = $attributes;
 
-          case 'children':
-            foreach ($value as $item) {
-              $result[$element_name]['childrens'][] = reset($item->toArray());
-            }
-            break;
+      // Looking for child values.
+      $child = $this->getElementWrappers();
+      $element['child'] = $child;
 
-          case 'array_map':
-            $array_map = $annotation_data['array_map'];
-            foreach ($value as $item) {
-              foreach ($item as $k => $v) {
-                foreach ($array_map as $name => $type) {
-                  if ($k == $name) {
-                    switch ($type) {
-                      case 'property':
-                        $result[$element_name]['properties'][$k] = $v;
-                        break;
-                    }
-                  }
-                }
-              }
-            }
-            break;
-        }
-        if (!empty($annotation_data['parentElement'])) {
-          $result[$element_name]['parentElement'] = $annotation_data['parentElement'];
-        }
-        else {
-          $result[$element_name]['parentElement'] = NULL;
-        }
+      $result[] = $element;
+    }
+    else {
+      // If object is not element root, than we find elements in properties.
+      // Used only for ShopInfo.
+      $elements = $this->getElementsFromProperties();
+      $result = array_merge($result, $elements);
+    }
+
+    return $result;
+  }
+
+  /**
+   * Trying to find element definition in object annotation.
+   */
+  private function getElementFromObject() {
+    $reflection = new \ReflectionObject($this);
+    $object_annotation = $this->reader->getClassAnnotation($reflection, 'Drupal\yandex_yml\Annotation\YandexYmlElement');
+    if ($object_annotation) {
+      return $object_annotation->get();
+    }
+    return;
+  }
+
+  /**
+   * Looking for value of element.
+   */
+  private function getElementValue() {
+    foreach ($this->properties as $name => $value) {
+      $reflection = new \ReflectionProperty($this, $name);
+      $property_annotation = $this->reader->getPropertyAnnotation($reflection, 'Drupal\yandex_yml\Annotation\YandexYmlValue');
+      if ($property_annotation) {
+        return $value;
       }
     }
-    return $result;
+  }
+
+  /**
+   * Looking for attributes of element.
+   */
+  private function getElementAttributes() {
+    $attributes = [];
+    foreach ($this->properties as $name => $value) {
+      $reflection = new \ReflectionProperty($this, $name);
+      $property_annotation = $this->reader->getPropertyAnnotation($reflection, 'Drupal\yandex_yml\Annotation\YandexYmlAttribute');
+      if ($property_annotation) {
+        $attribute_name = !empty($property_annotation->get()['name']) ? $property_annotation->get()['name'] : $name;
+        $attributes[] = [
+          'name' => $attribute_name,
+          'value' => $value,
+        ];
+      }
+    }
+    return $attributes;
+  }
+
+  /**
+   * Looking for elements in properties. They are standalone.
+   */
+  private function getElementsFromProperties() {
+    $elements = [];
+    foreach ($this->properties as $name => $value) {
+      $reflection = new \ReflectionProperty($this, $name);
+      $property_annotation = $this->reader->getPropertyAnnotation($reflection, 'Drupal\yandex_yml\Annotation\YandexYmlElement');
+      if ($property_annotation) {
+        $element_name = !empty($property_annotation->get()['name']) ? $property_annotation->get()['name'] : $name;
+        $elements[] = [
+          'name' => $element_name,
+          'value' => $value,
+        ];
+      }
+    }
+    return $elements;
+  }
+
+  /**
+   * Looking for values with wrapper.
+   */
+  private function getElementWrappers() {
+    $elements = [];
+    foreach ($this->properties as $name => $value) {
+      $reflection = new \ReflectionProperty($this, $name);
+      $property_annotation = $this->reader->getPropertyAnnotation($reflection, 'Drupal\yandex_yml\Annotation\YandexYmlElementWrapper');
+      if ($property_annotation) {
+        $element_name = !empty($property_annotation->get()['name']) ? $property_annotation->get()['name'] : $name;
+        $elements[] = [
+          'name' => $element_name,
+          'value' => $value,
+        ];
+      }
+    }
+    return $elements;
   }
 
   /**
@@ -114,7 +177,7 @@ trait YandexYmlToArrayTrait {
       if ($element['parentElement'] == $parent) {
         $children = $this->buildTree($elements, $element['element']);
         if ($children) {
-          $element['childrens'] = $children;
+          $element['child'] = $children;
         }
         $tree[] = $element;
       }
