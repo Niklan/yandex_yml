@@ -54,3 +54,7 @@ services:
     class: Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
     arguments: []
     shared: false
+  yandex_yml.param:
+    class: Drupal\yandex_yml\YandexYml\Param\YandexYmlParam
+    arguments: []
+    shared: false

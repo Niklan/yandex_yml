@@ -74,6 +74,9 @@ trait YandexYmlToArrayTrait {
       $child = $this->getElementWrappers();
       $element['child'] = $child;
 
+      $elements = $this->getElementsFromProperties();
+      $element['child'] = array_merge($element['child'], $elements);
+
       $result[] = $element;
     }
     else {
@@ -139,11 +142,19 @@ trait YandexYmlToArrayTrait {
       $reflection = new \ReflectionProperty($this, $name);
       $property_annotation = $this->reader->getPropertyAnnotation($reflection, 'Drupal\yandex_yml\Annotation\YandexYmlElement');
       if ($property_annotation) {
-        $element_name = !empty($property_annotation->get()['name']) ? $property_annotation->get()['name'] : $name;
-        $elements[] = [
-          'name' => $element_name,
-          'value' => $value,
-        ];
+        if (is_array($value)) {
+          ksm($value);
+          foreach ($value as $value_element) {
+            $elements = array_merge($elements, $value_element->toArray());
+          }
+        }
+        else {
+          $element_name = !empty($property_annotation->get()['name']) ? $property_annotation->get()['name'] : $name;
+          $elements[] = [
+            'name' => $element_name,
+            'value' => $value,
+          ];
+        }
       }
     }
     return $elements;

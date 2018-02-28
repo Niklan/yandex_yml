@@ -4,6 +4,7 @@ namespace Drupal\yandex_yml\YandexYml\Offer;
 
 use Drupal\Component\Utility\Unicode;
 use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
+use Drupal\yandex_yml\Annotation\YandexYmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
 use Drupal\yandex_yml\Annotation\YandexYmlElementWrapperAttribute;
 use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
@@ -217,17 +218,7 @@ abstract class YandexYmlOfferBase {
   protected $cpa;
 
   /**
-   * @TODO
-   * YandexYml(
-   *   elementName = "param",
-   *   type = "array_map",
-   *   parentElement = "offer",
-   *   array_map = {
-   *    "name": "property",
-   *    "value": "property",
-   *    "unit": "property"
-   *   }
-   * )
+   * @YandexYmlElement()
    *
    * @var array
    */
@@ -825,7 +816,14 @@ abstract class YandexYmlOfferBase {
    * @return YandexYmlOfferBase
    */
   public function setParam($name, $value, $unit = NULL) {
-    $this->param[] = ['name' => $name, 'value' => $value, 'unit' => $unit];
+    $param = \Drupal::service('yandex_yml.param')
+      ->setName($name)
+      ->setValue($value);
+
+    if ($unit) {
+      $param->setUnit($unit);
+    }
+    $this->param[] = $param;
     return $this;
   }
 
@@ -969,14 +967,14 @@ abstract class YandexYmlOfferBase {
   }
 
   /**
-   * Set id's of recommended products separated by comma.
+   * Set id's of recommended products.
    *
-   * @param string $rec
+   * @param array $rec
    *
    * @return YandexYmlOfferBase
    */
-  public function setRec($rec) {
-    $this->rec = $rec;
+  public function setRec(array $rec) {
+    $this->rec = implode(',', $rec);
     return $this;
   }
 
@@ -984,7 +982,7 @@ abstract class YandexYmlOfferBase {
    * @return array
    */
   public function getRec() {
-    return $this->rec;
+    return explode(',', $this->rec);
   }
 
 }
