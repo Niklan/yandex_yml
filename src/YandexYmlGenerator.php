@@ -157,7 +157,6 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     if (!empty($this->offers)) {
       $this->writer->startElement('offers');
       foreach ($this->offers as $offer) {
-        ksm($offer->toArray());
         $this->writeElementFromArray($offer->toArray());
       }
       $this->writer->endElement();

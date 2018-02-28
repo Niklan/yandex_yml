@@ -5,6 +5,7 @@ namespace Drupal\yandex_yml\YandexYml\Offer;
 use Drupal\Component\Utility\Unicode;
 use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
+use Drupal\yandex_yml\Annotation\YandexYmlElementWrapperAttribute;
 use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 
 /**
@@ -66,11 +67,9 @@ abstract class YandexYmlOfferBase {
   protected $price;
 
   /**
-   * @TODO
-   * YandexYml(
-   *   elementName = "price",
-   *   type = "property",
-   *   propertyName = "from"
+   * @YandexYmlElementWrapperAttribute(
+   *   name = "from",
+   *   targetElement = "price"
    * )
    *
    * @var bool
@@ -122,11 +121,8 @@ abstract class YandexYmlOfferBase {
   protected $delivery;
 
   /**
-   * @TODO
-   * YandexYml(
-   *   elementName = "delivery-options",
-   *   type = "children",
-   *   parentElement = "offer"
+   * @YandexYmlElementWrapper(
+   *   name = "delivery-options"
    * )
    *
    * @var array of \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery
