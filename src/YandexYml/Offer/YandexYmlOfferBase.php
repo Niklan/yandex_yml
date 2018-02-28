@@ -234,37 +234,53 @@ abstract class YandexYmlOfferBase {
   protected $param;
 
   /**
+   * @YandexYmlElementWrapper()
+   *
    * @var string
    */
   protected $expire;
 
   /**
+   * @YandexYmlElementWrapper()
+   *
    * @var float
    */
   protected $weight;
 
   /**
+   * @YandexYmlElementWrapper()
+   *
    * @var string
    */
   protected $dimensions;
 
   /**
+   * @YandexYmlElementWrapper()
+   *
    * @var bool
    */
   protected $downloadable;
 
   /**
+   * @YandexYmlElementWrapper()
+   *
    * @var array
    */
   protected $age;
 
   /**
+   * @YandexYmlElementWrapper(
+   *   name = "group-id"
+   * )
+   *
    * @var int
    */
   protected $groupId;
 
   /**
-   * @var array
+   * @YandexYmlElementWrapper()
+   *
+   * @var string
    */
   protected $rec;
 
@@ -953,13 +969,13 @@ abstract class YandexYmlOfferBase {
   }
 
   /**
-   * Set id's of recommended products.
+   * Set id's of recommended products separated by comma.
    *
-   * @param array $rec
+   * @param string $rec
    *
    * @return YandexYmlOfferBase
    */
-  public function setRec(array $rec) {
+  public function setRec($rec) {
     $this->rec = $rec;
     return $this;
   }
