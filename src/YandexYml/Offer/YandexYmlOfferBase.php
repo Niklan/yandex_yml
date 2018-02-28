@@ -147,6 +147,8 @@ abstract class YandexYmlOfferBase {
   /**
    * @YandexYmlElementWrapper()
    *
+   * @todo add supprot for CData
+   *
    * @var string
    */
   protected $description;
