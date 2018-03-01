@@ -143,7 +143,6 @@ trait YandexYmlToArrayTrait {
       $property_annotation = $this->reader->getPropertyAnnotation($reflection, 'Drupal\yandex_yml\Annotation\YandexYmlElement');
       if ($property_annotation) {
         if (is_array($value)) {
-          ksm($value);
           foreach ($value as $value_element) {
             $elements = array_merge($elements, $value_element->toArray());
           }
