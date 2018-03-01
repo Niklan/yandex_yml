@@ -87,7 +87,6 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writeDeliveryOptions();
     $this->writeOffers();
     $this->writeFooter();
-    $this->writer->endDocument();
     file_unmanaged_copy($this->tempFilePath, 'public://test-yandex-yml.xml', FILE_EXISTS_REPLACE);
   }
 
@@ -171,6 +170,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writer->fullEndElement();
     // yml_catalog
     $this->writer->fullEndElement();
+    $this->writer->endDocument();
   }
 
   /**

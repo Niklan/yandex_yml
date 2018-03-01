@@ -9,7 +9,7 @@ Add services for:
 - [x] Delivery
 - [x] ShopInfo
 - [ ] Offers
-    - [ ] Simple
+    - [x] Simple
     - [ ] Custom
     - [ ] Medicine
     - [ ] Book
