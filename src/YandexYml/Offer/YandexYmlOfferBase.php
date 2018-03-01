@@ -19,6 +19,13 @@ abstract class YandexYmlOfferBase {
   use YandexYmlToArrayTrait;
 
   /**
+   * @YandexYmlElementWrapper()
+   *
+   * @var string
+   */
+  protected $name;
+
+  /**
    * @YandexYmlAttribute()
    *
    * @var string
@@ -276,6 +283,20 @@ abstract class YandexYmlOfferBase {
    * @var string
    */
   protected $rec;
+
+  /**
+   * @YandexYmlElementWrapper()
+   *
+   * @var string
+   */
+  protected $vendor;
+
+  /**
+   * @YandexYmlElementWrapper()
+   *
+   * @var string
+   */
+  protected $vendorCode;
 
   /**
    * Set offer id.
@@ -985,6 +1006,57 @@ abstract class YandexYmlOfferBase {
    */
   public function getRec() {
     return explode(',', $this->rec);
+  }
+
+  /**
+   * @param string $name
+   *
+   * @return YandexYmlOfferBase
+   */
+  public function setName($name) {
+    $this->name = $name;
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getName() {
+    return $this->name;
+  }
+
+  /**
+   * @param string $vendor
+   *
+   * @return YandexYmlOfferBase
+   */
+  public function setVendor($vendor) {
+    $this->vendor = $vendor;
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getVendor() {
+    return $this->vendor;
+  }
+
+  /**
+   * @param string $vendorCode
+   *
+   * @return YandexYmlOfferBase
+   */
+  public function setVendorCode($vendorCode) {
+    $this->vendorCode = $vendorCode;
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getVendorCode() {
+    return $this->vendorCode;
   }
 
 }

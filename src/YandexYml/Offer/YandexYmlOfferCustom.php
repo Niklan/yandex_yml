@@ -35,20 +35,6 @@ class YandexYmlOfferCustom extends YandexYmlOfferBase {
    *
    * @var string
    */
-  protected $vendor;
-
-  /**
-   * @YandexYmlElementWrapper()
-   *
-   * @var string
-   */
-  protected $vendorCode;
-
-  /**
-   * @YandexYmlElementWrapper()
-   *
-   * @var string
-   */
   protected $typePrefix;
 
   /**
@@ -83,40 +69,6 @@ class YandexYmlOfferCustom extends YandexYmlOfferBase {
    */
   public function getModel() {
     return $this->model;
-  }
-
-  /**
-   * @param string $vendor
-   *
-   * @return YandexYmlOfferCustom
-   */
-  public function setVendor($vendor) {
-    $this->vendor = $vendor;
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getVendor() {
-    return $this->vendor;
-  }
-
-  /**
-   * @param string $vendorCode
-   *
-   * @return YandexYmlOfferCustom
-   */
-  public function setVendorCode($vendorCode) {
-    $this->vendorCode = $vendorCode;
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getVendorCode() {
-    return $this->vendorCode;
   }
 
   /**

@@ -153,6 +153,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    * Write offers.
    */
   protected function writeOffers() {
+    ksm($this->offers);
     if (!empty($this->offers)) {
       $this->writer->startElement('offers');
       foreach ($this->offers as $offer) {

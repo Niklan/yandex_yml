@@ -10,8 +10,8 @@ Add services for:
 - [x] ShopInfo
 - [ ] Offers
     - [x] Simple
-    - [ ] Custom
-    - [ ] Medicine
+    - [x] Custom
+    - [x] Medicine
     - [ ] Book
     - [ ] Audiobook
     - [ ] MusicVideo

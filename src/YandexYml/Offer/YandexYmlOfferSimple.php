@@ -2,7 +2,6 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
-use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
 
@@ -15,15 +14,6 @@ use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
  *
  */
 class YandexYmlOfferSimple extends YandexYmlOfferBase {
-
-  use YandexYmlToArrayTrait;
-
-  /**
-   * @YandexYmlElementWrapper()
-   *
-   * @var string
-   */
-  protected $name;
 
   /**
    * @YandexYmlElementWrapper()
@@ -45,23 +35,6 @@ class YandexYmlOfferSimple extends YandexYmlOfferBase {
    * @var string
    */
   protected $vendorCode;
-
-  /**
-   * @param string $name
-   *
-   * @return YandexYmlOfferSimple
-   */
-  public function setName($name) {
-    $this->name = $name;
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getName() {
-    return $this->name;
-  }
 
   /**
    * @param string $model
