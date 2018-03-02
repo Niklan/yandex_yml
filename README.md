@@ -12,7 +12,7 @@ Add services for:
     - [x] Simple
     - [x] Custom
     - [x] Medicine
-    - [ ] Book
+    - [x] Book
     - [ ] Audiobook
     - [ ] MusicVideo
     - [ ] EventTicket

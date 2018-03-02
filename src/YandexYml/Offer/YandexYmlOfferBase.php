@@ -264,6 +264,8 @@ abstract class YandexYmlOfferBase {
   /**
    * @YandexYmlElementWrapper()
    *
+   * @todo raplace by object as param.
+   *
    * @var array
    */
   protected $age;
