@@ -8,7 +8,7 @@ Add services for:
 - [x] Category
 - [x] Delivery
 - [x] ShopInfo
-- [ ] Offers
+- [x] Offers
     - [x] Simple
     - [x] Custom
     - [x] Medicine
@@ -16,7 +16,7 @@ Add services for:
     - [x] Audiobook
     - [x] MusicVideo
     - [x] EventTicket
-    - [ ] Tour
+    - [x] Tour
 - [x] Array trait to convert objects to array.
 
 - [ ] Add service to generate categories from taxonomy helper.
