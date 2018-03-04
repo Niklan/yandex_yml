@@ -15,7 +15,7 @@ Add services for:
     - [x] Book
     - [x] Audiobook
     - [x] MusicVideo
-    - [ ] EventTicket
+    - [x] EventTicket
     - [ ] Tour
 - [x] Array trait to convert objects to array.
 

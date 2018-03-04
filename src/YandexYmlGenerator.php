@@ -179,9 +179,9 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   protected function writeElementFromArray(array $values) {
     foreach ($values as $value) {
       $element_name = $value['name'];
-      $element_value = !empty($value['value']) ? $value['value'] : NULL;
-      $element_attributes = !empty($value['attributes']) ? $value['attributes'] : NULL;
-      $element_child = !empty($value['child']) ? $value['child'] : NULL;
+      $element_value = isset($value['value']) ? $value['value'] : NULL;
+      $element_attributes = isset($value['attributes']) ? $value['attributes'] : NULL;
+      $element_child = isset($value['child']) ? $value['child'] : NULL;
       $this->writer->startElement($element_name);
       if ($element_attributes) {
         foreach ($element_attributes as $element_attribute) {
