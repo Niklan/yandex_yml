@@ -30,7 +30,7 @@ class YandexYmlOfferMedicine extends YandexYmlOfferBase {
     // Required values for all medicine offers.
     $this->setType('medicine');
     $this->setPickup(TRUE);
-    // todo print as 0.
+    // todo print as 'false'.
     $this->setDelivery(FALSE);
   }
 

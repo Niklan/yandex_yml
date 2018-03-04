@@ -154,8 +154,6 @@ abstract class YandexYmlOfferBase {
   /**
    * @YandexYmlElementWrapper()
    *
-   * @todo add supprot for CData
-   *
    * @var string
    */
   protected $description;
@@ -262,9 +260,7 @@ abstract class YandexYmlOfferBase {
   protected $downloadable;
 
   /**
-   * @YandexYmlElementWrapper()
-   *
-   * @todo raplace by object as param.
+   * @YandexYmlElement()
    *
    * @var array
    */
@@ -961,7 +957,13 @@ abstract class YandexYmlOfferBase {
    * @return YandexYmlOfferBase
    */
   public function setAge($age, $unit = 'year') {
-    $this->age = ['age' => $age, 'unit' => $unit];
+    /** @var \Drupal\yandex_yml\YandexYml\Param\YandexYmlAge $param_age */
+    $param_age = \Drupal::service('yandex_yml.param.age');
+    $param_age->setValue($age);
+    if (!empty($unit)) {
+      $param_age->setUnit($unit);
+    }
+    $this->age[] = $param_age;
     return $this;
   }
 

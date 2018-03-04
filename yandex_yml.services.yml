@@ -58,3 +58,7 @@ services:
     class: Drupal\yandex_yml\YandexYml\Param\YandexYmlParam
     arguments: []
     shared: false
+  yandex_yml.param.age:
+    class: Drupal\yandex_yml\YandexYml\Param\YandexYmlAge
+    arguments: []
+    shared: false
