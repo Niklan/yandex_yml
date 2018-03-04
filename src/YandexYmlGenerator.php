@@ -191,7 +191,12 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
       }
       if ($element_value) {
         $this->preprocessValue($element_value);
-        $this->writer->text($element_value);
+        if ($element_value != strip_tags($element_value)) {
+          $this->writer->writeCData($element_value);
+        }
+        else {
+          $this->writer->text($element_value);
+        }
       }
       if ($element_child) {
         $this->writeElementFromArray($element_child);
