@@ -12,6 +12,7 @@ use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
  *   name = "offer"
  * )
  *
+ * @see https://yandex.ru/support/partnermarket/offers.html *
  */
 class YandexYmlOfferSimple extends YandexYmlOfferBase {
 

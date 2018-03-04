@@ -13,7 +13,7 @@ use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
  *   name = "currency"
  * )
  *
- * @see https://yandex.ru/support/webmaster/goods-prices/technical-requirements.html#concept3__currencies
+ * @see https://yandex.ru/support/partnermarket/currencies.html
  */
 class YandexYmlCurrency {
 

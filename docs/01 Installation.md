@@ -9,3 +9,5 @@ If your project is maintained with composer, install via it:
 ```bash
 composer require drupal/yandex_yml
 ```
+
+**Attention!** Before module will be stable, better to lock module version for safety. If some methods will change, your code will not be destroyed. Better update it manually and read changelog.

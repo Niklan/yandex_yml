@@ -14,7 +14,7 @@ use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
  *   name = "category"
  * )
  *
- * @see https://yandex.ru/support/webmaster/goods-prices/technical-requirements.html#concept3__categories
+ * @see https://yandex.ru/support/partnermarket/categories.html
  */
 class YandexYmlCategory {
 
