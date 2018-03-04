@@ -189,7 +189,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
           $this->writer->writeAttribute($element_attribute['name'], $element_attribute['value']);
         }
       }
-      if ($element_value) {
+      if (isset($element_value)) {
         $this->preprocessValue($element_value);
         if ($element_value != strip_tags($element_value)) {
           $this->writer->writeCData($element_value);
