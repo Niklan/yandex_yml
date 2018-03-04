@@ -62,3 +62,7 @@ services:
     class: Drupal\yandex_yml\YandexYml\Param\YandexYmlAge
     arguments: []
     shared: false
+  yandex_yml.param.data_tour:
+    class: Drupal\yandex_yml\YandexYml\Param\YandexYmlDataTour
+    arguments: []
+    shared: false

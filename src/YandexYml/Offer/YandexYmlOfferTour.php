@@ -56,8 +56,6 @@ class YandexYmlOfferTour extends YandexYmlOfferBase {
   /**
    * @YandexYmlElement()
    *
-   * @todo add object for this.
-   *
    * @var array
    */
   protected $dataTour = [];
@@ -218,12 +216,15 @@ class YandexYmlOfferTour extends YandexYmlOfferBase {
   }
 
   /**
-   * @param array $dataTour
+   * @param string $dataTour
    *
    * @return YandexYmlOfferTour
    */
   public function addDataTour($dataTour) {
-    $this->dataTour[] = $dataTour;
+    /** @var \Drupal\yandex_yml\YandexYml\Param\YandexYmlDataTour $data_tour */
+    $data_tour = \Drupal::service('yandex_yml.param.data_tour');
+    $data_tour->setValue($dataTour);
+    $this->dataTour[] = $data_tour;
     return $this;
   }
 
