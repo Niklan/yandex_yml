@@ -13,7 +13,7 @@ Add services for:
     - [x] Custom
     - [x] Medicine
     - [x] Book
-    - [ ] Audiobook
+    - [x] Audiobook
     - [ ] MusicVideo
     - [ ] EventTicket
     - [ ] Tour
