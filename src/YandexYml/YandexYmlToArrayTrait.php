@@ -211,21 +211,4 @@ trait YandexYmlToArrayTrait {
     return $attributes;
   }
 
-  /**
-   * Build tree for result.
-   */
-  private function buildTree(array $elements, $parent = NULL) {
-    $tree = [];
-    foreach ($elements as $element) {
-      if ($element['parentElement'] == $parent) {
-        $children = $this->buildTree($elements, $element['element']);
-        if ($children) {
-          $element['child'] = $children;
-        }
-        $tree[] = $element;
-      }
-    }
-    return $tree;
-  }
-
 }
