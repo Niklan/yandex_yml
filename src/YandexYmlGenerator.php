@@ -87,6 +87,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writeDeliveryOptions();
     $this->writeOffers();
     $this->writeFooter();
+    // @todo add it to arguments.
     file_unmanaged_copy($this->tempFilePath, 'public://test-yandex-yml.xml', FILE_EXISTS_REPLACE);
   }
 
