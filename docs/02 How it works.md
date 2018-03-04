@@ -18,3 +18,20 @@ All object and their properties is mapped using this annotations. When file need
 
 This array is pass through `YandexYmlGenerator::writeElementFromArray()` and according to array structure it will write it to XML.
 
+### Categories explanation
+
+A simple way to understand how it works is look at categories generation. When you add category to generator using `addCategory(YandexYmlCategory $category)` it will store this objects in own property. If you look at it, you will see all of them.
+
+![categories in generator](https://i.imgur.com/EcurQa9.png)
+
+When you call `generateFile()` the generator will cycle over each this object and call `::toArray()` method. This method will parse annotations and convert it to array.
+
+![to array result](https://i.imgur.com/6QJ6kFX.png)
+
+As you can see, properties of `YandexYmlCategory` is goes to their places according to property annotations.
+
+After it, it just write it to XML, and you will get result.
+
+![result in xml](https://i.imgur.com/IIhv3C3.png)
+
+![Explanation on image](https://i.imgur.com/MGTe2V8.png)

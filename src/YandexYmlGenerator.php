@@ -131,6 +131,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     if (!empty($this->categories)) {
       $this->writer->startElement('categories');
       foreach ($this->categories as $category) {
+        ksm($category->toArray());
         $this->writeElementFromArray($category->toArray());
       }
       $this->writer->endElement();

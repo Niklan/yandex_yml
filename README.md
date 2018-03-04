@@ -1,6 +1,6 @@
 # Yandex YML
 
-**Documentation**: [online](http://yandex-yml.readthedocs.io/en/8.x-1.x/), [local](/docs).
+**Documentation**: [online](http://yandex-yml.readthedocs.io/en/8.x-1.x/) ![readthedocstatus](https://readthedocs.org/projects/yandex-yml/badge/?version=8.x-1.x), [local](/docs).
 
 YML (Yandex Market Language) — is XML file with products for Yandex.Market. Not to be confused with YAML files, which also have **.yml** extension.
 
