@@ -67,8 +67,8 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->dateTime = $date_time;
     $this->dateFormatter = $date_formatter;
     // Prepare temporary file.
-    $this->tempFilePath = @\Drupal::service('file_system')
-      ->tempnam('yandex_yml', 'yml_');
+    $this->tempFilePath = \Drupal::service('file_system')
+      ->tempnam('temporary://yandex_yml', 'yml_');
     // Initialization of file.
     $this->writer = new \XMLWriter();
     $this->writer->openURI($this->tempFilePath);
@@ -79,7 +79,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   /**
    * Generate file on all provided data.
    */
-  public function generateFile() {
+  public function generateFile($filename = 'products.yml', $destination_path = 'public://') {
     $this->writeHeader();
     $this->writeShopInfo();
     $this->writeCurrencies();
@@ -87,8 +87,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writeDeliveryOptions();
     $this->writeOffers();
     $this->writeFooter();
-    // @todo add it to arguments.
-    file_unmanaged_copy($this->tempFilePath, 'public://test-yandex-yml.xml', FILE_EXISTS_REPLACE);
+    file_unmanaged_copy($this->tempFilePath, $destination_path . $filename, FILE_EXISTS_REPLACE);
   }
 
   /**
@@ -131,7 +130,6 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     if (!empty($this->categories)) {
       $this->writer->startElement('categories');
       foreach ($this->categories as $category) {
-        ksm($category->toArray());
         $this->writeElementFromArray($category->toArray());
       }
       $this->writer->endElement();
