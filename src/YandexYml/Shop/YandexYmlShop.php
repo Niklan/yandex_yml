@@ -15,9 +15,7 @@ class YandexYmlShop {
   use YandexYmlToArrayTrait;
 
   /**
-   * @YandexYmlElement(
-   *   name = "name"
-   * )
+   * @YandexYmlElement()
    *
    * @var string
    */
@@ -33,54 +31,42 @@ class YandexYmlShop {
   private $company;
 
   /**
-   * @YandexYmlElement(
-   *   name = "url"
-   * )
+   * @YandexYmlElement()
    *
    * @var string
    */
   private $url;
 
   /**
-   * @YandexYmlElement(
-   *   name = "url"
-   * )
+   * @YandexYmlElement()
    *
    * @var string
    */
   private $platform;
 
   /**
-   * @YandexYmlElement(
-   *   name = "version"
-   * )
+   * @YandexYmlElement()
    *
    * @var string
    */
   private $version;
 
   /**
-   * @YandexYmlElement(
-   *   name = "agency"
-   * )
+   * @YandexYmlElement()
    *
    * @var string
    */
   private $agency;
 
   /**
-   * @YandexYmlElement(
-   *   name = "email"
-   * )
+   * @YandexYmlElement()
    *
    * @var string
    */
   private $email;
 
   /**
-   * @YandexYmlElement(
-   *   name = "cpa"
-   * )
+   * @YandexYmlElement()
    *
    * @var int
    */

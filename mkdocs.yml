@@ -4,3 +4,4 @@ pages:
   - 'Installation': installation.md
   - 'How it works': how-it-works.md
   - 'Generate YML': generate-yml.md
+  - 'Real world examples': real-examples.md
