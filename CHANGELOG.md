@@ -2,6 +2,8 @@
 
 ## Current dev changes
 
+## 8.x-1.0-alpha3
+
 - **Breaking change.** Default filename was changed from products.yml to products.xml, because it's allowed by Yandex, and this is better for XML file.
 
 ## 8.x-1.0-alpha2
