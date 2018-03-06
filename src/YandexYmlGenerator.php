@@ -79,7 +79,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   /**
    * Generate file on all provided data.
    */
-  public function generateFile($filename = 'products.yml', $destination_path = 'public://') {
+  public function generateFile($filename = 'products.xml', $destination_path = 'public://') {
     $this->writeHeader();
     $this->writeShopInfo();
     $this->writeCurrencies();
