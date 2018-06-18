@@ -81,13 +81,29 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    */
   public function generateFile($filename = 'products.xml', $destination_path = 'public://') {
     $this->writeHeader();
+    $this->buildData();
+    file_unmanaged_copy($this->tempFilePath, $destination_path . $filename, FILE_EXISTS_REPLACE);
+  }
+
+  /**
+   * Write elements to writer object
+   */
+  protected function buildData(){
     $this->writeShopInfo();
     $this->writeCurrencies();
     $this->writeCategories();
     $this->writeDeliveryOptions();
     $this->writeOffers();
     $this->writeFooter();
-    file_unmanaged_copy($this->tempFilePath, $destination_path . $filename, FILE_EXISTS_REPLACE);
+  }
+
+  /**
+   * Return xml data from memory
+   */
+  public function getResponceData(){
+    $this->writer->openMemory();
+    $this->buildData();
+    return $this->writer->outputMemory();
   }
 
   /**
