@@ -102,6 +102,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    */
   public function getResponceData(){
     $this->writer->openMemory();
+    $this->writeHeader();
     $this->buildData();
     return $this->writer->outputMemory();
   }
