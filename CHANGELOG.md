@@ -2,6 +2,11 @@
 
 ## Current dev changes
 
+## 8.x-1.0-alpha4
+
+- By [Batkor](https://github.com/Niklan/yandex_yml/issues/1). Added method to return generated XML as string using meory. So you can now create custom controllers and other suff.
+- Updated documentation.
+
 ## 8.x-1.0-alpha3
 
 - **Breaking change.** Default filename was changed from products.yml to products.xml, because it's allowed by Yandex, and this is better for XML file.

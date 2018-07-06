@@ -86,25 +86,25 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   }
 
   /**
-   * Write elements to writer object
+   * Generate XML in memory and returns result markup.
    */
-  protected function buildData(){
+  public function generateMarkup() {
+    $this->writer->openMemory();
+    $this->writeHeader();
+    $this->buildData();
+    return $this->writer->outputMemory();
+  }
+
+  /**
+   * Write elements to writer object.
+   */
+  protected function buildData() {
     $this->writeShopInfo();
     $this->writeCurrencies();
     $this->writeCategories();
     $this->writeDeliveryOptions();
     $this->writeOffers();
     $this->writeFooter();
-  }
-
-  /**
-   * Return xml data from memory
-   */
-  public function getResponceData(){
-    $this->writer->openMemory();
-    $this->writeHeader();
-    $this->buildData();
-    return $this->writer->outputMemory();
   }
 
   /**

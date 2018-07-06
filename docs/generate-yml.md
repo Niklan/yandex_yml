@@ -21,6 +21,7 @@ $generator = \Drupal::service('yandex_yml.generator');
 - `addDeliveryOption(YandexYmlDelivery $delivery_option)`: Add delivery option. Each delivery option added separately and every delivery option is instance of `yandex_yml.delivery` service.
 - `addOffer(YandexYmlOfferBase $offer)`: Add offer information. Each offer added separately and every offer is instance one of it service `yandex_yml.offer.{TYPE}`.
 - `generateFile($filename = 'products.yml', $destination_path = 'public://')`: Generate result file according to all provided data.
+- `generateMarkup()`: Generate result in meory and returns string with valid XML markup. Use it as you wish, e.g. inside custom controller as response.
 
 ### Example
 
