@@ -14,7 +14,7 @@ use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
  *
  * @see https://yandex.ru/support/partnermarket/offers.html
  */
-abstract class YandexYmlOfferBase {
+abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
 
   use YandexYmlToArrayTrait;
 

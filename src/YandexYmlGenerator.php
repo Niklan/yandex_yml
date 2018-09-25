@@ -16,52 +16,75 @@ use Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop;
 class YandexYmlGenerator implements YandexYmlGeneratorInterface {
 
   /**
+   * The XML writer.
+   *
    * @var \XMLWriter
    */
   private $writer;
 
   /**
+   * The path to temp file.
+   *
    * @var string
    */
   private $tempFilePath;
 
   /**
+   * The shop info.
+   *
    * @var \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
    */
   private $shopInfo;
 
   /**
+   * The datetime.
+   *
    * @var \Drupal\Component\Datetime\Time
    */
   private $dateTime;
 
   /**
+   * The date formatter.
+   *
    * @var \Drupal\Core\Datetime\DateFormatter
    */
   private $dateFormatter;
 
   /**
-   * @var array
+   * The currencies.
+   *
+   * @var \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency[]
    */
   private $currencies = [];
 
   /**
-   * @var array
+   * The categories.
+   *
+   * @var \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory[]
    */
   private $categories = [];
 
   /**
-   * @var array
+   * The delivery options.
+   *
+   * @var \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery[]
    */
   private $deliveryOptions = [];
 
   /**
-   * @var array
+   * The offers.
+   *
+   * @var \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface[]
    */
   private $offers = [];
 
   /**
    * Constructs a new YandexYmlGenerator object.
+   *
+   * @param \Drupal\Component\Datetime\Time $date_time
+   *   The datetime.
+   * @param \Drupal\Core\Datetime\DateFormatter $date_formatter
+   *   The date formatter.
    */
   public function __construct(Time $date_time, DateFormatter $date_formatter) {
     $this->dateTime = $date_time;
@@ -77,7 +100,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   }
 
   /**
-   * Generate file on all provided data.
+   * {@inheritdoc}
    */
   public function generateFile($filename = 'products.xml', $destination_path = 'public://') {
     $this->writeHeader();
@@ -86,7 +109,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   }
 
   /**
-   * Generate XML in memory and returns result markup.
+   * {@inheritdoc}
    */
   public function generateMarkup() {
     $this->writer->openMemory();
@@ -183,15 +206,18 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    * Write document footer.
    */
   protected function writeFooter() {
-    // shop
+    // Close "shop".
     $this->writer->fullEndElement();
-    // yml_catalog
+    // Close "yml_catalog".
     $this->writer->fullEndElement();
     $this->writer->endDocument();
   }
 
   /**
    * Write element according to YandexYml annotation.
+   *
+   * @param array $values
+   *   The values to write from object.
    */
   protected function writeElementFromArray(array $values) {
     foreach ($values as $value) {
@@ -224,6 +250,9 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
 
   /**
    * Several additional processes for values.
+   *
+   * @param mixed $value
+   *   The value to process of.
    */
   protected function preprocessValue(&$value) {
     if (is_bool($value)) {
@@ -237,9 +266,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   }
 
   /**
-   * Set shop info.
-   *
-   * @param \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop $shop_info
+   * {@inheritdoc}
    */
   public function setShopInfo(YandexYmlShop $shop_info) {
     $this->shopInfo = $shop_info;
@@ -247,16 +274,14 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   }
 
   /**
-   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   * {@inheritdoc}
    */
   public function getShopInfo() {
     return $this->shopInfo;
   }
 
   /**
-   * @param \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency $currency
-   *
-   * @return YandexYmlGenerator
+   * {@inheritdoc}
    */
   public function addCurrency(YandexYmlCurrency $currency) {
     $this->currencies[$currency->getId()] = $currency;
@@ -264,14 +289,14 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   }
 
   /**
-   * @return array
+   * {@inheritdoc}
    */
   public function getCurrencies() {
     return $this->currencies;
   }
 
   /**
-   * @param array $categories
+   * {@inheritdoc}
    */
   public function addCategory(YandexYmlCategory $category) {
     $this->categories[$category->getId()] = $category;
@@ -279,35 +304,35 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   }
 
   /**
-   * @return array
+   * {@inheritdoc}
    */
   public function getCategories() {
     return $this->categories;
   }
 
   /**
-   * @param array $deliveryOptions
+   * {@inheritdoc}
    */
   public function addDeliveryOption(YandexYmlDelivery $delivery_option) {
     $this->deliveryOptions[] = $delivery_option;
   }
 
   /**
-   * @return array
+   * {@inheritdoc}
    */
   public function getDeliveryOptions() {
     return $this->deliveryOptions;
   }
 
   /**
-   * @param \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBase $offer
+   * {@inheritdoc}
    */
   public function addOffer(YandexYmlOfferBase $offer) {
     $this->offers[] = $offer;
   }
 
   /**
-   * @return array
+   * {@inheritdoc}
    */
   public function getOffers() {
     return $this->offers;
