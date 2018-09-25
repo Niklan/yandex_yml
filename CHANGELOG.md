@@ -2,6 +2,8 @@
 
 ## Current dev changes
 
+- Improved performance ~ x3 times.
+
 ## 8.x-1.0-alpha4
 
 - By [Batkor](https://github.com/Niklan/yandex_yml/issues/1). Added method to return generated XML as string using meory. So you can now create custom controllers and other suff.

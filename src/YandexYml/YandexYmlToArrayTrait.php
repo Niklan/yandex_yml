@@ -4,6 +4,11 @@ namespace Drupal\yandex_yml\YandexYml;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
+use Drupal\yandex_yml\Annotation\YandexYmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
+use Drupal\yandex_yml\Annotation\YandexYmlElementWrapperAttribute;
+use Drupal\yandex_yml\Annotation\YandexYmlValue;
 
 /**
  * Trait YandexYmlToArrayTrait.
@@ -35,7 +40,6 @@ trait YandexYmlToArrayTrait {
    */
   public function toArray() {
     $result = $this->parseAnnotations();
-    //$result = $this->buildTree($result);
     return $result;
   }
 
@@ -51,11 +55,13 @@ trait YandexYmlToArrayTrait {
       return $value !== NULL;
     });
 
-    $this->reader = new AnnotationReader();
-    // Clear the annotation loaders of any previous annotation classes.
-    AnnotationRegistry::reset();
-    // Register the namespaces of classes that can be used for annotations.
-    AnnotationRegistry::registerLoader('class_exists');
+    if (!isset($this->reader)) {
+      $this->reader = new AnnotationReader();
+      // Clear the annotation loaders of any previous annotation classes.
+      AnnotationRegistry::reset();
+      // Register the namespaces of classes that can be used for annotations.
+      AnnotationRegistry::registerLoader('class_exists');
+    }
 
     $element = $this->getElementFromObject();
     // If found element than object is an element.
@@ -93,12 +99,18 @@ trait YandexYmlToArrayTrait {
    * Trying to find element definition in object annotation.
    */
   private function getElementFromObject() {
-    $reflection = new \ReflectionObject($this);
-    $object_annotation = $this->reader->getClassAnnotation($reflection, 'Drupal\yandex_yml\Annotation\YandexYmlElement');
-    if ($object_annotation) {
-      return $object_annotation->get();
+    $result = &drupal_static(__CLASS__);
+    if (!isset($result)) {
+      $reflection = new \ReflectionObject($this);
+      $object_annotation = $this->reader->getClassAnnotation(
+        $reflection,
+        'Drupal\yandex_yml\Annotation\YandexYmlElement'
+      );
+      if ($object_annotation instanceof YandexYmlElement) {
+        $result = $object_annotation->get();
+      }
     }
-    return;
+    return $result;
   }
 
   /**
@@ -106,9 +118,10 @@ trait YandexYmlToArrayTrait {
    */
   private function getElementValue() {
     foreach ($this->properties as $name => $value) {
-      $reflection = new \ReflectionProperty($this, $name);
-      $property_annotation = $this->reader->getPropertyAnnotation($reflection, 'Drupal\yandex_yml\Annotation\YandexYmlValue');
-      if ($property_annotation) {
+      $annotation_name = 'Drupal\yandex_yml\Annotation\YandexYmlValue';
+      $property_annotation = $this->getPropertyAnnotation($name, $annotation_name);
+
+      if ($property_annotation instanceof YandexYmlValue) {
         return $value;
       }
     }
@@ -120,9 +133,10 @@ trait YandexYmlToArrayTrait {
   private function getElementAttributes() {
     $attributes = [];
     foreach ($this->properties as $name => $value) {
-      $reflection = new \ReflectionProperty($this, $name);
-      $property_annotation = $this->reader->getPropertyAnnotation($reflection, 'Drupal\yandex_yml\Annotation\YandexYmlAttribute');
-      if ($property_annotation) {
+      $annotation_name = 'Drupal\yandex_yml\Annotation\YandexYmlAttribute';
+      $property_annotation = $this->getPropertyAnnotation($name, $annotation_name);
+
+      if ($property_annotation instanceof YandexYmlAttribute) {
         $attribute_name = !empty($property_annotation->get()['name']) ? $property_annotation->get()['name'] : $name;
         $attributes[] = [
           'name' => $attribute_name,
@@ -139,9 +153,10 @@ trait YandexYmlToArrayTrait {
   private function getElementsFromProperties() {
     $elements = [];
     foreach ($this->properties as $name => $value) {
-      $reflection = new \ReflectionProperty($this, $name);
-      $property_annotation = $this->reader->getPropertyAnnotation($reflection, 'Drupal\yandex_yml\Annotation\YandexYmlElement');
-      if ($property_annotation) {
+      $annotation_name = 'Drupal\yandex_yml\Annotation\YandexYmlElement';
+      $property_annotation = $this->getPropertyAnnotation($name, $annotation_name);
+
+      if ($property_annotation instanceof YandexYmlElement) {
         if (is_array($value)) {
           foreach ($value as $value_element) {
             $elements = array_merge($elements, $value_element->toArray());
@@ -165,9 +180,10 @@ trait YandexYmlToArrayTrait {
   private function getElementWrappers() {
     $elements = [];
     foreach ($this->properties as $name => $value) {
-      $reflection = new \ReflectionProperty($this, $name);
-      $property_annotation = $this->reader->getPropertyAnnotation($reflection, 'Drupal\yandex_yml\Annotation\YandexYmlElementWrapper');
-      if ($property_annotation) {
+      $annotation_name = 'Drupal\yandex_yml\Annotation\YandexYmlElementWrapper';
+      $property_annotation = $this->getPropertyAnnotation($name, $annotation_name);
+
+      if ($property_annotation instanceof YandexYmlElementWrapper) {
         $element_name = !empty($property_annotation->get()['name']) ? $property_annotation->get()['name'] : $name;
         if (is_array($value)) {
           $array_element = [
@@ -180,6 +196,7 @@ trait YandexYmlToArrayTrait {
           $elements[] = $array_element;
         }
         else {
+          // @todo improve performance.
           $attributes = $this->getElementWrapperAttributes($element_name);
           $elements[] = [
             'name' => $element_name,
@@ -193,22 +210,44 @@ trait YandexYmlToArrayTrait {
   }
 
   /**
-   * Looking for attributes for YandexYmlElementWrapper.
+   * Looking YandexYmlElementWrapperAttribute for YandexYmlElementWrapper.
+   *
+   * Note! This method is drastically reduced performance.
    */
   private function getElementWrapperAttributes($target_element) {
-    $attributes = [];
-    foreach ($this->properties as $name => $value) {
-      $reflection = new \ReflectionProperty($this, $name);
-      $property_annotation = $this->reader->getPropertyAnnotation($reflection, 'Drupal\yandex_yml\Annotation\YandexYmlElementWrapperAttribute');
-      if ($property_annotation && $property_annotation->get()['targetElement'] == $target_element) {
-        $attribute_name = !empty($property_annotation->get()['name']) ? $property_annotation->get()['name'] : $name;
-        $attributes[] = [
-          'name' => $attribute_name,
-          'value' => $value,
-        ];
+    $result = &drupal_static(__CLASS__ . $target_element);
+    if (!isset($result)) {
+      $attributes = [];
+      foreach ($this->properties as $name => $value) {
+        $annotation_name = 'Drupal\yandex_yml\Annotation\YandexYmlElementWrapperAttribute';
+        $property_annotation = $this->getPropertyAnnotation($name, $annotation_name);
+
+        if ($property_annotation instanceof YandexYmlElementWrapperAttribute && $property_annotation->get()['targetElement'] == $target_element) {
+          $attribute_name = !empty($property_annotation->get()['name']) ? $property_annotation->get()['name'] : $name;
+          $attributes[] = [
+            'name' => $attribute_name,
+            'value' => $value,
+          ];
+        }
       }
+      $result = $attributes;
     }
-    return $attributes;
+    return $result;
+  }
+
+  /**
+   * Gets property annotation.
+   */
+  private function getPropertyAnnotation($name, $annotation_name) {
+    $property_annotation = &drupal_static(__CLASS__ . $name . $annotation_name);
+    if (!isset($property_annotation)) {
+      $reflection = new \ReflectionProperty($this, $name);
+      $property_annotation = $this->reader->getPropertyAnnotation(
+        $reflection,
+        $annotation_name
+      );
+    }
+    return $property_annotation;
   }
 
 }
