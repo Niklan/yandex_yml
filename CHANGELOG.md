@@ -2,7 +2,7 @@
 
 ## Current dev changes
 
-- Improved performance ~ x3 times.
+- Improved performance x3 times.
 
 ## 8.x-1.0-alpha4
 

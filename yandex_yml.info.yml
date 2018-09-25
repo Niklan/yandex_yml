@@ -1,5 +1,4 @@
-name: 'Yandex YML'
+name: Yandex YML
 type: module
-description: 'Yandex YML (Yandex Market Language) generator.'
+description: Yandex YML (Yandex Market Language) generator.
 core: 8.x
-package: 'Custom'
