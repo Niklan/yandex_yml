@@ -19,291 +19,393 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   use YandexYmlToArrayTrait;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product name.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $name;
 
   /**
-   * @YandexYmlAttribute()
+   * The product id.
    *
-   * @var string
+   * @var int|string
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html
+   *
+   * @YandexYmlAttribute()
    */
   protected $id;
 
   /**
-   * @YandexYmlAttribute()
+   * The status of bidding for offer.
    *
    * @var int
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/bid-cbid.html
+   *
+   * @YandexYmlAttribute()
    */
   protected $cbid;
 
   /**
-   * @YandexYmlAttribute()
+   * The bid amount.
    *
-   * @var int
+   * @var int|float
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/bid-cbid.html
+   *
+   * @YandexYmlAttribute()
    */
   protected $bid;
 
   /**
-   * @YandexYmlAttribute()
+   * The fee for order.
    *
-   * @var int
+   * @var int|float
+   *
+   * @YandexYmlAttribute()
    */
   protected $fee;
 
   /**
-   * @YandexYmlAttribute()
+   * The product status.
    *
    * @var bool
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html
+   *
+   * @YandexYmlAttribute()
    */
   protected $available;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product url.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $url;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product price.
    *
-   * @var int
+   * @var int|float
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $price;
 
   /**
+   * The product price from.
+   *
+   * @var bool
+   *
    * @YandexYmlElementWrapperAttribute(
    *   name = "from",
    *   targetElement = "price"
    * )
-   *
-   * @var bool
    */
   protected $priceFrom;
 
   /**
+   * The product old price.
+   *
+   * @var int|float
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/oldprice.html
+   *
    * @YandexYmlElementWrapper(
    *   name = "oldprice"
    * )
-   *
-   * @var int
    */
   protected $oldPrice;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product vat.
    *
-   * @var string
+   * @var int|string
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/vat.html
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $vat;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product currency id.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $currencyId;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product category id.
    *
    * @var int
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $categoryId;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product picture.
    *
    * @var string
+   *
+   * @see https://yandex.ru/support/partnermarket/offers.html
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $picture;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product delivery.
    *
    * @var bool
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/delivery.html
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $delivery;
 
   /**
+   * The product delivery options.
+   *
+   * @var \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery[]
+   *
    * @YandexYmlElementWrapper(
    *   name = "delivery-options"
    * )
-   *
-   * @var array of \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery
    */
   protected $deliveryOptions;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product available for pickup.
    *
    * @var bool
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/delivery.html
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $pickup;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product in stock status.
    *
    * @var bool
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/delivery.html
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $store;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product description.
    *
    * @var string
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/description.html
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $description;
 
   /**
+   * The product sales notes.
+   *
+   * @var string
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/sales_notes.html
+   *
    * @YandexYmlElementWrapper(
    *   name = "sales_notes"
    * )
-   *
-   * @var string
    */
   protected $salesNotes;
 
   /**
+   * The product min quantity.
+   *
+   * @var int|float
+   *
    * @YandexYmlElementWrapper(
    *   name = "min-quantity"
    * )
-   *
-   * @var int
    */
   protected $minQuantity;
 
   /**
+   * The product quantity step.
+   *
+   * @var int|float
+   *
    * @YandexYmlElementWrapper(
    *   name = "step-quantity"
    * )
-   *
-   * @var int
    */
   protected $stepQuantity;
 
   /**
+   * The product has manufacturer warranty.
+   *
+   * @var bool
+   *
    * @YandexYmlElementWrapper(
    *   name = "manufacturer_warranty"
    * )
-   *
-   * @var bool
    */
   protected $manufacturerWarranty;
 
   /**
+   * The product country of origin.
+   *
+   * @var string
+   *
+   * @see http://partner.market.yandex.ru/pages/help/Countries.pdf
+   * available list of countries.
+   *
    * @YandexYmlElementWrapper(
    *   name = "country_of_origin"
    * )
-   *
-   * @var string
    */
   protected $countryOfOrigin;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product for adults.
    *
    * @var bool
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/adult.html
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $adult;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product barcode.
    *
    * @var string
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/barcode.html
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $barcode;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product cpa.
    *
    * @var int
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $cpa;
 
   /**
-   * @YandexYmlElement()
+   * The product params.
    *
-   * @var array
+   * @var \Drupal\yandex_yml\YandexYml\Param\YandexYmlParam[]
+   *
+   * @YandexYmlElement()
    */
   protected $param;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product expiration date.
    *
    * @var string
+   *   An expiration date in ISO8601 format.
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $expire;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product weight.
    *
-   * @var float
+   * @var int|float
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $weight;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product dimensions.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $dimensions;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product is downloadable.
    *
    * @var bool
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $downloadable;
 
   /**
-   * @YandexYmlElement()
+   * The product age for.
    *
-   * @var array
+   * @var \Drupal\yandex_yml\YandexYml\Param\YandexYmlAge
+   *
+   * @YandexYmlElement()
    */
   protected $age;
 
   /**
+   * The product group id.
+   *
+   * @var int
+   *
    * @YandexYmlElementWrapper(
    *   name = "group-id"
    * )
-   *
-   * @var int
    */
   protected $groupId;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product recommendations.
    *
-   * @var string
+   * @var int[]
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $rec;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product vendor.
    *
    * @var string
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/vendor-name-model.html
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $vendor;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The product vendor code.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $vendorCode;
 
   /**
-   * Set offer id.
-   *
-   * Can contain only latin chars and numbers. The limit is 20 chars for id.
-   *
-   * @param string $id
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setId($id) {
     $this->id = $id;
@@ -311,20 +413,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getId() {
     return $this->id;
   }
 
   /**
-   * Set click bid for current offer.
-   *
-   * Value must be in integer, where 80 is equals 0.8 USD;
-   *
-   * @param int $cbid
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setCbid($cbid) {
     $this->cbid = $cbid;
@@ -332,18 +428,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return int
+   * {@inheritdoc}
    */
   public function getCbid() {
     return $this->cbid;
   }
 
   /**
-   * Set default bid for click.
-   *
-   * @param mixed $bid
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setBid($bid) {
     $this->bid = $bid;
@@ -351,22 +443,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getBid() {
     return $this->bid;
   }
 
   /**
-   * Set commission for the order on the Yandex.Market.
-   *
-   * - Value must be integer.
-   * - 220 equals 2,2% of offer price.
-   * - 1220 equals 12,2% of offer price and so on.
-   *
-   * @param mixed $fee
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setFee($fee) {
     $this->fee = $fee;
@@ -374,21 +458,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getFee() {
     return $this->fee;
   }
 
   /**
-   * Set availability of the offer.
-   *
-   * - TRUE - in stock, ready to ship.
-   * - FALSE - to order only.
-   *
-   * @param mixed $available
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setAvailable($available) {
     $this->available = $available;
@@ -396,21 +473,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getAvailable() {
     return $this->available;
   }
 
   /**
-   * Set URL of the offer.
-   *
-   * - Max length for link is 512 chars.
-   * - Cyrillic chars is also allowed.
-   *
-   * @param mixed $url
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setUrl($url) {
     $this->url = $url;
@@ -418,18 +488,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getUrl() {
     return $this->url;
   }
 
   /**
-   * Set price for offer.
-   *
-   * @param int $price
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setPrice($price) {
     $this->price = $price;
@@ -437,69 +503,44 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return int
+   * {@inheritdoc}
    */
   public function getPrice() {
     return $this->price;
   }
 
   /**
-   * Set price type.
-   *
-   * If set to TRUE, this means the price is from, otherwise price is exact.
-   * This only allowed for special categories of the products.
-   *
-   * @param bool $priceFrom
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
-  public function setPriceFrom($priceFrom) {
-    $this->priceFrom = $priceFrom;
+  public function setPriceFrom($price_from) {
+    $this->priceFrom = $price_from;
     return $this;
   }
 
   /**
-   * @return bool
+   * {@inheritdoc}
    */
   public function isPriceFrom() {
     return $this->priceFrom;
   }
 
   /**
-   * Set old price.
-   *
-   * Discount will be calculated automatically by Yandex. This value must be
-   * lower than price.
-   *
-   * @param int $oldPrice
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
-  public function setOldPrice($oldPrice) {
-    $this->oldPrice = $oldPrice;
+  public function setOldPrice($old_price) {
+    $this->oldPrice = $old_price;
     return $this;
   }
 
   /**
-   * @return int
+   * {@inheritdoc}
    */
   public function getOldPrice() {
     return $this->oldPrice;
   }
 
   /**
-   * Set vat formula.
-   *
-   * - 18%: 1 or VAT_18
-   * - 18/118: 3 or VAT_18_118
-   * - 10%: 2 or VAT_10
-   * - 10/110: 4 or VAT_10_110
-   * - 0%: 5 or VAT_0
-   * - No vat: 6 or NO_VAT
-   *
-   * @param mixed $vat
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setVat($vat) {
     $this->vat = $vat;
@@ -507,59 +548,44 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getVat() {
     return $this->vat;
   }
 
   /**
-   * Set currency for offer.
-   *
-   * Can be: RUR, USD, EUR, UAH, KZT, BYN.
-   * Don't forget to set price in this currency.
-   *
-   * @param string $currencyId
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
-  public function setCurrencyId($currencyId) {
-    $this->currencyId = $currencyId;
+  public function setCurrencyId($currency_id) {
+    $this->currencyId = $currency_id;
     return $this;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getCurrencyId() {
     return $this->currencyId;
   }
 
   /**
-   * Set category id.
-   *
-   * @param int $categoryId
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
-  public function setCategoryId($categoryId) {
-    $this->categoryId = $categoryId;
+  public function setCategoryId($category_id) {
+    $this->categoryId = $category_id;
     return $this;
   }
 
   /**
-   * @return int
+   * {@inheritdoc}
    */
   public function getCategoryId() {
     return $this->categoryId;
   }
 
   /**
-   * Set offer picture.
-   *
-   * @param mixed $picture
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setPicture($picture) {
     $this->picture = $picture;
@@ -567,18 +593,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getPicture() {
     return $this->picture;
   }
 
   /**
-   * Set the possibility of courier delivery to the region of the store.
-   *
-   * @param mixed $delivery
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setDelivery($delivery) {
     $this->delivery = $delivery;
@@ -586,37 +608,29 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getDelivery() {
     return $this->delivery;
   }
 
   /**
-   * Set delivery options.
-   *
-   * @param mixed $deliveryOptions
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
-  public function setDeliveryOptions($deliveryOptions) {
-    $this->deliveryOptions = $deliveryOptions;
+  public function setDeliveryOptions(array $delivery_options) {
+    $this->deliveryOptions = $delivery_options;
     return $this;
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getDeliveryOptions() {
     return $this->deliveryOptions;
   }
 
   /**
-   * Set the possibility of pickup from the issuance points.
-   *
-   * @param bool $pickup
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setPickup($pickup) {
     $this->pickup = $pickup;
@@ -624,18 +638,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return bool
+   * {@inheritdoc}
    */
   public function isPickup() {
     return $this->pickup;
   }
 
   /**
-   * Set can be this offer bought without order.
-   *
-   * @param bool $store
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setStore($store) {
     $this->store = $store;
@@ -643,11 +653,7 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * Set description of the product.
-   *
-   * @param string $description
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setDescription($description) {
     $description = Unicode::truncate($description, 3000);
@@ -656,104 +662,74 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getDescription() {
     return $this->description;
   }
 
   /**
-   * Set sales notes.
-   *
-   * Can be used for:
-   * - Set minimal total for order.
-   * - Set minimal quantity for order.
-   * - Required prepayment.
-   *
-   * @param string $salesNotes
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
-  public function setSalesNotes($salesNotes) {
-    $this->salesNotes = Unicode::truncate($salesNotes, 50);
+  public function setSalesNotes($sales_notes) {
+    $this->salesNotes = Unicode::truncate($sales_notes, 50);
     return $this;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getSalesNotes() {
     return $this->salesNotes;
   }
 
   /**
-   * Set minimal quantity for order.
-   *
-   * This value used only in "Tires", "Truck tires", "Motor tires",
-   * "Disks (car)".
-   *
-   * @param int $minQuantity
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
-  public function setMinQuantity($minQuantity) {
-    $this->minQuantity = $minQuantity;
+  public function setMinQuantity($min_quantity) {
+    $this->minQuantity = $min_quantity;
     return $this;
   }
 
   /**
-   * @return int
+   * {@inheritdoc}
    */
   public function getMinQuantity() {
     return $this->minQuantity;
   }
 
   /**
-   * Set step for quantity.
-   *
-   * @param int $stepQuantity
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
-  public function setStepQuantity($stepQuantity) {
-    $this->stepQuantity = $stepQuantity;
+  public function setStepQuantity($step_quantity) {
+    $this->stepQuantity = $step_quantity;
     return $this;
   }
 
   /**
-   * @return int
+   * {@inheritdoc}
    */
   public function getStepQuantity() {
     return $this->stepQuantity;
   }
 
   /**
-   * Set manufacturer warranty.
-   *
-   * @param bool $manufacturerWarranty
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
-  public function setManufacturerWarranty($manufacturerWarranty) {
-    $this->manufacturerWarranty = $manufacturerWarranty;
+  public function setManufacturerWarranty($manufacturer_warranty) {
+    $this->manufacturerWarranty = $manufacturer_warranty;
     return $this;
   }
 
   /**
-   * @return bool
+   * {@inheritdoc}
    */
   public function isManufacturerWarranty() {
     return $this->manufacturerWarranty;
   }
 
   /**
-   * Set the origin country.
-   *
-   * @see https://partner.market.yandex.ru/pages/help/Countries.pdf
-   *
-   * @param string $countryOfOrigin
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setCountryOfOrigin($countryOfOrigin) {
     $this->countryOfOrigin = $countryOfOrigin;
@@ -761,18 +737,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getCountryOfOrigin() {
     return $this->countryOfOrigin;
   }
 
   /**
-   * Set is product for adult.
-   *
-   * @param bool $adult
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setAdult($adult) {
     $this->adult = $adult;
@@ -780,20 +752,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getAdult() {
     return $this->adult;
   }
 
   /**
-   * Set barcode for offer.
-   *
-   * Available barcode standards: EAN-13, EAN-8, UPC-A, UPC-E.
-   *
-   * @param string $barcode
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setBarcode($barcode) {
     $this->barcode = $barcode;
@@ -801,23 +767,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getBarcode() {
     return $this->barcode;
   }
 
   /**
-   * Set if product can be sold on Yandex.Market directly.
-   *
-   * - 1: can be sold on Yandex.Market
-   * - 0: can't be sold on Yandex.Market
-   *
-   * By default Yandex set it to 1.
-   *
-   * @param int $cpa
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setCpa($cpa) {
     $this->cpa = $cpa;
@@ -825,16 +782,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return int
+   * {@inheritdoc}
    */
   public function getCpa() {
     return $this->cpa;
   }
 
   /**
-   * @param mixed $param
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setParam($name, $value, $unit = NULL) {
     $param = \Drupal::service('yandex_yml.param')
@@ -849,24 +804,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getParam() {
     return $this->param;
   }
 
   /**
-   * Set expiry date.
-   *
-   * Must be in ISO8601 format.
-   *
-   * - For expiration date / service life — P1Y2M10DT2H30M. 1 year, 2 months, 10
-   *   days, 2 hours and 30 minutes.
-   * - For expiration date / service life — YYYY-MM-DDThh:mm.
-   *
-   * @param string $expire
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setExpire($expire) {
     $this->expire = $expire;
@@ -874,23 +819,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getExpire() {
     return $this->expire;
   }
 
   /**
-   * Set weight.
-   *
-   * @example
-   *  - 1
-   *  - 2.20
-   *  - 0.001
-   *
-   * @param mixed $weight
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setWeight($weight) {
     $this->weight = $weight;
@@ -898,22 +834,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getWeight() {
     return $this->weight;
   }
 
   /**
-   * Set dimensions.
-   *
-   * @example
-   *  - 1/2/3
-   *  - 30/20/20.2
-   *
-   * @param mixed $dimensions
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setDimensions($dimensions) {
     $this->dimensions = $dimensions;
@@ -921,18 +849,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getDimensions() {
     return $this->dimensions;
   }
 
   /**
-   * Set if product downloadable.
-   *
-   * @param mixed $downloadable
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setDownloadable($downloadable) {
     $this->downloadable = $downloadable;
@@ -940,21 +864,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getDownloadable() {
     return $this->downloadable;
   }
 
   /**
-   * Set offer age.
-   *
-   * @param array $age
-   *
-   * @param string $unit
-   *   Can be yar or month.
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setAge($age, $unit = 'year') {
     /** @var \Drupal\yandex_yml\YandexYml\Param\YandexYmlAge $param_age */
@@ -968,37 +885,29 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return array
+   * {@inheritdoc}
    */
   public function getAge() {
     return $this->age;
   }
 
   /**
-   * Set group id.
-   *
-   * @param int $groupId
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
-  public function setGroupId($groupId) {
-    $this->groupId = $groupId;
+  public function setGroupId($group_id) {
+    $this->groupId = $group_id;
     return $this;
   }
 
   /**
-   * @return int
+   * {@inheritdoc}
    */
   public function getGroupId() {
     return $this->groupId;
   }
 
   /**
-   * Set id's of recommended products.
-   *
-   * @param array $rec
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setRec(array $rec) {
     $this->rec = implode(',', $rec);
@@ -1006,16 +915,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return array
+   * {@inheritdoc}
    */
   public function getRec() {
     return explode(',', $this->rec);
   }
 
   /**
-   * @param string $name
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setName($name) {
     $this->name = $name;
@@ -1023,16 +930,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getName() {
     return $this->name;
   }
 
   /**
-   * @param string $vendor
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setVendor($vendor) {
     $this->vendor = $vendor;
@@ -1040,16 +945,14 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getVendor() {
     return $this->vendor;
   }
 
   /**
-   * @param string $vendorCode
-   *
-   * @return YandexYmlOfferBase
+   * {@inheritdoc}
    */
   public function setVendorCode($vendorCode) {
     $this->vendorCode = $vendorCode;
@@ -1057,7 +960,7 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getVendorCode() {
     return $this->vendorCode;

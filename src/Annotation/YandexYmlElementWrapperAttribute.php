@@ -21,6 +21,8 @@ class YandexYmlElementWrapperAttribute extends Plugin {
   public $name;
 
   /**
+   * The target element name.
+   *
    * @var string
    */
   public $targetElement;
