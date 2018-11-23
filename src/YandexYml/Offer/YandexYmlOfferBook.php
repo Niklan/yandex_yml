@@ -9,99 +9,123 @@ use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
 /**
  * Book offer.
  *
+ * @see https://yandex.ru/support/partnermarket/export/books.html
+ *
  * @YandexYmlElement(
  *   name = "offer"
  * )
- *
- * @see https://yandex.ru/support/partnermarket/export/books.html
  */
-class YandexYmlOfferBook extends YandexYmlOfferBase {
+class YandexYmlOfferBook extends YandexYmlOfferBase implements YandexYmlOfferBookInterface {
 
   /**
-   * @YandexYmlElementWrapper()
+   * The publisher.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $publisher;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The ISBN id.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
-  protected $ISBN;
+  protected $isbn;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The author.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $author;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The series name.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $series;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The year of release.
    *
    * @var int
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $year;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The volume.
    *
    * @var int
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $volume;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The part.
    *
    * @var int
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $part;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The language.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $language;
 
   /**
+   * The table of contents.
+   *
+   * @var string
+   *
    * @YandexYmlElementWrapper(
    *   name = "table_of_contents"
    * )
-   *
-   * @var string
    */
   protected $tableOfContents;
 
   /**
-   * @YandexYmlAttribute()
+   * The type.
    *
    * @var string
+   *
+   * @YandexYmlAttribute()
    */
   protected $type;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The binding.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $binding;
 
   /**
+   * The page extend.
+   *
+   * @var int
+   *
    * @YandexYmlElementWrapper(
    *   name = "page_extent"
    * )
-   *
-   * @var int
    */
   protected $pageExtent;
 
@@ -114,9 +138,7 @@ class YandexYmlOfferBook extends YandexYmlOfferBase {
   }
 
   /**
-   * @param string $publisher
-   *
-   * @return YandexYmlOfferBook
+   * {@inheritdoc}
    */
   public function setPublisher($publisher) {
     $this->publisher = $publisher;
@@ -124,33 +146,29 @@ class YandexYmlOfferBook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getPublisher() {
     return $this->publisher;
   }
 
   /**
-   * @param string $ISBN
-   *
-   * @return YandexYmlOfferBook
+   * {@inheritdoc}
    */
-  public function setISBN($ISBN) {
-    $this->ISBN = $ISBN;
+  public function setIsbn($isbn) {
+    $this->isbn = $isbn;
     return $this;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
-  public function getISBN() {
-    return $this->ISBN;
+  public function getIsbn() {
+    return $this->isbn;
   }
 
   /**
-   * @param string $author
-   *
-   * @return YandexYmlOfferBook
+   * {@inheritdoc}
    */
   public function setAuthor($author) {
     $this->author = $author;
@@ -158,16 +176,14 @@ class YandexYmlOfferBook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getAuthor() {
     return $this->author;
   }
 
   /**
-   * @param string $series
-   *
-   * @return YandexYmlOfferBook
+   * {@inheritdoc}
    */
   public function setSeries($series) {
     $this->series = $series;
@@ -175,16 +191,14 @@ class YandexYmlOfferBook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getSeries() {
     return $this->series;
   }
 
   /**
-   * @param int $year
-   *
-   * @return YandexYmlOfferBook
+   * {@inheritdoc}
    */
   public function setYear($year) {
     $this->year = $year;
@@ -192,16 +206,14 @@ class YandexYmlOfferBook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return int
+   * {@inheritdoc}
    */
   public function getYear() {
     return $this->year;
   }
 
   /**
-   * @param int $volume
-   *
-   * @return YandexYmlOfferBook
+   * {@inheritdoc}
    */
   public function setVolume($volume) {
     $this->volume = $volume;
@@ -209,16 +221,14 @@ class YandexYmlOfferBook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return int
+   * {@inheritdoc}
    */
   public function getVolume() {
     return $this->volume;
   }
 
   /**
-   * @param int $part
-   *
-   * @return YandexYmlOfferBook
+   * {@inheritdoc}
    */
   public function setPart($part) {
     $this->part = $part;
@@ -226,16 +236,14 @@ class YandexYmlOfferBook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return int
+   * {@inheritdoc}
    */
   public function getPart() {
     return $this->part;
   }
 
   /**
-   * @param string $language
-   *
-   * @return YandexYmlOfferBook
+   * {@inheritdoc}
    */
   public function setLanguage($language) {
     $this->language = $language;
@@ -243,16 +251,14 @@ class YandexYmlOfferBook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getLanguage() {
     return $this->language;
   }
 
   /**
-   * @param string $tableOfContents
-   *
-   * @return YandexYmlOfferBook
+   * {@inheritdoc}
    */
   public function setTableOfContents($tableOfContents) {
     $this->tableOfContents = $tableOfContents;
@@ -260,16 +266,14 @@ class YandexYmlOfferBook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getTableOfContents() {
     return $this->tableOfContents;
   }
 
   /**
-   * @param string $type
-   *
-   * @return YandexYmlOfferBook
+   * {@inheritdoc}
    */
   public function setType($type) {
     $this->type = $type;
@@ -277,16 +281,14 @@ class YandexYmlOfferBook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getType() {
     return $this->type;
   }
 
   /**
-   * @param string $binding
-   *
-   * @return YandexYmlOfferBook
+   * {@inheritdoc}
    */
   public function setBinding($binding) {
     $this->binding = $binding;
@@ -294,24 +296,22 @@ class YandexYmlOfferBook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getBinding() {
     return $this->binding;
   }
 
   /**
-   * @param int $pageExtent
-   *
-   * @return YandexYmlOfferBook
+   * {@inheritdoc}
    */
-  public function setPageExtent($pageExtent) {
-    $this->pageExtent = $pageExtent;
+  public function setPageExtent($page_extent) {
+    $this->pageExtent = $page_extent;
     return $this;
   }
 
   /**
-   * @return int
+   * {@inheritdoc}
    */
   public function getPageExtent() {
     return $this->pageExtent;

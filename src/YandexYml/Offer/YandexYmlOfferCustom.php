@@ -1,46 +1,51 @@
 <?php
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
+
+use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
-use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
 
 /**
  * Custom offer.
  *
+ * @see https://yandex.ru/support/partnermarket/export/vendor-model.html
+ *
  * @YandexYmlElement(
  *   name = "offer"
  * )
- *
- * @see https://yandex.ru/support/partnermarket/export/vendor-model.html
  */
-class YandexYmlOfferCustom extends YandexYmlOfferBase {
+class YandexYmlOfferCustom extends YandexYmlOfferBase implements YandexYmlOfferCustomInterface {
 
   /**
-   * @YandexYmlAttribute()
+   * The type.
    *
    * @var string
+   *
+   * @YandexYmlAttribute()
    */
   protected $type;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The model.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $model;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The type prefix.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $typePrefix;
 
   /**
-   * @param string $type
-   *
-   * @return YandexYmlOfferCustom
+   * {@inheritdoc}
    */
   public function setType($type) {
     $this->type = $type;
@@ -48,16 +53,14 @@ class YandexYmlOfferCustom extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getType() {
     return $this->type;
   }
 
   /**
-   * @param string $model
-   *
-   * @return YandexYmlOfferCustom
+   * {@inheritdoc}
    */
   public function setModel($model) {
     $this->model = $model;
@@ -65,24 +68,22 @@ class YandexYmlOfferCustom extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getModel() {
     return $this->model;
   }
 
   /**
-   * @param string $typePrefix
-   *
-   * @return YandexYmlOfferCustom
+   * {@inheritdoc}
    */
-  public function setTypePrefix($typePrefix) {
-    $this->typePrefix = $typePrefix;
+  public function setTypePrefix($type_prefix) {
+    $this->typePrefix = $type_prefix;
     return $this;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getTypePrefix() {
     return $this->typePrefix;
