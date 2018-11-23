@@ -2,8 +2,11 @@
 
 ## Current dev changes
 
-- Improved performance x3 times.
-- Improved performance when generates alot of data. This is plus previous performance improvement ><. Tested on 20000 offers. Speed was increased from 65 sec. to 50sec, memory usage from 983mb to 180mb.
+- Improved performance since alpha4. Tested on 20000 offers.
+
+  * Time to generate reduced from 331 sec to 50 sec.
+  * Memory peak usage from 977 mb to 183 mb.
+
 - Improved code quality.
 
 ## 8.x-1.0-alpha4
