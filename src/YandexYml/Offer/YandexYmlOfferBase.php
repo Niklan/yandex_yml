@@ -32,8 +32,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    *
    * @var int|string
    *
-   * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html
-   *
    * @YandexYmlAttribute()
    */
   protected $id;
@@ -43,8 +41,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    *
    * @var int
    *
-   * @see https://yandex.ru/support/partnermarket/elements/bid-cbid.html
-   *
    * @YandexYmlAttribute()
    */
   protected $cbid;
@@ -53,8 +49,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    * The bid amount.
    *
    * @var int|float
-   *
-   * @see https://yandex.ru/support/partnermarket/elements/bid-cbid.html
    *
    * @YandexYmlAttribute()
    */
@@ -73,8 +67,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    * The product status.
    *
    * @var bool
-   *
-   * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html
    *
    * @YandexYmlAttribute()
    */
@@ -115,8 +107,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    *
    * @var int|float
    *
-   * @see https://yandex.ru/support/partnermarket/elements/oldprice.html
-   *
    * @YandexYmlElementWrapper(
    *   name = "oldprice"
    * )
@@ -127,8 +117,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    * The product vat.
    *
    * @var int|string
-   *
-   * @see https://yandex.ru/support/partnermarket/elements/vat.html
    *
    * @YandexYmlElementWrapper()
    */
@@ -157,8 +145,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    *
    * @var string
    *
-   * @see https://yandex.ru/support/partnermarket/offers.html
-   *
    * @YandexYmlElementWrapper()
    */
   protected $picture;
@@ -167,8 +153,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    * The product delivery.
    *
    * @var bool
-   *
-   * @see https://yandex.ru/support/partnermarket/elements/delivery.html
    *
    * @YandexYmlElementWrapper()
    */
@@ -190,8 +174,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    *
    * @var bool
    *
-   * @see https://yandex.ru/support/partnermarket/elements/delivery.html
-   *
    * @YandexYmlElementWrapper()
    */
   protected $pickup;
@@ -200,8 +182,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    * The product in stock status.
    *
    * @var bool
-   *
-   * @see https://yandex.ru/support/partnermarket/elements/delivery.html
    *
    * @YandexYmlElementWrapper()
    */
@@ -212,8 +192,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    *
    * @var string
    *
-   * @see https://yandex.ru/support/partnermarket/elements/description.html
-   *
    * @YandexYmlElementWrapper()
    */
   protected $description;
@@ -222,8 +200,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    * The product sales notes.
    *
    * @var string
-   *
-   * @see https://yandex.ru/support/partnermarket/elements/sales_notes.html
    *
    * @YandexYmlElementWrapper(
    *   name = "sales_notes"
@@ -269,9 +245,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    *
    * @var string
    *
-   * @see http://partner.market.yandex.ru/pages/help/Countries.pdf
-   * available list of countries.
-   *
    * @YandexYmlElementWrapper(
    *   name = "country_of_origin"
    * )
@@ -283,8 +256,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    *
    * @var bool
    *
-   * @see https://yandex.ru/support/partnermarket/elements/adult.html
-   *
    * @YandexYmlElementWrapper()
    */
   protected $adult;
@@ -293,8 +264,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    * The product barcode.
    *
    * @var string
-   *
-   * @see https://yandex.ru/support/partnermarket/elements/barcode.html
    *
    * @YandexYmlElementWrapper()
    */
@@ -388,8 +357,6 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
    * The product vendor.
    *
    * @var string
-   *
-   * @see https://yandex.ru/support/partnermarket/elements/vendor-name-model.html
    *
    * @YandexYmlElementWrapper()
    */

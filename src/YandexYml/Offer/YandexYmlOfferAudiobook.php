@@ -15,118 +15,148 @@ use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
  *
  * @see https://yandex.ru/support/partnermarket/export/audiobooks.html
  */
-class YandexYmlOfferAudiobook extends YandexYmlOfferBase {
+class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOfferAudiobookInterface {
 
   /**
-   * @YandexYmlElementWrapper()
+   * The publisher.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $publisher;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The ISBN id.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
-  protected $ISBN;
+  protected $isbn;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The author.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $author;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The series name.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $series;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The year of release.
    *
    * @var int
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $year;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The volume.
    *
    * @var int
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $volume;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The part.
    *
    * @var int
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $part;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The language.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $language;
 
   /**
+   * The table of contents.
+   *
+   * @var string
+   *
    * @YandexYmlElementWrapper(
    *   name = "table_of_contents"
    * )
-   *
-   * @var string
    */
   protected $tableOfContents;
 
   /**
-   * @YandexYmlAttribute()
+   * The type.
    *
    * @var string
+   *
+   * @YandexYmlAttribute()
    */
   protected $type;
 
   /**
+   * The performer.
+   *
+   * @var string
+   *
    * @YandexYmlElementWrapper(
    *   name = "performed_by"
    * )
-   *
-   * @var string
    */
   protected $performedBy;
 
   /**
+   * The performance type.
+   *
+   * @var string
+   *
    * @YandexYmlElementWrapper(
    *   name = "performance_type"
    * )
-   *
-   * @var string
    */
   protected $performanceType;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The storage.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $storage;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The format.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $format;
 
   /**
+   * The recording length.
+   *
+   * @var string
+   *
    * @YandexYmlElementWrapper(
    *   name = "recording_length"
    * )
-   *
-   * @var string
    */
   protected $recordingLength;
 
@@ -139,9 +169,7 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase {
   }
 
   /**
-   * @param mixed $publisher
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
   public function setPublisher($publisher) {
     $this->publisher = $publisher;
@@ -149,33 +177,29 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getPublisher() {
     return $this->publisher;
   }
 
   /**
-   * @param mixed $ISBN
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
-  public function setISBN($ISBN) {
-    $this->ISBN = $ISBN;
+  public function setIsbn($isbn) {
+    $this->isbn = $isbn;
     return $this;
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
-  public function getISBN() {
-    return $this->ISBN;
+  public function getIsbn() {
+    return $this->isbn;
   }
 
   /**
-   * @param mixed $author
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
   public function setAuthor($author) {
     $this->author = $author;
@@ -183,16 +207,14 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getAuthor() {
     return $this->author;
   }
 
   /**
-   * @param mixed $series
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
   public function setSeries($series) {
     $this->series = $series;
@@ -200,16 +222,14 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getSeries() {
     return $this->series;
   }
 
   /**
-   * @param mixed $year
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
   public function setYear($year) {
     $this->year = $year;
@@ -217,16 +237,14 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getYear() {
     return $this->year;
   }
 
   /**
-   * @param mixed $volume
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
   public function setVolume($volume) {
     $this->volume = $volume;
@@ -234,16 +252,14 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getVolume() {
     return $this->volume;
   }
 
   /**
-   * @param mixed $part
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
   public function setPart($part) {
     $this->part = $part;
@@ -251,16 +267,14 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getPart() {
     return $this->part;
   }
 
   /**
-   * @param mixed $language
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
   public function setLanguage($language) {
     $this->language = $language;
@@ -268,33 +282,29 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getLanguage() {
     return $this->language;
   }
 
   /**
-   * @param mixed $tableOfContents
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
-  public function setTableOfContents($tableOfContents) {
-    $this->tableOfContents = $tableOfContents;
+  public function setTableOfContents($table_of_contents) {
+    $this->tableOfContents = $table_of_contents;
     return $this;
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getTableOfContents() {
     return $this->tableOfContents;
   }
 
   /**
-   * @param mixed $type
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
   public function setType($type) {
     $this->type = $type;
@@ -302,50 +312,44 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getType() {
     return $this->type;
   }
 
   /**
-   * @param mixed $performedBy
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
-  public function setPerformedBy($performedBy) {
-    $this->performedBy = $performedBy;
+  public function setPerformedBy($performed_by) {
+    $this->performedBy = $performed_by;
     return $this;
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getPerformedBy() {
     return $this->performedBy;
   }
 
   /**
-   * @param mixed $performanceType
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
-  public function setPerformanceType($performanceType) {
-    $this->performanceType = $performanceType;
+  public function setPerformanceType($performance_type) {
+    $this->performanceType = $performance_type;
     return $this;
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getPerformanceType() {
     return $this->performanceType;
   }
 
   /**
-   * @param mixed $storage
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
   public function setStorage($storage) {
     $this->storage = $storage;
@@ -353,16 +357,14 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getStorage() {
     return $this->storage;
   }
 
   /**
-   * @param mixed $format
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
   public function setFormat($format) {
     $this->format = $format;
@@ -370,24 +372,22 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase {
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getFormat() {
     return $this->format;
   }
 
   /**
-   * @param mixed $recordingLength
-   *
-   * @return YandexYmlOfferAudiobook
+   * {@inheritdoc}
    */
-  public function setRecordingLength($recordingLength) {
-    $this->recordingLength = $recordingLength;
+  public function setRecordingLength($recording_length) {
+    $this->recordingLength = $recording_length;
     return $this;
   }
 
   /**
-   * @return mixed
+   * {@inheritdoc}
    */
   public function getRecordingLength() {
     return $this->recordingLength;

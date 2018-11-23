@@ -13,6 +13,8 @@ interface YandexYmlOfferBaseInterface {
    * @param string $id
    *   The product id.
    *
+   * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html
+   *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
    *   The current offer.
    */
@@ -32,6 +34,8 @@ interface YandexYmlOfferBaseInterface {
    * @param int $cbid
    *   The bid amount. 80 = 0.8 USD.
    *
+   * @see https://yandex.ru/support/partnermarket/elements/bid-cbid.html
+   *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
    *   The current offer.
    */
@@ -50,6 +54,8 @@ interface YandexYmlOfferBaseInterface {
    *
    * @param int $bid
    *   The bid amount. 80 = 0.8 USD.
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/bid-cbid.html
    *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
    *   The current offer.
@@ -92,6 +98,8 @@ interface YandexYmlOfferBaseInterface {
    *
    * @param bool $available
    *   The availability status.
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html
    *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
    *   The current offer.
@@ -172,6 +180,8 @@ interface YandexYmlOfferBaseInterface {
    * @param int $old_price
    *   The old price.
    *
+   * @see https://yandex.ru/support/partnermarket/elements/oldprice.html
+   *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
    *   The current offer.
    */
@@ -198,6 +208,8 @@ interface YandexYmlOfferBaseInterface {
    *
    * @param int|string $vat
    *   The formula type.
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/vat.html
    *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
    *   The current offer.
@@ -259,6 +271,8 @@ interface YandexYmlOfferBaseInterface {
    * @param mixed $picture
    *   The picture url.
    *
+   * @see https://yandex.ru/support/partnermarket/offers.html
+   *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
    *   The current offer.
    */
@@ -277,6 +291,8 @@ interface YandexYmlOfferBaseInterface {
    *
    * @param mixed $delivery
    *   The delivery status.
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/delivery.html
    *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
    *   The current offer.
@@ -316,6 +332,8 @@ interface YandexYmlOfferBaseInterface {
    * @param bool $pickup
    *   The pickup possibility.
    *
+   * @see https://yandex.ru/support/partnermarket/elements/delivery.html
+   *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
    *   The current offer.
    */
@@ -335,6 +353,8 @@ interface YandexYmlOfferBaseInterface {
    * @param bool $store
    *   The possibility value.
    *
+   * @see https://yandex.ru/support/partnermarket/elements/delivery.html
+   *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
    *   The current offer.
    */
@@ -345,6 +365,8 @@ interface YandexYmlOfferBaseInterface {
    *
    * @param string $description
    *   The description.
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/description.html
    *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
    *   The current offer.
@@ -371,6 +393,8 @@ interface YandexYmlOfferBaseInterface {
    *
    * @param string $sales_notes
    *   The sales notes.
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/sales_notes.html
    *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
    *   The current offer.
@@ -472,6 +496,8 @@ interface YandexYmlOfferBaseInterface {
    * @param bool $adult
    *   The adult status.
    *
+   * @see https://yandex.ru/support/partnermarket/elements/adult.html
+   *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
    *   The current offer.
    */
@@ -492,6 +518,8 @@ interface YandexYmlOfferBaseInterface {
    *
    * @param string $barcode
    *   The barcode.
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/barcode.html
    *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
    *   The current offer.
