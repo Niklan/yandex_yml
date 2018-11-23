@@ -18,10 +18,17 @@ use Drupal\yandex_yml\Annotation\YandexYmlValue;
 trait YandexYmlToArrayTrait {
 
   /**
-   * @var AnnotationReader
+   * The annotation reader.
+   *
+   * @var \Doctrine\Common\Annotations\AnnotationReader
    */
   private $reader;
 
+  /**
+   * The filtererd properties with values.
+   *
+   * @var array
+   */
   private $properties;
 
   /**
@@ -44,24 +51,36 @@ trait YandexYmlToArrayTrait {
   }
 
   /**
+   * Gets annotation reader.
+   *
+   * @return array|\Doctrine\Common\Annotations\AnnotationReader
+   *   The annotation reader.
+   */
+  private function getAnnotationReader() {
+    $reader = &drupal_static('yandex_yml_to_array_trait_annotation_reader');
+    if (!isset($reader)) {
+      $reader = new AnnotationReader();
+      // Register the namespaces of classes that can be used for annotations.
+      AnnotationRegistry::registerLoader('class_exists');
+    }
+    return $reader;
+  }
+
+  /**
    * Parse YandexYml annotations.
    */
   private function parseAnnotations() {
     $result = [];
-    // Get all defined properties which is no NULL.
+    // Get all defined properties.
     $properties = get_object_vars($this);
     unset($properties['_serviceId']);
+    // We don't wan't to parse properties without any values. This is cost too
+    // much.
     $this->properties = array_filter($properties, function ($value) {
       return $value !== NULL;
     });
 
-    if (!isset($this->reader)) {
-      $this->reader = new AnnotationReader();
-      // Clear the annotation loaders of any previous annotation classes.
-      AnnotationRegistry::reset();
-      // Register the namespaces of classes that can be used for annotations.
-      AnnotationRegistry::registerLoader('class_exists');
-    }
+    $this->reader = $this->getAnnotationReader();
 
     $element = $this->getElementFromObject();
     // If found element than object is an element.

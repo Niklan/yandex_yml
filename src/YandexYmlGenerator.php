@@ -78,6 +78,8 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    */
   private $offers = [];
 
+  protected $counter;
+
   /**
    * Constructs a new YandexYmlGenerator object.
    *
@@ -103,7 +105,6 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    * {@inheritdoc}
    */
   public function generateFile($filename = 'products.xml', $destination_path = 'public://') {
-    $this->writeHeader();
     $this->buildData();
     file_unmanaged_copy($this->tempFilePath, $destination_path . $filename, FILE_EXISTS_REPLACE);
   }
@@ -112,8 +113,6 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    * {@inheritdoc}
    */
   public function generateMarkup() {
-    $this->writer->openMemory();
-    $this->writeHeader();
     $this->buildData();
     return $this->writer->outputMemory();
   }
@@ -122,6 +121,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    * Write elements to writer object.
    */
   protected function buildData() {
+    $this->writeHeader();
     $this->writeShopInfo();
     $this->writeCurrencies();
     $this->writeCategories();
