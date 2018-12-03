@@ -7,7 +7,7 @@ namespace Drupal\yandex_yml\YandexYml\Offer;
  *
  * @see https://yandex.ru/support/partnermarket/export/medicine.html
  */
-interface YandexYmlOfferMedicineInterface {
+interface YandexYmlOfferMedicineInterface extends YandexYmlOfferBaseInterface {
 
   /**
    * Sets offer type.

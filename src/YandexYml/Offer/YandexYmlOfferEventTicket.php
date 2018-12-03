@@ -9,11 +9,11 @@ use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
 /**
  * Event ticket offer.
  *
+ * @see https://yandex.ru/support/partnermarket/export/event-tickets.html
+ *
  * @YandexYmlElement(
  *   name = "offer"
  * )
- *
- * @see https://yandex.ru/support/partnermarket/export/event-tickets.html
  */
 class YandexYmlOfferEventTicket extends YandexYmlOfferBase implements YandexYmlOfferEventTicketInterface {
 

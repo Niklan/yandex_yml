@@ -921,8 +921,8 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   /**
    * {@inheritdoc}
    */
-  public function setVendorCode($vendorCode) {
-    $this->vendorCode = $vendorCode;
+  public function setVendorCode($vendor_code) {
+    $this->vendorCode = $vendor_code;
     return $this;
   }
 

@@ -9,74 +9,92 @@ use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
 /**
  * Music and video offer.
  *
+ * @see https://yandex.ru/support/partnermarket/export/music-video.html
+ *
  * @YandexYmlElement(
  *   name = "offer"
  * )
- *
- * @see https://yandex.ru/support/partnermarket/export/music-video.html
  */
-class YandexYmlOfferMusicVideo extends YandexYmlOfferBase {
+class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOfferMusicVideoInterface {
 
   /**
-   * @YandexYmlAttribute()
+   * The offer type.
    *
    * @var string
+   *
+   * @YandexYmlAttribute()
    */
   protected $type;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The artist.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $artist;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The title.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $title;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The year.
    *
-   * @var string
+   * @var string|int
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $year;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The media device.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $media;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The starring.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $starring;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The director.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $director;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The original name.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $originalName;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The country.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $country;
 
@@ -89,9 +107,7 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase {
   }
 
   /**
-   * @param string $type
-   *
-   * @return YandexYmlOfferMusicVideo
+   * {@inheritdoc}
    */
   public function setType($type) {
     $this->type = $type;
@@ -99,16 +115,14 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getType() {
     return $this->type;
   }
 
   /**
-   * @param string $artist
-   *
-   * @return YandexYmlOfferMusicVideo
+   * {@inheritdoc}
    */
   public function setArtist($artist) {
     $this->artist = $artist;
@@ -116,16 +130,14 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getArtist() {
     return $this->artist;
   }
 
   /**
-   * @param string $title
-   *
-   * @return YandexYmlOfferMusicVideo
+   * {@inheritdoc}
    */
   public function setTitle($title) {
     $this->title = $title;
@@ -133,16 +145,14 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getTitle() {
     return $this->title;
   }
 
   /**
-   * @param string $year
-   *
-   * @return YandexYmlOfferMusicVideo
+   * {@inheritdoc}
    */
   public function setYear($year) {
     $this->year = $year;
@@ -150,16 +160,14 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getYear() {
     return $this->year;
   }
 
   /**
-   * @param string $media
-   *
-   * @return YandexYmlOfferMusicVideo
+   * {@inheritdoc}
    */
   public function setMedia($media) {
     $this->media = $media;
@@ -167,16 +175,14 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getMedia() {
     return $this->media;
   }
 
   /**
-   * @param array $starring
-   *
-   * @return YandexYmlOfferMusicVideo
+   * {@inheritdoc}
    */
   public function setStarring(array $starring) {
     $this->starring = implode(', ', $starring);
@@ -184,16 +190,14 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getStarring() {
     return $this->starring;
   }
 
   /**
-   * @param string $director
-   *
-   * @return YandexYmlOfferMusicVideo
+   * {@inheritdoc}
    */
   public function setDirector($director) {
     $this->director = $director;
@@ -201,33 +205,29 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getDirector() {
     return $this->director;
   }
 
   /**
-   * @param string $originalName
-   *
-   * @return YandexYmlOfferMusicVideo
+   * {@inheritdoc}
    */
-  public function setOriginalName($originalName) {
-    $this->originalName = $originalName;
+  public function setOriginalName($original_name) {
+    $this->originalName = $original_name;
     return $this;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getOriginalName() {
     return $this->originalName;
   }
 
   /**
-   * @param string $country
-   *
-   * @return YandexYmlOfferMusicVideo
+   * {@inheritdoc}
    */
   public function setCountry($country) {
     $this->country = $country;
@@ -235,7 +235,7 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getCountry() {
     return $this->country;

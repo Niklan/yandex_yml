@@ -8,11 +8,11 @@ use Drupal\yandex_yml\Annotation\YandexYmlElement;
 /**
  * Medicine offer.
  *
+ * @see https://yandex.ru/support/partnermarket/export/medicine.html
+ *
  * @YandexYmlElement(
  *   name = "offer"
  * )
- *
- * @see https://yandex.ru/support/partnermarket/export/medicine.html
  */
 class YandexYmlOfferMedicine extends YandexYmlOfferBase implements YandexYmlOfferMedicineInterface {
 

@@ -8,39 +8,43 @@ use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
 /**
  * Base object for simple offer.
  *
+ * @see https://yandex.ru/support/partnermarket/offers.html
+ *
  * @YandexYmlElement(
  *   name = "offer"
  * )
- *
- * @see https://yandex.ru/support/partnermarket/offers.html *
  */
-class YandexYmlOfferSimple extends YandexYmlOfferBase {
+class YandexYmlOfferSimple extends YandexYmlOfferBase implements YandexYmlOfferSimpleInterface {
 
   /**
-   * @YandexYmlElementWrapper()
+   * The model.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $model;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The vendor.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $vendor;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The vendor code.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $vendorCode;
 
   /**
-   * @param string $model
-   *
-   * @return YandexYmlOfferSimple
+   * {@inheritdoc}
    */
   public function setModel($model) {
     $this->model = $model;
@@ -48,16 +52,14 @@ class YandexYmlOfferSimple extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getModel() {
     return $this->model;
   }
 
   /**
-   * @param string $vendor
-   *
-   * @return YandexYmlOfferSimple
+   * {@inheritdoc}
    */
   public function setVendor($vendor) {
     $this->vendor = $vendor;
@@ -65,24 +67,22 @@ class YandexYmlOfferSimple extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getVendor() {
     return $this->vendor;
   }
 
   /**
-   * @param string $vendorCode
-   *
-   * @return YandexYmlOfferSimple
+   * {@inheritdoc}
    */
-  public function setVendorCode($vendorCode) {
-    $this->vendorCode = $vendorCode;
+  public function setVendorCode($vendor_code) {
+    $this->vendorCode = $vendor_code;
     return $this;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getVendorCode() {
     return $this->vendorCode;

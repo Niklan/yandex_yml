@@ -7,7 +7,7 @@ namespace Drupal\yandex_yml\YandexYml\Offer;
  *
  * @see https://yandex.ru/support/partnermarket/export/event-tickets.html
  */
-interface YandexYmlOfferEventTicketInterface {
+interface YandexYmlOfferEventTicketInterface extends YandexYmlOfferBaseInterface {
 
   /**
    * Sets event type.
