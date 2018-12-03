@@ -2,8 +2,8 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
-use Drupal\yandex_yml\Annotation\YandexYmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
+use Drupal\yandex_yml\Annotation\YandexYmlElement;
 
 /**
  * Medicine offer.
@@ -14,12 +14,14 @@ use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
  *
  * @see https://yandex.ru/support/partnermarket/export/medicine.html
  */
-class YandexYmlOfferMedicine extends YandexYmlOfferBase {
+class YandexYmlOfferMedicine extends YandexYmlOfferBase implements YandexYmlOfferMedicineInterface {
 
   /**
-   * @YandexYmlAttribute()
+   * The offer type.
    *
    * @var string
+   *
+   * @YandexYmlAttribute()
    */
   protected $type;
 
@@ -34,9 +36,7 @@ class YandexYmlOfferMedicine extends YandexYmlOfferBase {
   }
 
   /**
-   * @param string $type
-   *
-   * @return YandexYmlOfferMedicine
+   * {@inheritdoc}
    */
   public function setType($type) {
     $this->type = $type;
@@ -44,7 +44,7 @@ class YandexYmlOfferMedicine extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getType() {
     return $this->type;

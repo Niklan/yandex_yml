@@ -55,6 +55,8 @@ trait YandexYmlToArrayTrait {
    *
    * @return array|\Doctrine\Common\Annotations\AnnotationReader
    *   The annotation reader.
+   *
+   * @throws \Doctrine\Common\Annotations\AnnotationException
    */
   private function getAnnotationReader() {
     $reader = &drupal_static('yandex_yml_to_array_trait_annotation_reader');

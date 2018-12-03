@@ -15,67 +15,83 @@ use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
  *
  * @see https://yandex.ru/support/partnermarket/export/event-tickets.html
  */
-class YandexYmlOfferEventTicket extends YandexYmlOfferBase {
+class YandexYmlOfferEventTicket extends YandexYmlOfferBase implements YandexYmlOfferEventTicketInterface {
 
   /**
-   * @YandexYmlAttribute()
+   * The event type.
    *
    * @var string
+   *
+   * @YandexYmlAttribute()
    */
   protected $type;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The event name.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $name;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The event place.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $place;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The hall.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $hall;
 
   /**
+   * The hall part.
+   *
+   * @var string
+   *
    * @YandexYmlElementWrapper(
    *   name = "hall_part"
    * )
-   *
-   * @var string
    */
   protected $hallPart;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The date.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $date;
 
   /**
+   * The event is premiere.
+   *
+   * @var bool
+   *
    * @YandexYmlElementWrapper(
    *   name = "is_premiere"
    * )
-   *
-   * @var int
    */
   protected $isPremiere;
 
   /**
+   * The event is for kids.
+   *
+   * @var bool
+   *
    * @YandexYmlElementWrapper(
    *   name = "is_kids"
    * )
-   *
-   * @var int
    */
   protected $isKids;
 
@@ -88,9 +104,7 @@ class YandexYmlOfferEventTicket extends YandexYmlOfferBase {
   }
 
   /**
-   * @param string $type
-   *
-   * @return YandexYmlOfferEventTicket
+   * {@inheritdoc}
    */
   public function setType($type) {
     $this->type = $type;
@@ -98,16 +112,14 @@ class YandexYmlOfferEventTicket extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getType() {
     return $this->type;
   }
 
   /**
-   * @param string $name
-   *
-   * @return YandexYmlOfferEventTicket
+   * {@inheritdoc}
    */
   public function setName($name) {
     $this->name = $name;
@@ -115,16 +127,14 @@ class YandexYmlOfferEventTicket extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getName() {
     return $this->name;
   }
 
   /**
-   * @param string $place
-   *
-   * @return YandexYmlOfferEventTicket
+   * {@inheritdoc}
    */
   public function setPlace($place) {
     $this->place = $place;
@@ -132,16 +142,14 @@ class YandexYmlOfferEventTicket extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getPlace() {
     return $this->place;
   }
 
   /**
-   * @param string $hall
-   *
-   * @return YandexYmlOfferEventTicket
+   * {@inheritdoc}
    */
   public function setHall($hall) {
     $this->hall = $hall;
@@ -149,33 +157,29 @@ class YandexYmlOfferEventTicket extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getHall() {
     return $this->hall;
   }
 
   /**
-   * @param string $hallPart
-   *
-   * @return YandexYmlOfferEventTicket
+   * {@inheritdoc}
    */
-  public function setHallPart($hallPart) {
-    $this->hallPart = $hallPart;
+  public function setHallPart($hall_part) {
+    $this->hallPart = $hall_part;
     return $this;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getHallPart() {
     return $this->hallPart;
   }
 
   /**
-   * @param string $date
-   *
-   * @return YandexYmlOfferEventTicket
+   * {@inheritdoc}
    */
   public function setDate($date) {
     $this->date = $date;
@@ -183,43 +187,39 @@ class YandexYmlOfferEventTicket extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getDate() {
     return $this->date;
   }
 
   /**
-   * @param string $isPremiere
-   *
-   * @return YandexYmlOfferEventTicket
+   * {@inheritdoc}
    */
-  public function setIsPremiere($isPremiere) {
-    $this->isPremiere = $isPremiere;
+  public function setIsPremiere($is_premiere) {
+    $this->isPremiere = $is_premiere;
     return $this;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
-  public function getisPremiere() {
+  public function getIsPremiere() {
     return $this->isPremiere;
   }
 
   /**
-   * @param string $isKids
-   *
-   * @return YandexYmlOfferEventTicket
+   * {@inheritdoc}
    */
-  public function setIsKids($isKids) {
-    $this->isKids = $isKids;
+  public function setIsKids($is_kids) {
+    $this->isKids = $is_kids;
     return $this;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
-  public function getisKids() {
+  public function getIsKids() {
     return $this->isKids;
   }
 
