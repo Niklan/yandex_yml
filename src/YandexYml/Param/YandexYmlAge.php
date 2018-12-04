@@ -2,13 +2,13 @@
 
 namespace Drupal\yandex_yml\YandexYml\Param;
 
-use Drupal\yandex_yml\Annotation\YandexYmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
+use Drupal\yandex_yml\Annotation\YandexYmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlValue;
 use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 
 /**
- * Class YandexYmlParamAge
+ * Age element.
  *
  * Used as abstraction for YML element.
  *
@@ -21,23 +21,31 @@ class YandexYmlAge {
   use YandexYmlToArrayTrait;
 
   /**
-   * @YandexYmlAttribute()
+   * The unit.
    *
    * @var string
+   *
+   * @YandexYmlAttribute()
    */
   private $unit;
 
   /**
-   * @YandexYmlValue()
+   * The value.
    *
    * @var string
+   *
+   * @YandexYmlValue()
    */
   private $value;
 
   /**
-   * @param string $unit
+   * Sets unit.
    *
-   * @return YandexYmlAge
+   * @param string $unit
+   *   The unit.
+   *
+   * @return $this|\Drupal\yandex_yml\YandexYml\Param\YandexYmlAge
+   *   The current age instance.
    */
   public function setUnit($unit) {
     $this->unit = $unit;
@@ -45,16 +53,23 @@ class YandexYmlAge {
   }
 
   /**
+   * Gets unit.
+   *
    * @return string
+   *   The unit.
    */
   public function getUnit() {
     return $this->unit;
   }
 
   /**
-   * @param string $value
+   * Sets value.
    *
-   * @return YandexYmlAge
+   * @param string $value
+   *   The value.
+   *
+   * @return $this|\Drupal\yandex_yml\YandexYml\Param\YandexYmlAge
+   *   The current age instance.
    */
   public function setValue($value) {
     $this->value = $value;
@@ -62,7 +77,10 @@ class YandexYmlAge {
   }
 
   /**
+   * Gets value.
+   *
    * @return string
+   *   The value.
    */
   public function getValue() {
     return $this->value;

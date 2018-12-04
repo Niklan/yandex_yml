@@ -3,12 +3,11 @@
 namespace Drupal\yandex_yml\YandexYml\Param;
 
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlValue;
 use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 
 /**
- * Class YandexYmlDataTour
+ * Data tour element.
  *
  * Used as abstraction for YML element.
  *
@@ -21,16 +20,22 @@ class YandexYmlDataTour {
   use YandexYmlToArrayTrait;
 
   /**
-   * @YandexYmlValue()
+   * The value.
    *
    * @var string
+   *
+   * @YandexYmlValue()
    */
   private $value;
 
   /**
-   * @param string $value
+   * Sets value.
    *
-   * @return YandexYmlDataTour
+   * @param string $value
+   *   The value.
+   *
+   * @return $this|\Drupal\yandex_yml\YandexYml\Param\YandexYmlDataTour
+   *   The current object instance.
    */
   public function setValue($value) {
     $this->value = $value;
@@ -38,7 +43,10 @@ class YandexYmlDataTour {
   }
 
   /**
+   * Gets value.
+   *
    * @return string
+   *   The value.
    */
   public function getValue() {
     return $this->value;
