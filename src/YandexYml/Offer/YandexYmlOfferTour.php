@@ -6,119 +6,146 @@ use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
 
-
 /**
  * Tour offer.
+ *
+ * @see https://yandex.ru/support/partnermarket/export/tours.html
  *
  * @YandexYmlElement(
  *   name = "offer"
  * )
- *
- * @see https://yandex.ru/support/partnermarket/export/tours.html
  */
-class YandexYmlOfferTour extends YandexYmlOfferBase {
+class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTourInterface {
 
   /**
-   * @YandexYmlAttribute()
+   * The offer type.
    *
    * @var string
+   *
+   * @YandexYmlAttribute()
    */
   protected $type;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The world region.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $worldRegion;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The country.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $country;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The region.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $region;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The days.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $days;
 
   /**
-   * @YandexYmlElement()
+   * The data tour.
    *
    * @var array
+   *
+   * @YandexYmlElement()
    */
   protected $dataTour = [];
 
   /**
+   * The hotel stars.
+   *
+   * @var string
+   *
    * @YandexYmlElementWrapper(
    *   name = "hotel_stars"
    * )
-   *
-   * @var string
    */
   protected $hotelStars;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The room.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $room;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The meal.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $meal;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The included.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $included;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The transport.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $transport;
 
   /**
+   * The min price.
+   *
+   * @var string
+   *
    * @YandexYmlElementWrapper(
    *   name = "price_min"
    * )
-   *
-   * @var string
    */
   protected $priceMin;
 
   /**
+   * The price max.
+   *
+   * @var string
+   *
    * @YandexYmlElementWrapper(
    *   name = "price_max"
    * )
-   *
-   * @var string
    */
   protected $priceMax;
 
   /**
-   * @YandexYmlElementWrapper()
+   * The options.
    *
    * @var string
+   *
+   * @YandexYmlElementWrapper()
    */
   protected $options;
 
@@ -131,9 +158,7 @@ class YandexYmlOfferTour extends YandexYmlOfferBase {
   }
 
   /**
-   * @param string $type
-   *
-   * @return YandexYmlOfferTour
+   * {@inheritdoc}
    */
   public function setType($type) {
     $this->type = $type;
@@ -141,33 +166,29 @@ class YandexYmlOfferTour extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getType() {
     return $this->type;
   }
 
   /**
-   * @param string $worldRegion
-   *
-   * @return YandexYmlOfferTour
+   * {@inheritdoc}
    */
-  public function setWorldRegion($worldRegion) {
-    $this->worldRegion = $worldRegion;
+  public function setWorldRegion($world_region) {
+    $this->worldRegion = $world_region;
     return $this;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getWorldRegion() {
     return $this->worldRegion;
   }
 
   /**
-   * @param string $country
-   *
-   * @return YandexYmlOfferTour
+   * {@inheritdoc}
    */
   public function setCountry($country) {
     $this->country = $country;
@@ -175,16 +196,14 @@ class YandexYmlOfferTour extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getCountry() {
     return $this->country;
   }
 
   /**
-   * @param string $region
-   *
-   * @return YandexYmlOfferTour
+   * {@inheritdoc}
    */
   public function setRegion($region) {
     $this->region = $region;
@@ -192,16 +211,14 @@ class YandexYmlOfferTour extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getRegion() {
     return $this->region;
   }
 
   /**
-   * @param string $days
-   *
-   * @return YandexYmlOfferTour
+   * {@inheritdoc}
    */
   public function setDays($days) {
     $this->days = $days;
@@ -209,53 +226,47 @@ class YandexYmlOfferTour extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getDays() {
     return $this->days;
   }
 
   /**
-   * @param string $dataTour
-   *
-   * @return YandexYmlOfferTour
+   * {@inheritdoc}
    */
-  public function addDataTour($dataTour) {
+  public function addDataTour($data_tour) {
     /** @var \Drupal\yandex_yml\YandexYml\Param\YandexYmlDataTour $data_tour */
     $data_tour = \Drupal::service('yandex_yml.param.data_tour');
-    $data_tour->setValue($dataTour);
+    $data_tour->setValue($data_tour);
     $this->dataTour[] = $data_tour;
     return $this;
   }
 
   /**
-   * @return array
+   * {@inheritdoc}
    */
   public function getDataTour() {
     return $this->dataTour;
   }
 
   /**
-   * @param string $hotelStars
-   *
-   * @return YandexYmlOfferTour
+   * {@inheritdoc}
    */
-  public function setHotelStars($hotelStars) {
-    $this->hotelStars = $hotelStars;
+  public function setHotelStars($hotel_stars) {
+    $this->hotelStars = $hotel_stars;
     return $this;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getHotelStars() {
     return $this->hotelStars;
   }
 
   /**
-   * @param string $room
-   *
-   * @return YandexYmlOfferTour
+   * {@inheritdoc}
    */
   public function setRoom($room) {
     $this->room = $room;
@@ -263,16 +274,14 @@ class YandexYmlOfferTour extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getRoom() {
     return $this->room;
   }
 
   /**
-   * @param string $meal
-   *
-   * @return YandexYmlOfferTour
+   * {@inheritdoc}
    */
   public function setMeal($meal) {
     $this->meal = $meal;
@@ -280,16 +289,14 @@ class YandexYmlOfferTour extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getMeal() {
     return $this->meal;
   }
 
   /**
-   * @param array $included
-   *
-   * @return YandexYmlOfferTour
+   * {@inheritdoc}
    */
   public function setIncluded(array $included) {
     $this->included = implode(', ', $included);
@@ -297,16 +304,14 @@ class YandexYmlOfferTour extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getIncluded() {
     return $this->included;
   }
 
   /**
-   * @param string $transport
-   *
-   * @return YandexYmlOfferTour
+   * {@inheritdoc}
    */
   public function setTransport($transport) {
     $this->transport = $transport;
@@ -314,50 +319,44 @@ class YandexYmlOfferTour extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getTransport() {
     return $this->transport;
   }
 
   /**
-   * @param string $priceMin
-   *
-   * @return YandexYmlOfferTour
+   * {@inheritdoc}
    */
-  public function setPriceMin($priceMin) {
-    $this->priceMin = $priceMin;
+  public function setPriceMin($price_min) {
+    $this->priceMin = $price_min;
     return $this;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getPriceMin() {
     return $this->priceMin;
   }
 
   /**
-   * @param string $priceMax
-   *
-   * @return YandexYmlOfferTour
+   * {@inheritdoc}
    */
-  public function setPriceMax($priceMax) {
-    $this->priceMax = $priceMax;
+  public function setPriceMax($price_max) {
+    $this->priceMax = $price_max;
     return $this;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getPriceMax() {
     return $this->priceMax;
   }
 
   /**
-   * @param string $options
-   *
-   * @return YandexYmlOfferTour
+   * {@inheritdoc}
    */
   public function setOptions($options) {
     $this->options = $options;
@@ -365,7 +364,7 @@ class YandexYmlOfferTour extends YandexYmlOfferBase {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getOptions() {
     return $this->options;
