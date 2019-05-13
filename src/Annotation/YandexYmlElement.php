@@ -18,4 +18,14 @@ class YandexYmlElement extends Plugin {
    */
   public $name;
 
+  /**
+   * Gets element name.
+   *
+   * @return string
+   *   The element name.
+   */
+  public function getElementName() {
+    return $this->definition['name'];
+  }
+
 }

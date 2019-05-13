@@ -2,84 +2,92 @@
 
 namespace Drupal\yandex_yml;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Drupal;
 use Drupal\Component\Datetime\Time;
 use Drupal\Core\Datetime\DateFormatter;
-use Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory;
-use Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency;
-use Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery;
-use Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBase;
+use Drupal\yandex_yml\Annotation\YandexYmlElement;
 use Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop;
+use XMLWriter;
 
 /**
  * Class YandexYmlGenerator.
  */
 class YandexYmlGenerator implements YandexYmlGeneratorInterface {
 
+  protected $counter;
+
   /**
    * The XML writer.
    *
    * @var \XMLWriter
    */
-  private $writer;
+  protected $writer;
 
   /**
    * The path to temp file.
    *
    * @var string
    */
-  private $tempFilePath;
+  protected $tempFilePath;
 
   /**
    * The shop info.
    *
    * @var \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
    */
-  private $shopInfo;
+  protected $shopInfo;
 
   /**
    * The datetime.
    *
    * @var \Drupal\Component\Datetime\Time
    */
-  private $dateTime;
+  protected $dateTime;
 
   /**
    * The date formatter.
    *
    * @var \Drupal\Core\Datetime\DateFormatter
    */
-  private $dateFormatter;
+  protected $dateFormatter;
 
   /**
    * The currencies.
    *
    * @var \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency[]
    */
-  private $currencies = [];
+  protected $currencies = [];
 
   /**
    * The categories.
    *
    * @var \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory[]
    */
-  private $categories = [];
+  protected $categories = [];
 
   /**
    * The delivery options.
    *
    * @var \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery[]
    */
-  private $deliveryOptions = [];
+  protected $deliveryOptions = [];
 
   /**
    * The offers.
    *
    * @var \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface[]
    */
-  private $offers = [];
+  protected $offers = [];
 
-  protected $counter;
-
+  /**
+   * The annotation reader.
+   *
+   * @var \Doctrine\Common\Annotations\AnnotationReader
+   */
+  protected $annotationReader;
+  
   /**
    * Constructs a new YandexYmlGenerator object.
    *
@@ -92,13 +100,17 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->dateTime = $date_time;
     $this->dateFormatter = $date_formatter;
     // Prepare temporary file.
-    $this->tempFilePath = \Drupal::service('file_system')
+    $this->tempFilePath = Drupal::service('file_system')
       ->tempnam('temporary://yandex_yml', 'yml_');
     // Initialization of file.
-    $this->writer = new \XMLWriter();
+    $this->writer = new XMLWriter();
     $this->writer->openURI($this->tempFilePath);
     $this->writer->setIndentString("\t");
     $this->writer->setIndent(TRUE);
+
+    $this->annotationReader = new AnnotationReader();
+    // Register the namespaces of classes that can be used for annotations.
+    AnnotationRegistry::registerLoader('class_exists');
   }
 
   /**
@@ -110,23 +122,11 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   }
 
   /**
-   * {@inheritdoc}
-   */
-  public function generateMarkup() {
-    $this->buildData();
-    return $this->writer->outputMemory();
-  }
-
-  /**
    * Write elements to writer object.
    */
   protected function buildData() {
     $this->writeHeader();
-    $this->writeShopInfo();
-    $this->writeCurrencies();
-    $this->writeCategories();
-    $this->writeDeliveryOptions();
-    $this->writeOffers();
+    $this->writeElement($this->getShopInfo());
     $this->writeFooter();
   }
 
@@ -140,112 +140,53 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writer->endDTD();
     $this->writer->startElement('yml_catalog');
     $this->writer->writeAttribute('date', $date);
-    $this->writer->startElement('shop');
   }
 
   /**
    * Write ShopInfo.
    */
-  protected function writeShopInfo() {
-    $this->writeElementFromArray($this->getShopInfo()->toArray());
+  protected function writeElement($element) {
+    $this->processClass($element);
   }
 
-  /**
-   * Write currencies.
-   */
-  protected function writeCurrencies() {
-    if (!empty($this->currencies)) {
-      $this->writer->startElement('currencies');
-      foreach ($this->currencies as $currency) {
-        $this->writeElementFromArray($currency->toArray());
-      }
-      $this->writer->endElement();
+  protected function processClass($element) {
+    $class_annotation = $this->parseClassAnnotation($element);
+
+    // Process <element>.
+    if ($class_annotation instanceof YandexYmlElement) {
+      $this->writer->startElement($class_annotation->getElementName());
+      $this->processProperties($element);
+      $this->writer->fullEndElement();
     }
   }
 
-  /**
-   * Write categories.
-   */
-  protected function writeCategories() {
-    if (!empty($this->categories)) {
-      $this->writer->startElement('categories');
-      foreach ($this->categories as $category) {
-        $this->writeElementFromArray($category->toArray());
+  protected function processProperties($element) {
+    $result = &drupal_static(__CLASS__ . ':property_annotation:' . get_class($element));
+
+    if (!isset($result)) {
+      $reflection = new \ReflectionClass($element);
+      foreach ($reflection->getProperties() as $property) {
+        $annotation = $this->annotationReader->getPropertyAnnotations($property);
+        dump($annotation);
       }
-      $this->writer->endElement();
     }
+
+    return $result;
   }
 
   /**
-   * Write delivery options.
+   * Parse YandexYml elements.
    */
-  protected function writeDeliveryOptions() {
-    if (!empty($this->deliveryOptions)) {
-      $this->writer->startElement('delivery-options');
-      foreach ($this->deliveryOptions as $delivery_option) {
-        $this->writeElementFromArray($delivery_option->toArray());
-      }
-      $this->writer->endElement();
-    }
-  }
+  protected function parseClassAnnotation($element) {
+    $result = &drupal_static(__CLASS__ . ':class_annotation:' . get_class($element));
 
-  /**
-   * Write offers.
-   */
-  protected function writeOffers() {
-    if (!empty($this->offers)) {
-      $this->writer->startElement('offers');
-      foreach ($this->offers as $offer) {
-        $this->writeElementFromArray($offer->toArray());
-      }
-      $this->writer->endElement();
+    if (!isset($result)) {
+      $reflection = new \ReflectionClass($element);
+      $annotation_name = 'Drupal\yandex_yml\Annotation\YandexYmlElement';
+      $result = $this->annotationReader->getClassAnnotation($reflection, $annotation_name);
     }
-  }
 
-  /**
-   * Write document footer.
-   */
-  protected function writeFooter() {
-    // Close "shop".
-    $this->writer->fullEndElement();
-    // Close "yml_catalog".
-    $this->writer->fullEndElement();
-    $this->writer->endDocument();
-  }
-
-  /**
-   * Write element according to YandexYml annotation.
-   *
-   * @param array $values
-   *   The values to write from object.
-   */
-  protected function writeElementFromArray(array $values) {
-    foreach ($values as $value) {
-      $element_name = $value['name'];
-      $element_value = isset($value['value']) ? $value['value'] : NULL;
-      $element_attributes = isset($value['attributes']) ? $value['attributes'] : NULL;
-      $element_child = isset($value['child']) ? $value['child'] : NULL;
-      $this->writer->startElement($element_name);
-      if ($element_attributes) {
-        foreach ($element_attributes as $element_attribute) {
-          $this->preprocessValue($element_attribute['value']);
-          $this->writer->writeAttribute($element_attribute['name'], $element_attribute['value']);
-        }
-      }
-      if (isset($element_value)) {
-        $this->preprocessValue($element_value);
-        if ($element_value != strip_tags($element_value)) {
-          $this->writer->writeCData($element_value);
-        }
-        else {
-          $this->writer->text($element_value);
-        }
-      }
-      if ($element_child) {
-        $this->writeElementFromArray($element_child);
-      }
-      $this->writer->endElement();
-    }
+    return $result;
   }
 
   /**
@@ -268,14 +209,6 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   /**
    * {@inheritdoc}
    */
-  public function setShopInfo(YandexYmlShop $shop_info) {
-    $this->shopInfo = $shop_info;
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getShopInfo() {
     return $this->shopInfo;
   }
@@ -283,59 +216,28 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   /**
    * {@inheritdoc}
    */
-  public function addCurrency(YandexYmlCurrency $currency) {
-    $this->currencies[$currency->getId()] = $currency;
+  public function setShopInfo(YandexYmlShop $shop_info) {
+    $this->shopInfo = $shop_info;
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Write document footer.
    */
-  public function getCurrencies() {
-    return $this->currencies;
+  protected function writeFooter() {
+    // Close "yml_catalog".
+    $this->writer->fullEndElement();
+    $this->writer->endDocument();
   }
 
   /**
    * {@inheritdoc}
    */
-  public function addCategory(YandexYmlCategory $category) {
-    $this->categories[$category->getId()] = $category;
-    return $this;
-  }
+  public function generateMarkup() {
+    $this->buildData();
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getCategories() {
-    return $this->categories;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function addDeliveryOption(YandexYmlDelivery $delivery_option) {
-    $this->deliveryOptions[] = $delivery_option;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getDeliveryOptions() {
-    return $this->deliveryOptions;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function addOffer(YandexYmlOfferBase $offer) {
-    $this->offers[] = $offer;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getOffers() {
-    return $this->offers;
+    return $this->writer->outputMemory();
   }
 
 }

@@ -12,6 +12,10 @@ use InvalidArgumentException;
  * Class YandexYmlShop.
  *
  * @see https://yandex.ru/support/partnermarket/elements/shop.html
+ *
+ * @YandexYmlElement(
+ *   name = "shop"
+ * )
  */
 final class YandexYmlShop {
 
