@@ -15,7 +15,7 @@ use Drupal\yandex_yml\Annotation\YandexYmlValue;
  *   name = "category"
  * )
  */
-class YandexYmlCategory {
+final class YandexYmlCategory {
 
   /**
    * The category ID.
@@ -24,7 +24,7 @@ class YandexYmlCategory {
    *
    * @YandexYmlAttribute()
    */
-  private $id;
+  protected $id;
 
   /**
    * The category parent ID.
@@ -33,7 +33,7 @@ class YandexYmlCategory {
    *
    * @YandexYmlAttribute()
    */
-  private $parentId;
+  protected $parentId;
 
   /**
    * The category name.
@@ -42,7 +42,33 @@ class YandexYmlCategory {
    *
    * @YandexYmlValue()
    */
-  private $name;
+  protected $name;
+
+  /**
+   * YandexYmlCategory constructor.
+   *
+   * @param int $id
+   *   The category ID.
+   * @param string $name
+   *   The category name.
+   * @param null|int $parent_id
+   *   The category parent ID.
+   */
+  public function __construct($id, $name, $parent_id = NULL) {
+    $this->setId($id);
+    $this->setName($name);
+    $this->setParentId($parent_id);
+  }
+
+  /**
+   * Gets category id.
+   *
+   * @return int
+   *   The category id.
+   */
+  public function getId() {
+    return $this->id;
+  }
 
   /**
    * Sets category id.
@@ -55,19 +81,20 @@ class YandexYmlCategory {
    * @return \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory
    *   This category object.
    */
-  public function setId($id) {
+  protected function setId($id) {
     $this->id = $id;
+
     return $this;
   }
 
   /**
-   * Gets category id.
+   * Gets parent category id.
    *
    * @return int
-   *   The category id.
+   *   The parent category id.
    */
-  public function getId() {
-    return $this->id;
+  public function getParentId() {
+    return $this->parentId;
   }
 
   /**
@@ -83,32 +110,9 @@ class YandexYmlCategory {
    * @return \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory
    *   The current category.
    */
-  public function setParentId($parentId) {
+  protected function setParentId($parentId) {
     $this->parentId = $parentId;
-    return $this;
-  }
 
-  /**
-   * Gets parent category id.
-   *
-   * @return int
-   *   The parent category id.
-   */
-  public function getParentId() {
-    return $this->parentId;
-  }
-
-  /**
-   * Sets category name.
-   *
-   * @param string $name
-   *   The category name.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory
-   *   The current category.
-   */
-  public function setName($name) {
-    $this->name = $name;
     return $this;
   }
 
@@ -120,6 +124,21 @@ class YandexYmlCategory {
    */
   public function getName() {
     return $this->name;
+  }
+
+  /**
+   * Sets category name.
+   *
+   * @param string $name
+   *   The category name.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory
+   *   The current category.
+   */
+  protected function setName($name) {
+    $this->name = $name;
+
+    return $this;
   }
 
 }

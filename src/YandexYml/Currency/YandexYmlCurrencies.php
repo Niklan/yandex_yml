@@ -2,7 +2,7 @@
 
 namespace Drupal\yandex_yml\YandexYml\Currency;
 
-use Traversable;
+use Drupal\yandex_yml\YandexYml\YandexYmlArray;
 
 /**
  * Class YandexYmlCurrencies.
@@ -11,14 +11,7 @@ use Traversable;
  *
  * @see https://yandex.ru/support/partnermarket/currencies.html
  */
-final class YandexYmlCurrencies implements \IteratorAggregate {
-
-  /**
-   * The currencies info.
-   *
-   * @var array
-   */
-  protected $currencies = [];
+final class YandexYmlCurrencies extends YandexYmlArray {
 
   /**
    * Adds currency.
@@ -30,16 +23,9 @@ final class YandexYmlCurrencies implements \IteratorAggregate {
    *   The current object instance.
    */
   public function addCurrency(YandexYmlCurrency $currency) {
-    $this->currencies[] = $currency;
+    $this->values[] = $currency;
 
     return $this;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public function getIterator() {
-    return new \ArrayIterator();
   }
 
 }

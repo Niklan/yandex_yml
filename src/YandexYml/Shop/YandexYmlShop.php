@@ -4,6 +4,7 @@ namespace Drupal\yandex_yml\YandexYml\Shop;
 
 use Drupal;
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
+use Drupal\yandex_yml\YandexYml\Category\YandexYmlCategories;
 use Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrencies;
 use InvalidArgumentException;
 
@@ -87,6 +88,15 @@ final class YandexYmlShop {
    * @YandexYmlElement()
    */
   protected $currencies;
+
+  /**
+   * The list of categories of products.
+   *
+   * @var \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategories
+   *
+   * @YandexYmlElement()
+   */
+  protected $categories;
 
   /**
    * YandexYmlShop constructor.
@@ -335,6 +345,31 @@ final class YandexYmlShop {
    */
   public function setCurrencies(YandexYmlCurrencies $currencies) {
     $this->currencies = $currencies;
+
+    return $this;
+  }
+
+  /**
+   * Gets categories.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategories
+   *   The categories info.
+   */
+  public function getCategories() {
+    return $this->categories;
+  }
+
+  /**
+   * Sets categories.
+   *
+   * @param \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategories $categories
+   *   The categories info.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   *   The object instance.
+   */
+  public function setCategories(YandexYmlCategories $categories) {
+    $this->categories = $categories;
 
     return $this;
   }
