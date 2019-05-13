@@ -5,7 +5,6 @@ namespace Drupal\yandex_yml\YandexYml\Category;
 use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlValue;
-use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 
 /**
  * Class YandexYmlCategory.
@@ -17,8 +16,6 @@ use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
  * )
  */
 class YandexYmlCategory {
-
-  use YandexYmlToArrayTrait;
 
   /**
    * The category ID.

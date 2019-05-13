@@ -4,7 +4,6 @@ namespace Drupal\yandex_yml\YandexYml\Delivery;
 
 use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
-use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 
 /**
  * Class YandexYmlDelivery.
@@ -16,8 +15,6 @@ use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
  * )
  */
 class YandexYmlDelivery {
-
-  use YandexYmlToArrayTrait;
 
   /**
    * The delivery cost.

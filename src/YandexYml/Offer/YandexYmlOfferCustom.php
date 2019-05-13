@@ -5,7 +5,6 @@ namespace Drupal\yandex_yml\YandexYml\Offer;
 use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
-use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 
 /**
  * Custom offer.
@@ -17,8 +16,6 @@ use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
  * )
  */
 class YandexYmlOfferCustom extends YandexYmlOfferBase implements YandexYmlOfferCustomInterface {
-
-  use YandexYmlToArrayTrait;
 
   /**
    * The type.

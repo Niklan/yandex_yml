@@ -2,219 +2,306 @@
 
 namespace Drupal\yandex_yml\YandexYml\Shop;
 
+use Drupal;
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
-use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
+use InvalidArgumentException;
 
 /**
  * Class YandexYmlShop.
  *
- * @see https://yandex.ru/support/partnermarket/export/yml.html
+ * @see https://yandex.ru/support/partnermarket/elements/shop.html
  */
 class YandexYmlShop {
 
-  use YandexYmlToArrayTrait;
-
   /**
-   * @YandexYmlElement()
+   * The short shop name.
    *
    * @var string
+   *
+   * @YandexYmlElement()
    */
-  private $name;
+  protected $name;
 
   /**
+   * The full company name which owns the shop.
+   *
+   * @var string
+   *
    * @YandexYmlElement(
    *   name = "company"
    * )
+   */
+  protected $company;
+
+  /**
+   * The shop home page.
    *
    * @var string
+   *
+   * @YandexYmlElement()
    */
-  private $company;
+  protected $url;
 
   /**
-   * @YandexYmlElement()
+   * The platform name.
    *
    * @var string
+   *
+   * @YandexYmlElement()
    */
-  private $url;
+  protected $platform;
 
   /**
-   * @YandexYmlElement()
+   * The platform version.
    *
    * @var string
+   *
+   * @YandexYmlElement()
    */
-  private $platform;
+  protected $version;
 
   /**
-   * @YandexYmlElement()
+   * The agency name which provides technical support for the shop.
    *
    * @var string
+   *
+   * @YandexYmlElement()
    */
-  private $version;
+  protected $agency;
 
   /**
-   * @YandexYmlElement()
+   * The email of platform developers or technical support.
    *
    * @var string
-   */
-  private $agency;
-
-  /**
-   * @YandexYmlElement()
    *
-   * @var string
-   */
-  private $email;
-
-  /**
    * @YandexYmlElement()
-   *
-   * @var int
    */
-  private $cpa;
+  protected $email;
 
   /**
+   * YandexYmlShop constructor.
+   *
    * @param string $name
-   *
-   * @return YandexYmlShop
+   *   The short shop name.
+   * @param string $company
+   *   The full company name which owns the shop.
+   * @param null|string $url
+   *   The shop home page.
+   * @param null|string $platform
+   *   The platform name.
+   * @param null|string $version
+   *   The platform version.
+   * @param null|string $agency
+   *   The agency name which provides technical support for the shop.
+   * @param null|string $email
+   *   The email of platform developers or agency which provides technical
+   *   support for the shop.
    */
-  public function setName($name) {
-    $this->name = $name;
-    return $this;
+  public function __construct(
+    $name,
+    $company,
+    $url = NULL,
+    $platform = 'Drupal',
+    $version = Drupal::VERSION,
+    $agency = NULL,
+    $email = NULL
+  ) {
+
+    $this->setName($name);
+    $this->setCompany($company);
+    $this->setUrl($url);
+    $this->setPlatform($platform);
+    $this->setVersion($version);
+    $this->setAgency($agency);
+    $this->setEmail($email);
   }
 
   /**
+   * Gets name.
+   *
    * @return string
+   *   The short shop name.
    */
   public function getName() {
     return $this->name;
   }
 
   /**
-   * @param string $company
+   * Sets name.
    *
-   * @return YandexYmlShop
+   * @param string $name
+   *   The short shop name.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   *   The object instance.
    */
-  public function setCompany($company) {
-    $this->company = $company;
+  protected function setName($name) {
+    if (mb_strlen($name) > 20) {
+      throw new InvalidArgumentException('The shop name must be not longer than 20 chars.');
+    }
+
+    $this->name = $name;
+
     return $this;
   }
 
   /**
+   * Gets company.
+   *
    * @return string
+   *   The full company name which owns the shop.
    */
   public function getCompany() {
     return $this->company;
   }
 
   /**
-   * @param string $url
+   * Sets company.
    *
-   * @return YandexYmlShop
+   * @param string $company
+   *   The full company name which owns the shop.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   *   The object instance.
    */
-  public function setUrl($url) {
-    $this->url = $url;
+  protected function setCompany($company) {
+    $this->company = $company;
+
     return $this;
   }
 
   /**
+   * Gets url.
+   *
    * @return string
+   *   The shop home page.
    */
   public function getUrl() {
     return $this->url;
   }
 
   /**
-   * @param string $platform
+   * Sets url.
    *
-   * @return YandexYmlShop
+   * @param null|string $url
+   *   The shop home page.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   *   The object instance.
    */
-  public function setPlatform($platform) {
-    $this->platform = $platform;
+  protected function setUrl($url) {
+    if (!$this->url) {
+      Drupal::request()->getSchemeAndHttpHost();
+    }
+    else {
+      $this->url = $url;
+    }
+
+    if (mb_strlen($this->url) > 50) {
+      throw new InvalidArgumentException('The length of shop url must be lower than 50 chars.');
+    }
+
     return $this;
   }
 
   /**
+   * Gets platform.
+   *
    * @return string
+   *   The platform name.
    */
   public function getPlatform() {
     return $this->platform;
   }
 
   /**
-   * @param string $version
+   * Sets platform.
    *
-   * @return YandexYmlShop
+   * @param null|string $platform
+   *   The platform name.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   *   The object instance.
    */
-  public function setVersion($version) {
-    $this->version = $version;
+  protected function setPlatform($platform) {
+    $this->platform = $platform;
+
     return $this;
   }
 
   /**
+   * Gets version.
+   *
    * @return string
+   *   The platform version.
    */
   public function getVersion() {
     return $this->version;
   }
 
   /**
-   * @param string $agency
+   * Sets version.
    *
-   * @return YandexYmlShop
+   * @param null|string $version
+   *   The platform version.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   *   The object instance.
    */
-  public function setAgency($agency) {
-    $this->agency = $agency;
+  protected function setVersion($version) {
+    $this->version = $version;
+
     return $this;
   }
 
   /**
+   * Gets agency.
+   *
    * @return string
+   *   The agency name which provides technical support for the shop.
    */
   public function getAgency() {
     return $this->agency;
   }
 
   /**
-   * @param string $email
+   * Sets agency.
    *
-   * @return YandexYmlShop
+   * @param string $agency
+   *   The agency name which provides technical support for the shop.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   *   The object instance.
    */
-  public function setEmail($email) {
-    $this->email = $email;
+  protected function setAgency($agency) {
+    $this->agency = $agency;
+
     return $this;
   }
 
   /**
+   * Get email.
+   *
    * @return string
+   *   The email of platform developers or technical support.
    */
   public function getEmail() {
     return $this->email;
   }
 
   /**
-   * @param int $cpa
+   * Sets email.
    *
-   * @return YandexYmlShop
+   * @param string $email
+   *   The email of platform developers or technical support.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   *   The object instance.
    */
-  public function setCpa($cpa) {
-    $this->cpa = $cpa;
+  protected function setEmail($email) {
+    $this->email = $email;
+
     return $this;
-  }
-
-  /**
-   * @return int
-   */
-  public function getCpa() {
-    return $this->cpa;
-  }
-
-  /**
-   * Set default values.
-   */
-  public function __construct() {
-    $this->setUrl(\Drupal::request()->getSchemeAndHttpHost());
-    $this->setPlatform('Drupal');
-    $this->setVersion(\Drupal::VERSION);
   }
 
 }

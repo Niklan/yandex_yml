@@ -5,7 +5,6 @@ namespace Drupal\yandex_yml\YandexYml\Param;
 use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlValue;
-use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 
 /**
  * Age element.
@@ -17,8 +16,6 @@ use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
  * )
  */
 class YandexYmlAge {
-
-  use YandexYmlToArrayTrait;
 
   /**
    * The unit.

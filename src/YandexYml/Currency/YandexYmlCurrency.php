@@ -4,7 +4,6 @@ namespace Drupal\yandex_yml\YandexYml\Currency;
 
 use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
-use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 
 /**
  * Class YandexYmlCurrency.
@@ -16,8 +15,6 @@ use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
  * )
  */
 class YandexYmlCurrency {
-
-  use YandexYmlToArrayTrait;
 
   /**
    * The currency code.

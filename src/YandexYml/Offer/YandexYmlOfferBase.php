@@ -7,7 +7,6 @@ use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
 use Drupal\yandex_yml\Annotation\YandexYmlElementWrapperAttribute;
-use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
 
 /**
  * Base object for other offers.
@@ -15,8 +14,6 @@ use Drupal\yandex_yml\YandexYml\YandexYmlToArrayTrait;
  * @see https://yandex.ru/support/partnermarket/offers.html
  */
 abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
-
-  use YandexYmlToArrayTrait;
 
   /**
    * The product name.
