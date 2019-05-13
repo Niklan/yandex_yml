@@ -14,7 +14,7 @@ use Drupal\yandex_yml\Annotation\YandexYmlElement;
  *   name = "currency"
  * )
  */
-class YandexYmlCurrency {
+final class YandexYmlCurrency {
 
   /**
    * The currency code.
@@ -23,7 +23,7 @@ class YandexYmlCurrency {
    *
    * @YandexYmlAttribute()
    */
-  private $id;
+  protected $id;
 
   /**
    * The currency exchange rate for single unit.
@@ -32,22 +32,19 @@ class YandexYmlCurrency {
    *
    * @YandexYmlAttribute()
    */
-  private $rate;
+  protected $rate;
 
   /**
-   * Sets currency code name.
+   * YandexYmlCurrency constructor.
    *
    * @param string $id
-   *   The currency id.
-   *
-   * @example RUR, RUB, USD, EUR, UAH, KZT.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency
-   *   The current currency.
+   *   The currency ID.
+   * @param $rate
+   *   The rate value.
    */
-  public function setId($id) {
-    $this->id = $id;
-    return $this;
+  public function __construct($id, $rate) {
+    $this->setId($id);
+    $this->setRate($rate);
   }
 
   /**
@@ -58,6 +55,33 @@ class YandexYmlCurrency {
    */
   public function getId() {
     return $this->id;
+  }
+
+  /**
+   * Sets currency code name.
+   *
+   * @param string $id
+   *   The currency id.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency
+   *   The current currency.
+   * @example RUR, RUB, USD, EUR, UAH, KZT.
+   *
+   */
+  protected function setId($id) {
+    $this->id = $id;
+
+    return $this;
+  }
+
+  /**
+   * Gets exchange rate.
+   *
+   * @return int|float|string
+   *   The exchange rate.
+   */
+  public function getRate() {
+    return $this->rate;
   }
 
   /**
@@ -78,19 +102,10 @@ class YandexYmlCurrency {
    * @return \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency
    *   The current currency.
    */
-  public function setRate($rate) {
+  protected function setRate($rate) {
     $this->rate = $rate;
-    return $this;
-  }
 
-  /**
-   * Gets exchange rate.
-   *
-   * @return int|float|string
-   *   The exchange rate.
-   */
-  public function getRate() {
-    return $this->rate;
+    return $this;
   }
 
 }

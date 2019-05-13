@@ -4,6 +4,7 @@ namespace Drupal\yandex_yml\YandexYml\Shop;
 
 use Drupal;
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
+use Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrencies;
 use InvalidArgumentException;
 
 /**
@@ -11,7 +12,7 @@ use InvalidArgumentException;
  *
  * @see https://yandex.ru/support/partnermarket/elements/shop.html
  */
-class YandexYmlShop {
+final class YandexYmlShop {
 
   /**
    * The short shop name.
@@ -77,6 +78,15 @@ class YandexYmlShop {
    * @YandexYmlElement()
    */
   protected $email;
+
+  /**
+   * The list of currencies supported by shop.
+   *
+   * @var \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrencies
+   *
+   * @YandexYmlElement()
+   */
+  protected $currencies;
 
   /**
    * YandexYmlShop constructor.
@@ -300,6 +310,31 @@ class YandexYmlShop {
    */
   protected function setEmail($email) {
     $this->email = $email;
+
+    return $this;
+  }
+
+  /**
+   * Gets currencies.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrencies
+   *   An array of supported currencies.
+   */
+  public function getCurrencies() {
+    return $this->currencies;
+  }
+
+  /**
+   * Sets currencies for the shop.
+   *
+   * @param \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrencies $currencies
+   *   The currencies info.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   *   The object instance.
+   */
+  public function setCurrencies(YandexYmlCurrencies $currencies) {
+    $this->currencies = $currencies;
 
     return $this;
   }
