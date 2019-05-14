@@ -9,7 +9,7 @@ use Drupal\Component\Annotation\Plugin;
  *
  * @Annotation
  */
-class YandexYmlElementWrapper extends Plugin {
+class YandexYmlElementWrapper extends YandexYmlXmlBase {
 
   /**
    * Element wrapper name.

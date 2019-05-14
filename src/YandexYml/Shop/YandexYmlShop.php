@@ -3,7 +3,8 @@
 namespace Drupal\yandex_yml\YandexYml\Shop;
 
 use Drupal;
-use Drupal\yandex_yml\Annotation\YandexYmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 use Drupal\yandex_yml\YandexYml\Category\YandexYmlCategories;
 use Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrencies;
 use InvalidArgumentException;
@@ -13,9 +14,7 @@ use InvalidArgumentException;
  *
  * @see https://yandex.ru/support/partnermarket/elements/shop.html
  *
- * @YandexYmlElement(
- *   name = "shop"
- * )
+ * @YandexYmlXmlRootElement(name = "shop")
  */
 final class YandexYmlShop {
 
@@ -24,7 +23,7 @@ final class YandexYmlShop {
    *
    * @var string
    *
-   * @YandexYmlElement()
+   * @YandexYmlXmlElement()
    */
   protected $name;
 
@@ -33,7 +32,7 @@ final class YandexYmlShop {
    *
    * @var string
    *
-   * @YandexYmlElement(
+   * @YandexYmlXmlElement(
    *   name = "company"
    * )
    */
@@ -44,7 +43,7 @@ final class YandexYmlShop {
    *
    * @var string
    *
-   * @YandexYmlElement()
+   * @YandexYmlXmlElement()
    */
   protected $url;
 
@@ -53,7 +52,7 @@ final class YandexYmlShop {
    *
    * @var string
    *
-   * @YandexYmlElement()
+   * @YandexYmlXmlElement()
    */
   protected $platform;
 
@@ -62,7 +61,7 @@ final class YandexYmlShop {
    *
    * @var string
    *
-   * @YandexYmlElement()
+   * @YandexYmlXmlElement()
    */
   protected $version;
 
@@ -71,7 +70,7 @@ final class YandexYmlShop {
    *
    * @var string
    *
-   * @YandexYmlElement()
+   * @YandexYmlXmlElement()
    */
   protected $agency;
 
@@ -80,7 +79,7 @@ final class YandexYmlShop {
    *
    * @var string
    *
-   * @YandexYmlElement()
+   * @YandexYmlXmlElement()
    */
   protected $email;
 
@@ -89,7 +88,7 @@ final class YandexYmlShop {
    *
    * @var \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrencies
    *
-   * @YandexYmlElement()
+   * @YandexYmlXmlElement()
    */
   protected $currencies;
 
@@ -98,7 +97,7 @@ final class YandexYmlShop {
    *
    * @var \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategories
    *
-   * @YandexYmlElement()
+   * @YandexYmlXmlElement()
    */
   protected $categories;
 

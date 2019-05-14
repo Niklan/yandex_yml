@@ -2,14 +2,14 @@
 
 namespace Drupal\yandex_yml\Annotation;
 
-use Drupal\Component\Annotation\Plugin;
-
 /**
- * Annotation YandexYml.
+ * Annotation YandexYmlXmlRootElement.
+ *
+ * Used for XML element contains another elements. In other words - container.
  *
  * @Annotation
  */
-class YandexYmlElement extends Plugin {
+class YandexYmlXmlRootElement extends YandexYmlXmlBase {
 
   /**
    * Element name.
@@ -24,7 +24,7 @@ class YandexYmlElement extends Plugin {
    * @return string
    *   The element name.
    */
-  public function getElementName() {
+  public function getName() {
     return $this->definition['name'];
   }
 

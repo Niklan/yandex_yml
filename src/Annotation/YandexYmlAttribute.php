@@ -2,14 +2,12 @@
 
 namespace Drupal\yandex_yml\Annotation;
 
-use Drupal\Component\Annotation\Plugin;
-
 /**
  * Annotation YandexYml.
  *
  * @Annotation
  */
-class YandexYmlAttribute extends Plugin {
+class YandexYmlAttribute extends YandexYmlXmlBase {
 
   /**
    * Attribute name.

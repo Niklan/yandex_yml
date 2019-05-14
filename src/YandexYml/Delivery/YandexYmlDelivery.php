@@ -3,7 +3,7 @@
 namespace Drupal\yandex_yml\YandexYml\Delivery;
 
 use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
-use Drupal\yandex_yml\Annotation\YandexYmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
 
 /**
  * Class YandexYmlDelivery.
