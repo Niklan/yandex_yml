@@ -6,13 +6,13 @@ use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
 
 /**
- * Class YandexYmlCurrency.
+ * Class Currency.
  *
  * @see https://yandex.ru/support/partnermarket/currencies.html
  *
  * @YandexYmlXmlElement(name = "currency")
  */
-final class YandexYmlCurrency {
+final class Currency {
 
   /**
    * The currency code.
@@ -33,7 +33,7 @@ final class YandexYmlCurrency {
   protected $rate;
 
   /**
-   * YandexYmlCurrency constructor.
+   * Currency constructor.
    *
    * @param string $id
    *   The currency ID.
@@ -61,7 +61,7 @@ final class YandexYmlCurrency {
    * @param string $id
    *   The currency id.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency
+   * @return \Drupal\yandex_yml\YandexYml\Currency\Currency
    *   The current currency.
    * @example RUR, RUB, USD, EUR, UAH, KZT.
    *
@@ -97,7 +97,7 @@ final class YandexYmlCurrency {
    * @param int|float|string $rate
    *   The exchange rate.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency
+   * @return \Drupal\yandex_yml\YandexYml\Currency\Currency
    *   The current currency.
    */
   protected function setRate($rate) {

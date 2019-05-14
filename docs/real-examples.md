@@ -74,13 +74,13 @@ class YandexYmlService {
    * Generate result file.
    */
   public function generateFile() {
-    /** @var \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop $shop_info */
+    /** @var \Drupal\yandex_yml\YandexYml\Shop\Shop $shop_info */
     $shop_info = \Drupal::service('yandex_yml.shop')
       ->setName('NAME')
       ->setCompany('FULLNAME')
       ->setEmail('developer@example.com')
       ->setCpa(0);
-    $this->generator->setShopInfo($shop_info);
+    $this->generator->setShop($shop_info);
 
     $spare_parts = $this->entityTypeManager->getStorage('node')
       ->loadByProperties([
@@ -88,7 +88,7 @@ class YandexYmlService {
         'status' => NodeInterface::PUBLISHED,
       ]);
 
-    /** @var \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency $currency */
+    /** @var \Drupal\yandex_yml\YandexYml\Currency\Currency $currency */
     $currency = \Drupal::service('yandex_yml.currency');
     $currency->setId('RUB')->setRate(1);
     $this->generator->addCurrency($currency);

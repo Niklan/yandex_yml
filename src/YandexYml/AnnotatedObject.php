@@ -14,7 +14,7 @@ use ReflectionObject;
  *
  * @package Drupal\yandex_yml\YandexYml
  */
-class YandexYmlAnnotatatedObject {
+class AnnotatedObject {
 
   protected $annotationReader;
 

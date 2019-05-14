@@ -6,18 +6,18 @@ use Drupal;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlElementWrapper;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
-use Drupal\yandex_yml\YandexYml\Category\YandexYmlCategories;
-use Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrencies;
+use Drupal\yandex_yml\YandexYml\Category\Categories;
+use Drupal\yandex_yml\YandexYml\Currency\Currencies;
 use InvalidArgumentException;
 
 /**
- * Class YandexYmlShop.
+ * Class Shop.
  *
  * @see https://yandex.ru/support/partnermarket/elements/shop.html
  *
  * @YandexYmlXmlRootElement(name = "shop")
  */
-final class YandexYmlShop {
+final class Shop {
 
   /**
    * The short shop name.
@@ -85,7 +85,7 @@ final class YandexYmlShop {
   /**
    * The list of currencies supported by shop.
    *
-   * @var \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrencies
+   * @var \Drupal\yandex_yml\YandexYml\Currency\Currencies
    *
    * @YandexYmlXmlElementWrapper()
    */
@@ -94,14 +94,14 @@ final class YandexYmlShop {
   /**
    * The list of categories of products.
    *
-   * @var \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategories
+   * @var \Drupal\yandex_yml\YandexYml\Category\Categories
    *
    * @YandexYmlXmlElementWrapper()
    */
   protected $categories;
 
   /**
-   * YandexYmlShop constructor.
+   * Shop constructor.
    *
    * @param string $name
    *   The short shop name.
@@ -154,7 +154,7 @@ final class YandexYmlShop {
    * @param string $name
    *   The short shop name.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
   protected function setName($name) {
@@ -183,7 +183,7 @@ final class YandexYmlShop {
    * @param string $company
    *   The full company name which owns the shop.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
   protected function setCompany($company) {
@@ -208,7 +208,7 @@ final class YandexYmlShop {
    * @param null|string $url
    *   The shop home page.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
   protected function setUrl($url) {
@@ -242,7 +242,7 @@ final class YandexYmlShop {
    * @param null|string $platform
    *   The platform name.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
   protected function setPlatform($platform) {
@@ -267,7 +267,7 @@ final class YandexYmlShop {
    * @param null|string $version
    *   The platform version.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
   protected function setVersion($version) {
@@ -292,7 +292,7 @@ final class YandexYmlShop {
    * @param string $agency
    *   The agency name which provides technical support for the shop.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
   protected function setAgency($agency) {
@@ -317,7 +317,7 @@ final class YandexYmlShop {
    * @param string $email
    *   The email of platform developers or technical support.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
   protected function setEmail($email) {
@@ -329,7 +329,7 @@ final class YandexYmlShop {
   /**
    * Gets currencies.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrencies
+   * @return \Drupal\yandex_yml\YandexYml\Currency\Currencies
    *   An array of supported currencies.
    */
   public function getCurrencies() {
@@ -339,13 +339,13 @@ final class YandexYmlShop {
   /**
    * Sets currencies for the shop.
    *
-   * @param \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrencies $currencies
+   * @param \Drupal\yandex_yml\YandexYml\Currency\Currencies $currencies
    *   The currencies info.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
-  public function setCurrencies(YandexYmlCurrencies $currencies) {
+  public function setCurrencies(Currencies $currencies) {
     $this->currencies = $currencies;
 
     return $this;
@@ -354,7 +354,7 @@ final class YandexYmlShop {
   /**
    * Gets categories.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategories
+   * @return \Drupal\yandex_yml\YandexYml\Category\Categories
    *   The categories info.
    */
   public function getCategories() {
@@ -364,13 +364,13 @@ final class YandexYmlShop {
   /**
    * Sets categories.
    *
-   * @param \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategories $categories
+   * @param \Drupal\yandex_yml\YandexYml\Category\Categories $categories
    *   The categories info.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
-  public function setCategories(YandexYmlCategories $categories) {
+  public function setCategories(Categories $categories) {
     $this->categories = $categories;
 
     return $this;

@@ -2,11 +2,11 @@
 
 namespace Drupal\yandex_yml;
 
-use Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory;
-use Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency;
+use Drupal\yandex_yml\YandexYml\Category\Category;
+use Drupal\yandex_yml\YandexYml\Currency\Currency;
 use Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery;
 use Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBase;
-use Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop;
+use Drupal\yandex_yml\YandexYml\Shop\Shop;
 
 /**
  * Interface YandexYmlGeneratorInterface.
@@ -34,20 +34,20 @@ interface YandexYmlGeneratorInterface {
   /**
    * Sets shop info.
    *
-   * @param \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop $shop_info
+   * @param \Drupal\yandex_yml\YandexYml\Shop\Shop $shop_info
    *   The shop info.
    *
    * @return \Drupal\yandex_yml\YandexYmlGeneratorInterface
    *   The current generator.
    */
-  public function setShopInfo(YandexYmlShop $shop_info);
+  public function setShop(Shop $shop_info);
 
   /**
    * Gets shop info.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The shop info.
    */
-  public function getShopInfo();
+  public function getShop();
 
 }

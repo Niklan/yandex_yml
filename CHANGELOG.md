@@ -24,21 +24,21 @@ $yandex_yml_generator = \Drupal::service('yandex_yml.generator');
 
 Timer::start('yandex_yml');
 
-/** @var \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop $shop_info */
+/** @var \Drupal\yandex_yml\YandexYml\Shop\Shop $shop_info */
 $shop_info = \Drupal::service('yandex_yml.shop')
   ->setName('Example shop name')
   ->setCompany('Fullname of the store')
   ->setAgency('https://niklan.net')
   ->setEmail('hello@niklan.net')
   ->setCpa(0);
-$yandex_yml_generator->setShopInfo($shop_info);
+$yandex_yml_generator->setShop($shop_info);
 
 $currencies_array = [
   ['id' => 'RUB', 'rate' => 1],
   ['id' => 'USD', 'rate' => 'CBRF'],
 ];
 foreach ($currencies_array as $currency_data) {
-  /** @var \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency $currency */
+  /** @var \Drupal\yandex_yml\YandexYml\Currency\Currency $currency */
   $currency = \Drupal::service('yandex_yml.currency')
     ->setId($currency_data['id'])
     ->setRate($currency_data['rate']);
@@ -55,7 +55,7 @@ $categories_array = [
   7 => ['name' => 'Office equipment'],
 ];
 foreach ($categories_array as $category_id => $category_data) {
-  /** @var \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory $category */
+  /** @var \Drupal\yandex_yml\YandexYml\Category\Category $category */
   $category = \Drupal::service('yandex_yml.category')
     ->setId($category_id)
     ->setName($category_data['name']);

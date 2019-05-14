@@ -7,13 +7,13 @@ use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlValue;
 
 /**
- * Class YandexYmlCategory.
+ * Class Category.
  *
  * @see https://yandex.ru/support/partnermarket/categories.html
  *
  * @YandexYmlXmlElement(name = "category")
  */
-final class YandexYmlCategory {
+final class Category {
 
   /**
    * The category ID.
@@ -43,7 +43,7 @@ final class YandexYmlCategory {
   protected $name;
 
   /**
-   * YandexYmlCategory constructor.
+   * Category constructor.
    *
    * @param int $id
    *   The category ID.
@@ -76,7 +76,7 @@ final class YandexYmlCategory {
    * @param int $id
    *   The category id.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory
+   * @return \Drupal\yandex_yml\YandexYml\Category\Category
    *   This category object.
    */
   protected function setId($id) {
@@ -105,7 +105,7 @@ final class YandexYmlCategory {
    * @param int $parentId
    *   The parent category id.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory
+   * @return \Drupal\yandex_yml\YandexYml\Category\Category
    *   The current category.
    */
   protected function setParentId($parentId) {
@@ -130,7 +130,7 @@ final class YandexYmlCategory {
    * @param string $name
    *   The category name.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory
+   * @return \Drupal\yandex_yml\YandexYml\Category\Category
    *   The current category.
    */
   protected function setName($name) {

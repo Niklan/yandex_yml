@@ -5,24 +5,24 @@ namespace Drupal\yandex_yml\YandexYml\Category;
 use Drupal\yandex_yml\YandexYml\YandexYmlArray;
 
 /**
- * Class YandexYmlCategories.
+ * Class Categories.
  *
  * Contains list of categories.
  *
  * @see https://yandex.ru/support/partnermarket/elements/categories.html
  */
-final class YandexYmlCategories extends YandexYmlArray {
+final class Categories extends YandexYmlArray {
 
   /**
    * Adds category.
    *
-   * @param \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory $category
+   * @param \Drupal\yandex_yml\YandexYml\Category\Category $category
    *   The category info.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategories
+   * @return \Drupal\yandex_yml\YandexYml\Category\Categories
    *   The current object instance.
    */
-  public function addCategory(YandexYmlCategory $category) {
+  public function addCategory(Category $category) {
     $this->values[] = $category;
 
     return $this;

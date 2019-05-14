@@ -13,8 +13,8 @@ use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlElementWrapper;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 use Drupal\yandex_yml\Utils\Utils;
-use Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop;
-use Drupal\yandex_yml\YandexYml\YandexYmlAnnotatatedObject;
+use Drupal\yandex_yml\YandexYml\Shop\Shop;
+use Drupal\yandex_yml\YandexYml\AnnotatedObject;
 use XMLWriter;
 
 /**
@@ -49,7 +49,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   /**
    * The shop info.
    *
-   * @var \Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop
+   * @var \Drupal\yandex_yml\YandexYml\Shop\Shop
    */
   protected $shopInfo;
 
@@ -70,14 +70,14 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   /**
    * The currencies.
    *
-   * @var \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrency[]
+   * @var \Drupal\yandex_yml\YandexYml\Currency\Currency[]
    */
   protected $currencies = [];
 
   /**
    * The categories.
    *
-   * @var \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategory[]
+   * @var \Drupal\yandex_yml\YandexYml\Category\Category[]
    */
   protected $categories = [];
 
@@ -140,7 +140,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    */
   protected function buildData() {
     $this->writeHeader();
-    $this->processClass($this->getShopInfo());
+    $this->processClass($this->getShop());
     $this->writeFooter();
   }
 
@@ -216,6 +216,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
         continue;
       }
 
+      $this->preprocessValue($property_value);
       $this->writer->startElement($element_name);
       $this->writer->text($property_value);
       $this->writer->fullEndElement();
@@ -267,7 +268,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $result = &drupal_static(__CLASS__ . ':annotated_object:' . get_class($object));
 
     if (!isset($result)) {
-      $result = new YandexYmlAnnotatatedObject($object);
+      $result = new AnnotatedObject($object);
     }
 
     return $result;
@@ -276,14 +277,14 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   /**
    * {@inheritdoc}
    */
-  public function getShopInfo() {
+  public function getShop() {
     return $this->shopInfo;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setShopInfo(YandexYmlShop $shop_info) {
+  public function setShop(Shop $shop_info) {
     $this->shopInfo = $shop_info;
 
     return $this;
