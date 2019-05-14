@@ -2,6 +2,7 @@
 
 namespace Drupal\yandex_yml\YandexYml\Currency;
 
+use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 use Drupal\yandex_yml\YandexYml\YandexYmlArray;
 
 /**

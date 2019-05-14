@@ -10,16 +10,25 @@ use Drupal\Core\Datetime\DateFormatter;
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlBase;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlElementWrapper;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 use Drupal\yandex_yml\Utils\Utils;
 use Drupal\yandex_yml\YandexYml\Shop\YandexYmlShop;
-use ReflectionClass;
+use Drupal\yandex_yml\YandexYml\YandexYmlAnnotatatedObject;
 use XMLWriter;
 
 /**
  * Class YandexYmlGenerator.
  */
 class YandexYmlGenerator implements YandexYmlGeneratorInterface {
+
+  const XML_ROOT_ELEMENT = 'Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement';
+
+  const XML_ELEMENT = 'Drupal\yandex_yml\Annotation\YandexYmlXmlElement';
+
+  const XML_ELEMENT_WRAPPER = 'Drupal\yandex_yml\Annotation\YandexYmlXmlElementWrapper';
+
+  const XML_ATTRIBUTE = 'Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute';
 
   protected $counter;
 
@@ -148,98 +157,117 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   }
 
   protected function processClass($element) {
-    $class_annotation = $this->parseClassAnnotation($element);
+    $annotated_object = $this->getAnnotatedObject($element);
 
     // If object is root xml element (contains another elements).
-    if ($class_annotation instanceof YandexYmlXmlRootElement) {
-      $this->writer->startElement($class_annotation->getName());
+    if ($xml_root_element = $annotated_object->getClassAnnotation($this::XML_ROOT_ELEMENT)) {
+      $this->writer->startElement($xml_root_element->getName());
+      $this->processProperties($element);
       $this->processMethods($element);
       $this->writer->fullEndElement();
     }
-    else {
+    elseif ($xml_element = $annotated_object->getClassAnnotation($this::XML_ELEMENT)) {
+      // @todo maybe need to handle a bit differently. For example looking only
+      //   for attributes and value, not allows nested elements.
+      $this->writer->startElement($xml_element->getName());
+      $this->processProperties($element);
       $this->processMethods($element);
+      $this->writer->fullEndElement();
     }
   }
 
-  protected function parseClassAnnotation($element) {
-    $result = &drupal_static(__CLASS__ . ':class_annotation:' . get_class($element));
-
-    if (!isset($result)) {
-      $reflection = $this->getClassReflection($element);
-      // Classes can be only YandexYmlXmlRootElement.
-      $annotation_name = 'Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement';
-      $result = $this->annotationReader->getClassAnnotation($reflection, $annotation_name);
-    }
-
-    return $result;
-  }
-
-  protected function processMethods($element) {
-    $reflection = $this->getClassReflection($element);
-    // @todo
-  }
-
+  // @todo split up method to simple or make this flexible.
   protected function processProperties($element) {
-    $properties = $this->parsePropertiesAnnotations($element);
-    // @toto this loop can be cached in static in future.
-    foreach ($properties as $property_info) {
-      // Only for properties that has parsed annotations.
-      if (empty($property_info['annotations'])) {
+    $annotated_object = $this->getAnnotatedObject($element);
+    // Attributes.
+    $attribute_properties = $annotated_object->getPropertiesWithAnnotation($this::XML_ATTRIBUTE);
+    foreach ($attribute_properties as $property_name) {
+      $property_annotation = $annotated_object->getPropertyAnnotation($property_name, $this::XML_ATTRIBUTE);
+
+      // Annotation can override attribute name. Property name used as default.
+      $attribute_name = $property_annotation->getName() ?: $property_name;
+      $callable = $this->getPropertyGetter($element, $property_name);
+      if (!$callable) {
         continue;
       }
 
-      foreach ($property_info['annotations'] as $annotation) {
-        // Skip if annotation is not based on our special base object.
-        if (!$annotation instanceof YandexYmlXmlBase) {
-          continue;
-        }
-
-        if ($annotation instanceof YandexYmlElement) {
-          $callable = [
-            $element,
-            Utils::predictGetterName($property_info['property_name']),
-          ];
-
-          if (is_callable($callable)) {
-            $value = call_user_func($callable);
-            dump($value);
-
-            if (is_object($value)) {
-              $this->processClass($value);
-            }
-            else {
-              $this->writer->startElement($annotation->getElementName());
-              $this->writer->writeCdata($value);
-              $this->writer->fullEndElement();
-            }
-          }
-        }
+      $property_value = call_user_func($callable);
+      if (!$property_value) {
+        continue;
       }
+
+      $this->writer->writeAttribute($attribute_name, $property_value);
+    }
+
+    // Elements.
+    $element_properties = $annotated_object->getPropertiesWithAnnotation($this::XML_ELEMENT);
+    foreach ($element_properties as $property_name) {
+      $property_annotation = $annotated_object->getPropertyAnnotation($property_name, $this::XML_ELEMENT);
+
+      // Annotation can override element name. Property name used as default.
+      $element_name = $property_annotation->getName() ?: $property_name;
+      $callable = $this->getPropertyGetter($element, $property_name);
+      if (!$callable) {
+        continue;
+      }
+
+      $property_value = call_user_func($callable);
+      if (!$property_value) {
+        continue;
+      }
+
+      $this->writer->startElement($element_name);
+      $this->writer->text($property_value);
+      $this->writer->fullEndElement();
+    }
+
+    // Wrappers.
+    $element_wrapper_properties = $annotated_object->getPropertiesWithAnnotation($this::XML_ELEMENT_WRAPPER);
+    foreach ($element_wrapper_properties as $wrapper_property_name) {
+      $property_annotation = $annotated_object->getPropertyAnnotation($wrapper_property_name, $this::XML_ELEMENT_WRAPPER);
+
+      // Annotation can override element name. Property name used as default.
+      $element_name = $property_annotation->getName() ?: $wrapper_property_name;
+      $callable = $this->getPropertyGetter($element, $wrapper_property_name);
+      if (!$callable) {
+        continue;
+      }
+
+      // Wrappers means that value is multiple.
+      $property_values = call_user_func($callable);
+      if (!$property_values || !$property_values instanceof \Traversable) {
+        continue;
+      }
+
+      $this->writer->startElement($element_name);
+      foreach ($property_values as $property_value) {
+        $this->processClass($property_value);
+      }
+      $this->writer->fullEndElement();
     }
   }
 
-  protected function parsePropertiesAnnotations($element) {
-    $result = &drupal_static(__CLASS__ . ':property_annotations:' . get_class($element));
+  protected function getPropertyGetter($element, $property_name) {
+    $callable = [
+      $element,
+      Utils::predictGetterName($property_name),
+    ];
 
-    if (!isset($result)) {
-      $reflection = $this->getClassReflection($element);
-
-      foreach ($reflection->getProperties() as $property) {
-        $result[] = [
-          'property_name' => $property->getName(),
-          'annotations' => $this->annotationReader->getPropertyAnnotations($property),
-        ];
-      }
-    }
-
-    return $result;
+    return is_callable($callable) ? $callable : NULL;
   }
 
-  protected function getClassReflection($element) {
-    $result = &drupal_static('yandex_yml:class_reflection:' . get_class($element));
+  protected function processMethods($element) {
+    $annotated_object = $this->getAnnotatedObject($element);
+    // @todo complete or remove. For now there is no methods with annotations
+    //   but in theory, this must be better solution then annotated protected
+    //   properties.
+  }
+
+  protected function getAnnotatedObject($object) {
+    $result = &drupal_static(__CLASS__ . ':annotated_object:' . get_class($object));
 
     if (!isset($result)) {
-      $result = new ReflectionClass($element);
+      $result = new YandexYmlAnnotatatedObject($object);
     }
 
     return $result;

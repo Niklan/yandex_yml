@@ -2,17 +2,15 @@
 
 namespace Drupal\yandex_yml\YandexYml\Currency;
 
-use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
-use Drupal\yandex_yml\Annotation\YandexYmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
 
 /**
  * Class YandexYmlCurrency.
  *
  * @see https://yandex.ru/support/partnermarket/currencies.html
  *
- * @YandexYmlElement(
- *   name = "currency"
- * )
+ * @YandexYmlXmlElement(name = "currency")
  */
 final class YandexYmlCurrency {
 
@@ -21,7 +19,7 @@ final class YandexYmlCurrency {
    *
    * @var string
    *
-   * @YandexYmlAttribute()
+   * @YandexYmlXmlAttribute()
    */
   protected $id;
 
@@ -30,7 +28,7 @@ final class YandexYmlCurrency {
    *
    * @var int|float|string
    *
-   * @YandexYmlAttribute()
+   * @YandexYmlXmlAttribute()
    */
   protected $rate;
 

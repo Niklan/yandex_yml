@@ -4,6 +4,7 @@ namespace Drupal\yandex_yml\YandexYml\Shop;
 
 use Drupal;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlElementWrapper;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 use Drupal\yandex_yml\YandexYml\Category\YandexYmlCategories;
 use Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrencies;
@@ -32,9 +33,7 @@ final class YandexYmlShop {
    *
    * @var string
    *
-   * @YandexYmlXmlElement(
-   *   name = "company"
-   * )
+   * @YandexYmlXmlElement()
    */
   protected $company;
 
@@ -88,7 +87,7 @@ final class YandexYmlShop {
    *
    * @var \Drupal\yandex_yml\YandexYml\Currency\YandexYmlCurrencies
    *
-   * @YandexYmlXmlElement()
+   * @YandexYmlXmlElementWrapper()
    */
   protected $currencies;
 
@@ -97,7 +96,7 @@ final class YandexYmlShop {
    *
    * @var \Drupal\yandex_yml\YandexYml\Category\YandexYmlCategories
    *
-   * @YandexYmlXmlElement()
+   * @YandexYmlXmlElementWrapper()
    */
   protected $categories;
 
@@ -213,8 +212,8 @@ final class YandexYmlShop {
    *   The object instance.
    */
   protected function setUrl($url) {
-    if (!$this->url) {
-      Drupal::request()->getSchemeAndHttpHost();
+    if (!$url) {
+      $this->url = Drupal::request()->getSchemeAndHttpHost();
     }
     else {
       $this->url = $url;
