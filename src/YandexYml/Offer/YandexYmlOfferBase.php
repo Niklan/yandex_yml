@@ -158,7 +158,7 @@ abstract class YandexYmlOfferBase implements YandexYmlOfferBaseInterface {
   /**
    * The product delivery options.
    *
-   * @var \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery[]
+   * @var \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption[]
    *
    * @YandexYmlElementWrapper(
    *   name = "delivery-options"

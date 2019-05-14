@@ -310,7 +310,7 @@ interface YandexYmlOfferBaseInterface {
   /**
    * Sets delivery options.
    *
-   * @param \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery[] $delivery_options
+   * @param \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption[] $delivery_options
    *   The delivery options.
    *
    * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
@@ -321,7 +321,7 @@ interface YandexYmlOfferBaseInterface {
   /**
    * Gets delivery options.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery[]
+   * @return \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption[]
    *   The delivery options.
    */
   public function getDeliveryOptions();

@@ -8,6 +8,7 @@ use Drupal\yandex_yml\Annotation\YandexYmlXmlElementWrapper;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 use Drupal\yandex_yml\YandexYml\Category\Categories;
 use Drupal\yandex_yml\YandexYml\Currency\Currencies;
+use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions;
 use InvalidArgumentException;
 
 /**
@@ -99,6 +100,15 @@ final class Shop {
    * @YandexYmlXmlElementWrapper()
    */
   protected $categories;
+
+  /**
+   * The list of delivery options.
+   *
+   * @var \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions
+   *
+   * @YandexYmlXmlElementWrapper(name = "delivery-options")
+   */
+  protected $deliveryOptions;
 
   /**
    * Shop constructor.
@@ -372,6 +382,31 @@ final class Shop {
    */
   public function setCategories(Categories $categories) {
     $this->categories = $categories;
+
+    return $this;
+  }
+
+  /**
+   * Gets delivery options.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions
+   *   The delivery options.
+   */
+  public function getDeliveryOptions() {
+    return $this->deliveryOptions;
+  }
+
+  /**
+   * Sets delivery options.
+   *
+   * @param \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions $deliveryOptions
+   *   The delivery options.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
+   *   The object instance.
+   */
+  public function setDeliveryOptions(DeliveryOptions $deliveryOptions) {
+    $this->deliveryOptions = $deliveryOptions;
 
     return $this;
   }

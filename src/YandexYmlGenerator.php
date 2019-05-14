@@ -84,7 +84,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   /**
    * The delivery options.
    *
-   * @var \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery[]
+   * @var \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption[]
    */
   protected $deliveryOptions = [];
 

@@ -2,48 +2,61 @@
 
 namespace Drupal\yandex_yml\YandexYml\Delivery;
 
-use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
 
 /**
- * Class YandexYmlDelivery.
+ * Class DeliveryOption.
  *
  * @see https://yandex.ru/support/partnermarket/elements/delivery-options.html
  *
- * @YandexYmlElement(
- *   name = "option"
- * )
+ * @YandexYmlXmlElement(name = "option")
  */
-class YandexYmlDelivery {
+class DeliveryOption {
 
   /**
    * The delivery cost.
    *
    * @var int
    *
-   * @YandexYmlAttribute()
+   * @YandexYmlXmlAttribute()
    */
-  private $cost;
+  protected $cost;
 
   /**
    * The delivery duration.
    *
    * @var int|string
    *
-   * @YandexYmlAttribute()
+   * @YandexYmlXmlAttribute()
    */
-  private $days;
+  protected $days;
 
   /**
    * The hour of order before.
    *
    * @var int
    *
-   * @YandexYmlAttribute(
-   *   name = "order-before"
-   * )
+   * @YandexYmlXmlAttribute(name = "order-before")
    */
-  private $orderBefore;
+  protected $orderBefore;
+
+
+  public function __construct($cost, $days, $order_before = NULL) {
+    $this->setCost($cost);
+    $this->setDays($days);
+    $this->setOrderBefore($order_before);
+  }
+
+  /**
+   * Gets delivery cost.
+   *
+   * @return int
+   *   The delivery cost.
+   */
+  public function getCost() {
+    return $this->cost;
+  }
 
   /**
    * Sets cost of delivery.
@@ -55,22 +68,23 @@ class YandexYmlDelivery {
    * @param int $cost
    *   The delivery cost.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery
+   * @return \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption
    *   The current delivery.
    */
-  public function setCost($cost) {
+  protected function setCost($cost) {
     $this->cost = $cost;
+
     return $this;
   }
 
   /**
-   * Gets delivery cost.
+   * Gets estimated delivery time.
    *
-   * @return int
-   *   The delivery cost.
+   * @return int|string
+   *   The delivery time.
    */
-  public function getCost() {
-    return $this->cost;
+  public function getDays() {
+    return $this->days;
   }
 
   /**
@@ -87,22 +101,23 @@ class YandexYmlDelivery {
    * @param int|string $days
    *   The delivery time.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery
+   * @return \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption
    *   The current delivery.
    */
-  public function setDays($days) {
+  protected function setDays($days) {
     $this->days = $days;
+
     return $this;
   }
 
   /**
-   * Gets estimated delivery time.
+   * Gets order before time.
    *
-   * @return int|string
-   *   The delivery time.
+   * @return int
+   *   The order before hour.
    */
-  public function getDays() {
-    return $this->days;
+  public function getOrderBefore() {
+    return $this->orderBefore;
   }
 
   /**
@@ -118,22 +133,13 @@ class YandexYmlDelivery {
    * @param int $order_before
    *   The order before hour.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery
+   * @return \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption
    *   The current delivery.
    */
-  public function setOrderBefore($order_before) {
+  protected function setOrderBefore($order_before) {
     $this->orderBefore = $order_before;
-    return $this;
-  }
 
-  /**
-   * Gets order before time.
-   *
-   * @return int
-   *   The order before hour.
-   */
-  public function getOrderBefore() {
-    return $this->orderBefore;
+    return $this;
   }
 
 }

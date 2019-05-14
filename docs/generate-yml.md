@@ -138,7 +138,7 @@ $delivery_options = [
 ];
 $delivery_objects = [];
 foreach ($delivery_options as $delivery_option) {
-  /** @var \Drupal\yandex_yml\YandexYml\Delivery\YandexYmlDelivery $delivery */
+  /** @var \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption $delivery */
   $delivery = \Drupal::service('yandex_yml.delivery')
     ->setCost($delivery_option['cost'])
     ->setDays($delivery_option['days']);

@@ -4,8 +4,8 @@
 
 - Improved performance since alpha4. Tested on 20000 offers. Services has been replaced by Value Objects.
 
-  * Time to generate reduced from 331 sec to 50 sec.
-  * Memory peak usage from 977 mb to 183 mb.
+  * Time to generate reduced from 331 sec to TODO sec.
+  * Memory peak usage from 977 mb to TODO mb.
   
 Code used for testing before changes (alpha 3).
 
