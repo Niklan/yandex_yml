@@ -9,6 +9,7 @@ use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 use Drupal\yandex_yml\YandexYml\Category\Categories;
 use Drupal\yandex_yml\YandexYml\Currency\Currencies;
 use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions;
+use Drupal\yandex_yml\YandexYml\Pickup\PickupOptions;
 use InvalidArgumentException;
 
 /**
@@ -109,6 +110,26 @@ final class Shop {
    * @YandexYmlXmlElementWrapper(name = "delivery-options")
    */
   protected $deliveryOptions;
+
+  /**
+   * The list of pickup options.
+   *
+   * @var \Drupal\yandex_yml\YandexYml\Pickup\PickupOptions;
+   *
+   * @YandexYmlXmlElementWrapper(name = "pickup-options")
+   */
+  protected $pickupOptions;
+
+  /**
+   * The auto discount status.
+   *
+   * @var bool
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/shop-enable_auto_discounts.html
+   *
+   * @YandexYmlXmlElement(name = "enable_auto_discounts")
+   */
+  protected $enableAutoDiscounts;
 
   /**
    * Shop constructor.
@@ -407,6 +428,59 @@ final class Shop {
    */
   public function setDeliveryOptions(DeliveryOptions $deliveryOptions) {
     $this->deliveryOptions = $deliveryOptions;
+
+    return $this;
+  }
+
+  /**
+   * Gets pickup options.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Pickup\PickupOptions
+   *   The pickup options.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Pickup\PickupOptions
+   *   The pickup options.
+   */
+  public function getPickupOptions() {
+    return $this->pickupOptions;
+  }
+
+  /**
+   * Sets pickup options.
+   *
+   * @param \Drupal\yandex_yml\YandexYml\Pickup\PickupOptions $pickupOptions
+   *   The pickup options.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
+   *   The object instance.
+   */
+  public function setPickupOptions(PickupOptions $pickupOptions) {
+    $this->pickupOptions = $pickupOptions;
+
+    return $this;
+  }
+
+  /**
+   * Gets auto discount status.
+   *
+   * @return bool
+   *   The auto discount status.
+   */
+  public function getEnableAutoDiscounts() {
+    return $this->enableAutoDiscounts;
+  }
+
+  /**
+   * Sets auto discount status.
+   *
+   * @param bool $enableAutoDiscounts
+   *   The auto discount status.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
+   *   The object instance.
+   */
+  public function setEnableAutoDiscounts($enableAutoDiscounts) {
+    $this->enableAutoDiscounts = $enableAutoDiscounts;
 
     return $this;
   }

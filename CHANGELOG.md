@@ -134,6 +134,8 @@ Code used after changes (alpha 4). Since there are differences which breaks BC.
 ```
 
 - Improved code quality.
+- Added support for `pickup-options`.
+- Added support for `enable_auto_discounts`.
 
 ## 8.x-1.0-alpha4
 
