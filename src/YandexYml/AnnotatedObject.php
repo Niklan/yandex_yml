@@ -7,7 +7,6 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlBase;
 use InvalidArgumentException;
 use ReflectionClass;
-use ReflectionObject;
 
 /**
  * Contains annotations for an object in value object manner.
@@ -33,47 +32,10 @@ class AnnotatedObject {
     // Register the namespaces of classes that can be used for annotations.
     AnnotationRegistry::registerLoader('class_exists');
 
-    $reflection = new ReflectionObject($object);
-    $this->setClassAnnotations($reflection);
-    $this->setPropertyAnnotations($reflection);
-    $this->setMethodAnnotations($reflection);
+    $this->processReflections($object);
+
     // Help GC to free memory when needed.
-    unset($reflection);
     unset($this->annotationReader);
-  }
-
-  protected function setClassAnnotations(ReflectionClass $reflection) {
-    $class_annotations = $this->annotationReader->getClassAnnotations($reflection);
-
-    foreach ($class_annotations as $class_annotation) {
-      if ($class_annotation instanceof YandexYmlXmlBase) {
-        $this->classAnnotations[] = $class_annotation;
-      }
-    }
-  }
-
-  protected function setPropertyAnnotations(ReflectionClass $reflection) {
-    foreach ($reflection->getProperties() as $property) {
-      $property_annotations = $this->annotationReader->getPropertyAnnotations($property);
-
-      foreach ($property_annotations as $property_annotation) {
-        if ($property_annotation instanceof YandexYmlXmlBase) {
-          $this->propertyAnnotations[$property->getName()][] = $property_annotation;
-        }
-      }
-    }
-  }
-
-  protected function setMethodAnnotations(ReflectionClass $reflection) {
-    foreach ($reflection->getMethods() as $method) {
-      $method_annotations = $this->annotationReader->getMethodAnnotations($method);
-
-      foreach ($method_annotations as $method_annotation) {
-        if ($method_annotation instanceof YandexYmlXmlBase) {
-          $this->propertyAnnotations[$method->getName()][] = $method_annotations;
-        }
-      }
-    }
   }
 
   public function getClassAnnotation($annotation) {
@@ -85,7 +47,6 @@ class AnnotatedObject {
 
     return NULL;
   }
-
 
   public function getPropertyAnnotation($property_name, $annotation) {
     if (!isset($this->propertyAnnotations[$property_name])) {
@@ -128,6 +89,53 @@ class AnnotatedObject {
     }
 
     return NULL;
+  }
+
+  protected function processReflections($object) {
+    $reflection = new ReflectionClass($object);
+    $this->setClassAnnotations($reflection);
+    $this->setPropertyAnnotations($reflection);
+    $this->setMethodAnnotations($reflection);
+
+    if ($parent_object = $reflection->getParentClass()) {
+      $this->processReflections($parent_object);
+    }
+
+    unset($reflection);
+  }
+
+  protected function setClassAnnotations(ReflectionClass $reflection) {
+    $class_annotations = $this->annotationReader->getClassAnnotations($reflection);
+
+    foreach ($class_annotations as $class_annotation) {
+      if ($class_annotation instanceof YandexYmlXmlBase) {
+        $this->classAnnotations[] = $class_annotation;
+      }
+    }
+  }
+
+  protected function setPropertyAnnotations(ReflectionClass $reflection) {
+    foreach ($reflection->getProperties() as $property) {
+      $property_annotations = $this->annotationReader->getPropertyAnnotations($property);
+
+      foreach ($property_annotations as $property_annotation) {
+        if ($property_annotation instanceof YandexYmlXmlBase) {
+          $this->propertyAnnotations[$property->getName()][] = $property_annotation;
+        }
+      }
+    }
+  }
+
+  protected function setMethodAnnotations(ReflectionClass $reflection) {
+    foreach ($reflection->getMethods() as $method) {
+      $method_annotations = $this->annotationReader->getMethodAnnotations($method);
+
+      foreach ($method_annotations as $method_annotation) {
+        if ($method_annotation instanceof YandexYmlXmlBase) {
+          $this->propertyAnnotations[$method->getName()][] = $method_annotations;
+        }
+      }
+    }
   }
 
 }

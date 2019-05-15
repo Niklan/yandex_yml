@@ -2,26 +2,24 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
-use Drupal\yandex_yml\Annotation\YandexYmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 
 /**
  * Base object for simple offer.
  *
  * @see https://yandex.ru/support/partnermarket/offers.html
  *
- * @YandexYmlElement(
- *   name = "offer"
- * )
+ * @YandexYmlXmlRootElement(name = "offer")
  */
-class YandexYmlOfferSimple extends YandexYmlOfferBase implements YandexYmlOfferSimpleInterface {
+class OfferSimple extends Offer {
 
   /**
    * The model.
    *
    * @var string
    *
-   * @YandexYmlElementWrapper()
+   * @@YandexYmlXmlElement()
    */
   protected $model;
 
@@ -30,7 +28,7 @@ class YandexYmlOfferSimple extends YandexYmlOfferBase implements YandexYmlOfferS
    *
    * @var string
    *
-   * @YandexYmlElementWrapper()
+   * @@YandexYmlXmlElement()
    */
   protected $vendor;
 
@@ -39,53 +37,92 @@ class YandexYmlOfferSimple extends YandexYmlOfferBase implements YandexYmlOfferS
    *
    * @var string
    *
-   * @YandexYmlElementWrapper()
+   * @@YandexYmlXmlElement()
    */
   protected $vendorCode;
 
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
-  public function setModel($model) {
-    $this->model = $model;
-    return $this;
+  public function __construct($id, $url, $price, $currency_id, $category_id, $name) {
+    parent::__construct($id, $url, $price, $currency_id, $category_id);
+
+    $this->setName($name);
   }
 
   /**
-   * {@inheritdoc}
+   * Gets model.
+   *
+   * @return string
+   *   The model.
    */
   public function getModel() {
     return $this->model;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets model.
+   *
+   * @param string $model
+   *   The model.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
+   *   The current offer.
    */
-  public function setVendor($vendor) {
-    $this->vendor = $vendor;
+  public function setModel($model) {
+    $this->model = $model;
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Gets vendor.
+   *
+   * @return string
+   *   The vendor.
    */
   public function getVendor() {
     return $this->vendor;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets vendor.
+   *
+   * @param string $vendor
+   *   The vendor.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
+   *   The current offer.
    */
-  public function setVendorCode($vendor_code) {
-    $this->vendorCode = $vendor_code;
+  public function setVendor($vendor) {
+    $this->vendor = $vendor;
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Gets vendor code.
+   *
+   * @return string
+   *   The vendor code.
    */
   public function getVendorCode() {
     return $this->vendorCode;
+  }
+
+  /**
+   * Sets vendor code.
+   *
+   * @param string $vendor_code
+   *   The vendor code.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
+   *   The current offer.
+   */
+  public function setVendorCode($vendor_code) {
+    $this->vendorCode = $vendor_code;
+
+    return $this;
   }
 
 }

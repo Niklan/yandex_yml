@@ -95,7 +95,7 @@ class YandexYmlService {
 
     /** @var NodeInterface $spare_part */
     foreach ($spare_parts as $spare_part) {
-      /** @var \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferSimple $offer */
+      /** @var \Drupal\yandex_yml\YandexYml\Offer\OfferSimple $offer */
       $offer = \Drupal::service('yandex_yml.offer.simple');
       $offer->setId($spare_part->id())
         ->setAvailable(TRUE)

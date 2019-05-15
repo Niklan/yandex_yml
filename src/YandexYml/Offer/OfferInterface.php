@@ -2,23 +2,13 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
+use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions;
+use Drupal\yandex_yml\YandexYml\Param\Params;
+
 /**
  * Defines interface with common methods for all Yandex yml offers.
  */
-interface YandexYmlOfferBaseInterface {
-
-  /**
-   * Sets product id.
-   *
-   * @param string $id
-   *   The product id.
-   *
-   * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
-   *   The current offer.
-   */
-  public function setId($id);
+interface OfferInterface {
 
   /**
    * Gets product id.
@@ -36,7 +26,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://yandex.ru/support/partnermarket/elements/bid-cbid.html
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setCbid($cbid);
@@ -57,7 +47,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://yandex.ru/support/partnermarket/elements/bid-cbid.html
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setBid($bid);
@@ -80,7 +70,7 @@ interface YandexYmlOfferBaseInterface {
    * @param int $fee
    *   The fee amount.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setFee($fee);
@@ -101,7 +91,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setAvailable($available);
@@ -115,34 +105,12 @@ interface YandexYmlOfferBaseInterface {
   public function getAvailable();
 
   /**
-   * Sets product url.
-   *
-   * @param string $url
-   *   The product url.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
-   *   The current offer.
-   */
-  public function setUrl($url);
-
-  /**
    * Gets product url.
    *
    * @return string
    *   The product url.
    */
   public function getUrl();
-
-  /**
-   * Sets product price.
-   *
-   * @param int|float $price
-   *   The product unit price.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
-   *   The current offer.
-   */
-  public function setPrice($price);
 
   /**
    * Gets product price.
@@ -161,7 +129,7 @@ interface YandexYmlOfferBaseInterface {
    * @param bool $price_from
    *   The product price from status.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setPriceFrom($price_from);
@@ -182,7 +150,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://yandex.ru/support/partnermarket/elements/oldprice.html
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setOldPrice($old_price);
@@ -211,7 +179,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://yandex.ru/support/partnermarket/elements/vat.html
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setVat($vat);
@@ -225,37 +193,12 @@ interface YandexYmlOfferBaseInterface {
   public function getVat();
 
   /**
-   * Sets currency for offer.
-   *
-   * Can be: RUR, USD, EUR, UAH, KZT, BYN.
-   * Don't forget to set price in this currency.
-   *
-   * @param string $currency_id
-   *   The currency id.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
-   *   The current offer.
-   */
-  public function setCurrencyId($currency_id);
-
-  /**
    * Gets currency id.
    *
    * @return string
    *   The currency id.
    */
   public function getCurrencyId();
-
-  /**
-   * Sets category id.
-   *
-   * @param int $category_id
-   *   The category id.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
-   *   The current offer.
-   */
-  public function setCategoryId($category_id);
 
   /**
    * Gets category id.
@@ -273,7 +216,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://yandex.ru/support/partnermarket/offers.html
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setPicture($picture);
@@ -294,7 +237,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://yandex.ru/support/partnermarket/elements/delivery.html
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setDelivery($delivery);
@@ -310,13 +253,13 @@ interface YandexYmlOfferBaseInterface {
   /**
    * Sets delivery options.
    *
-   * @param \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption[] $delivery_options
+   * @param \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions $delivery_options
    *   The delivery options.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
-  public function setDeliveryOptions(array $delivery_options);
+  public function setDeliveryOptions(DeliveryOptions $delivery_options);
 
   /**
    * Gets delivery options.
@@ -334,7 +277,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://yandex.ru/support/partnermarket/elements/delivery.html
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setPickup($pickup);
@@ -355,7 +298,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://yandex.ru/support/partnermarket/elements/delivery.html
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setStore($store);
@@ -368,7 +311,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://yandex.ru/support/partnermarket/elements/description.html
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setDescription($description);
@@ -396,7 +339,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://yandex.ru/support/partnermarket/elements/sales_notes.html
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setSalesNotes($sales_notes);
@@ -418,7 +361,7 @@ interface YandexYmlOfferBaseInterface {
    * @param int|float $min_quantity
    *   The minimum order quantity.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setMinQuantity($min_quantity);
@@ -437,7 +380,7 @@ interface YandexYmlOfferBaseInterface {
    * @param int|float $step_quantity
    *   The step quantity.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setStepQuantity($step_quantity);
@@ -456,7 +399,7 @@ interface YandexYmlOfferBaseInterface {
    * @param bool $manufacturer_warranty
    *   The manufacturer warranty status.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setManufacturerWarranty($manufacturer_warranty);
@@ -477,7 +420,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://partner.market.yandex.ru/pages/help/Countries.pdf
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setCountryOfOrigin($country_of_origin);
@@ -498,7 +441,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://yandex.ru/support/partnermarket/elements/adult.html
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setAdult($adult);
@@ -521,7 +464,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://yandex.ru/support/partnermarket/elements/barcode.html
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setBarcode($barcode);
@@ -543,7 +486,7 @@ interface YandexYmlOfferBaseInterface {
    * @param int $cpa
    *   The CPA.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setCpa($cpa);
@@ -559,25 +502,21 @@ interface YandexYmlOfferBaseInterface {
   /**
    * Sets offer param.
    *
-   * @param string $name
-   *   The param name.
-   * @param string $value
-   *   The param value.
-   * @param string|null $unit
-   *   The unit of the value.
+   * @param \Drupal\yandex_yml\YandexYml\Param\Params $params
+   *   The params list.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
-  public function setParam($name, $value, $unit = NULL);
+  public function setParams(Params $params);
 
   /**
    * Gets params.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Param\YandexYmlParam[]
+   * @return \Drupal\yandex_yml\YandexYml\Param\Params
    *   The param objects.
    */
-  public function getParam();
+  public function getParams();
 
   /**
    * Sets expiry date.
@@ -591,7 +530,7 @@ interface YandexYmlOfferBaseInterface {
    * @param string $expire
    *   The expiration date.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setExpire($expire);
@@ -615,7 +554,7 @@ interface YandexYmlOfferBaseInterface {
    *  - 2.20
    *  - 0.001
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setWeight($weight);
@@ -638,7 +577,7 @@ interface YandexYmlOfferBaseInterface {
    *  - 1/2/3
    *  - 30/20/20.2
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setDimensions($dimensions);
@@ -657,7 +596,7 @@ interface YandexYmlOfferBaseInterface {
    * @param bool $downloadable
    *   The downloadable status.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setDownloadable($downloadable);
@@ -678,7 +617,7 @@ interface YandexYmlOfferBaseInterface {
    * @param string $unit
    *   The unit of age. Can be "year" or "month".
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setAge($age, $unit = 'year');
@@ -697,7 +636,7 @@ interface YandexYmlOfferBaseInterface {
    * @param int $group_id
    *   The group id.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setGroupId($group_id);
@@ -711,31 +650,12 @@ interface YandexYmlOfferBaseInterface {
   public function getGroupId();
 
   /**
-   * Sets recommended products.
-   *
-   * @param array $rec
-   *   The recommended products sku.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
-   *   The current offer.
-   */
-  public function setRec(array $rec);
-
-  /**
-   * Gets recommended products sku.
-   *
-   * @return string
-   *   The recommended product sku separated by comma.
-   */
-  public function getRec();
-
-  /**
    * Sets name.
    *
    * @param string $name
    *   The offer name.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setName($name);
@@ -756,7 +676,7 @@ interface YandexYmlOfferBaseInterface {
    *
    * @see https://yandex.ru/support/partnermarket/elements/vendor-name-model.html
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setVendor($vendor);
@@ -775,7 +695,7 @@ interface YandexYmlOfferBaseInterface {
    * @param string $vendor_code
    *   The vendor code.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
   public function setVendorCode($vendor_code);

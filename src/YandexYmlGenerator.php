@@ -8,13 +8,10 @@ use Drupal;
 use Drupal\Component\Datetime\Time;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\yandex_yml\Annotation\YandexYmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlBase;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlElementWrapper;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 use Drupal\yandex_yml\Utils\Utils;
-use Drupal\yandex_yml\YandexYml\Shop\Shop;
 use Drupal\yandex_yml\YandexYml\AnnotatedObject;
+use Drupal\yandex_yml\YandexYml\Shop\Shop;
+use Traversable;
 use XMLWriter;
 
 /**
@@ -29,6 +26,8 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   const XML_ELEMENT_WRAPPER = 'Drupal\yandex_yml\Annotation\YandexYmlXmlElementWrapper';
 
   const XML_ATTRIBUTE = 'Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute';
+
+  const XML_LIST = 'Drupal\yandex_yml\Annotation\YandexYmlXmlList';
 
   protected $counter;
 
@@ -177,6 +176,18 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   }
 
   // @todo split up method to simple or make this flexible.
+
+  protected function getAnnotatedObject($object) {
+    $result = &drupal_static(__CLASS__ . ':annotated_object:' . get_class($object));
+
+    if (!isset($result)) {
+      $result = new AnnotatedObject($object);
+    }
+
+    return $result;
+  }
+
+  // @todo YandexYmlXmlValue for <param>, <category>
   protected function processProperties($element) {
     $annotated_object = $this->getAnnotatedObject($element);
     // Attributes.
@@ -236,7 +247,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
 
       // Wrappers means that value is multiple.
       $property_values = call_user_func($callable);
-      if (!$property_values || !$property_values instanceof \Traversable) {
+      if (!$property_values || !$property_values instanceof Traversable) {
         continue;
       }
 
@@ -246,66 +257,40 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
       }
       $this->writer->fullEndElement();
     }
+
+    // Lists.
+    $list_properties = $annotated_object->getPropertiesWithAnnotation($this::XML_LIST);
+    foreach ($list_properties as $list_property_name) {
+      $callable = $this->getPropertyGetter($element, $list_property_name);
+      if (!$callable) {
+        continue;
+      }
+
+      // List means that value is multiple.
+      $property_values = call_user_func($callable);
+      if (!$property_values || !$property_values instanceof Traversable) {
+        continue;
+      }
+
+      foreach ($property_values as $property_value) {
+        $this->processClass($property_value);
+      }
+    }
   }
 
   protected function getPropertyGetter($element, $property_name) {
-    $callable = [
-      $element,
-      Utils::predictGetterName($property_name),
-    ];
-
-    return is_callable($callable) ? $callable : NULL;
-  }
-
-  protected function processMethods($element) {
-    $annotated_object = $this->getAnnotatedObject($element);
-    // @todo complete or remove. For now there is no methods with annotations
-    //   but in theory, this must be better solution then annotated protected
-    //   properties.
-  }
-
-  protected function getAnnotatedObject($object) {
-    $result = &drupal_static(__CLASS__ . ':annotated_object:' . get_class($object));
+    $result = &drupal_static(__CLASS__ . ':' . __METHOD__ . ':' . get_class($element) . ':' . $property_name);
 
     if (!isset($result)) {
-      $result = new AnnotatedObject($object);
+      $callable = [
+        $element,
+        Utils::predictGetterName($property_name),
+      ];
+
+      $result = is_callable($callable) ? $callable : NULL;
     }
 
     return $result;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getShop() {
-    return $this->shopInfo;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setShop(Shop $shop_info) {
-    $this->shopInfo = $shop_info;
-
-    return $this;
-  }
-
-  /**
-   * Write document footer.
-   */
-  protected function writeFooter() {
-    // Close "yml_catalog".
-    $this->writer->fullEndElement();
-    $this->writer->endDocument();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function generateMarkup() {
-    $this->buildData();
-
-    return $this->writer->outputMemory();
   }
 
   /**
@@ -323,6 +308,47 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     str_replace('>', '&gt;', $value);
     str_replace('<', '&lt;', $value);
     str_replace("'", '&apos;', $value);
+  }
+
+  protected function processMethods($element) {
+    $annotated_object = $this->getAnnotatedObject($element);
+    // @todo complete or remove. For now there is no methods with annotations
+    //   but in theory, this must be better solution then annotated protected
+    //   properties.
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getShop() {
+    return $this->shopInfo;
+  }
+
+  /**
+   * Write document footer.
+   */
+  protected function writeFooter() {
+    // Close "yml_catalog".
+    $this->writer->fullEndElement();
+    $this->writer->endDocument();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setShop(Shop $shop_info) {
+    $this->shopInfo = $shop_info;
+
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function generateMarkup() {
+    $this->buildData();
+
+    return $this->writer->outputMemory();
   }
 
 }

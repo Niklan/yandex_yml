@@ -163,7 +163,7 @@ foreach ($delivery_options as $delivery_option) {
 ### Example
 
 ```php
-/** @var \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferSimple $offer_simple */
+/** @var \Drupal\yandex_yml\YandexYml\Offer\OfferSimple $offer_simple */
 $offer_simple = \Drupal::service('yandex_yml.offer.simple');
 $offer_simple->setId(1234)
   ->setAvailable(TRUE)

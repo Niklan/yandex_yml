@@ -9,6 +9,7 @@ use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 use Drupal\yandex_yml\YandexYml\Category\Categories;
 use Drupal\yandex_yml\YandexYml\Currency\Currencies;
 use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions;
+use Drupal\yandex_yml\YandexYml\Offer\Offers;
 use Drupal\yandex_yml\YandexYml\Pickup\PickupOptions;
 use InvalidArgumentException;
 
@@ -130,6 +131,15 @@ final class Shop {
    * @YandexYmlXmlElement(name = "enable_auto_discounts")
    */
   protected $enableAutoDiscounts;
+
+  /**
+   * The list of offers..
+   *
+   * @var \Drupal\yandex_yml\YandexYml\Offer\Offers
+   *
+   * @YandexYmlXmlElementWrapper(name = "offers")
+   */
+  protected $offers;
 
   /**
    * Shop constructor.
@@ -481,6 +491,31 @@ final class Shop {
    */
   public function setEnableAutoDiscounts($enableAutoDiscounts) {
     $this->enableAutoDiscounts = $enableAutoDiscounts;
+
+    return $this;
+  }
+
+  /**
+   * Gets offers.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Offer\Offers
+   *   The offers list.
+   */
+  public function getOffers() {
+    return $this->offers;
+  }
+
+  /**
+   * Sets offers.
+   *
+   * @param \Drupal\yandex_yml\YandexYml\Offer\Offers $offers
+   *   The offers list.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
+   *   The object instance.
+   */
+  public function setOffers(Offers $offers) {
+    $this->offers = $offers;
 
     return $this;
   }

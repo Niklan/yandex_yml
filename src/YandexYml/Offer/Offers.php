@@ -1,29 +1,29 @@
 <?php
 
-namespace Drupal\yandex_yml\YandexYml\Delivery;
+namespace Drupal\yandex_yml\YandexYml\Offer;
 
 use Drupal\yandex_yml\YandexYml\YandexYmlArray;
 
 /**
- * Class DeliveryOptions.
+ * Class Offers.
  *
- * Contains delivery options.
+ * Contains offers.
  *
- * @see https://yandex.ru/support/partnermarket/elements/delivery-options.html
+ * @see https://yandex.ru/support/partnermarket/offers.html
  */
-final class DeliveryOptions extends YandexYmlArray {
+final class Offers extends YandexYmlArray {
 
   /**
    * Adds delivery option.
    *
-   * @param \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption $delivery_option
-   *   The delivery option.
+   * @param \Drupal\yandex_yml\YandexYml\Offer\OfferInterface $offer
+   *   The offer.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions
+   * @return \Drupal\yandex_yml\YandexYml\Offer\Offers
    *   The current object instance.
    */
-  public function addOption(DeliveryOption $delivery_option) {
-    $this->values[] = $delivery_option;
+  public function addOffer(OfferInterface $offer) {
+    $this->values[] = $offer;
 
     return $this;
   }
