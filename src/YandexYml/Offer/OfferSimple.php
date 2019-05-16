@@ -18,8 +18,6 @@ class OfferSimple extends Offer {
    * The model.
    *
    * @var string
-   *
-   * @@YandexYmlXmlElement()
    */
   protected $model;
 
@@ -27,8 +25,6 @@ class OfferSimple extends Offer {
    * The vendor.
    *
    * @var string
-   *
-   * @@YandexYmlXmlElement()
    */
   protected $vendor;
 
@@ -36,8 +32,6 @@ class OfferSimple extends Offer {
    * The vendor code.
    *
    * @var string
-   *
-   * @@YandexYmlXmlElement()
    */
   protected $vendorCode;
 
@@ -55,6 +49,8 @@ class OfferSimple extends Offer {
    *
    * @return string
    *   The model.
+   *
+   * @YandexYmlXmlElement(name = "model")
    */
   public function getModel() {
     return $this->model;
@@ -80,6 +76,8 @@ class OfferSimple extends Offer {
    *
    * @return string
    *   The vendor.
+   *
+   * @YandexYmlXmlElement(name = "vendor")
    */
   public function getVendor() {
     return $this->vendor;
@@ -105,6 +103,8 @@ class OfferSimple extends Offer {
    *
    * @return string
    *   The vendor code.
+   *
+   * @YandexYmlXmlElement(name = "vendorCode")
    */
   public function getVendorCode() {
     return $this->vendorCode;

@@ -26,8 +26,6 @@ final class Shop {
    * The short shop name.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $name;
 
@@ -35,8 +33,6 @@ final class Shop {
    * The full company name which owns the shop.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $company;
 
@@ -44,8 +40,6 @@ final class Shop {
    * The shop home page.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $url;
 
@@ -53,8 +47,6 @@ final class Shop {
    * The platform name.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $platform;
 
@@ -62,8 +54,6 @@ final class Shop {
    * The platform version.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $version;
 
@@ -71,8 +61,6 @@ final class Shop {
    * The agency name which provides technical support for the shop.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $agency;
 
@@ -80,8 +68,6 @@ final class Shop {
    * The email of platform developers or technical support.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $email;
 
@@ -89,8 +75,6 @@ final class Shop {
    * The list of currencies supported by shop.
    *
    * @var \Drupal\yandex_yml\YandexYml\Currency\Currencies
-   *
-   * @YandexYmlXmlElementWrapper()
    */
   protected $currencies;
 
@@ -98,8 +82,6 @@ final class Shop {
    * The list of categories of products.
    *
    * @var \Drupal\yandex_yml\YandexYml\Category\Categories
-   *
-   * @YandexYmlXmlElementWrapper()
    */
   protected $categories;
 
@@ -107,8 +89,6 @@ final class Shop {
    * The list of delivery options.
    *
    * @var \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions
-   *
-   * @YandexYmlXmlElementWrapper(name = "delivery-options")
    */
   protected $deliveryOptions;
 
@@ -116,8 +96,6 @@ final class Shop {
    * The list of pickup options.
    *
    * @var \Drupal\yandex_yml\YandexYml\Pickup\PickupOptions;
-   *
-   * @YandexYmlXmlElementWrapper(name = "pickup-options")
    */
   protected $pickupOptions;
 
@@ -127,8 +105,6 @@ final class Shop {
    * @var bool
    *
    * @see https://yandex.ru/support/partnermarket/elements/shop-enable_auto_discounts.html
-   *
-   * @YandexYmlXmlElement(name = "enable_auto_discounts")
    */
   protected $enableAutoDiscounts;
 
@@ -136,8 +112,6 @@ final class Shop {
    * The list of offers..
    *
    * @var \Drupal\yandex_yml\YandexYml\Offer\Offers
-   *
-   * @YandexYmlXmlElementWrapper(name = "offers")
    */
   protected $offers;
 
@@ -184,6 +158,8 @@ final class Shop {
    *
    * @return string
    *   The short shop name.
+   *
+   * @YandexYmlXmlElement(name = "name")
    */
   public function getName() {
     return $this->name;
@@ -213,6 +189,8 @@ final class Shop {
    *
    * @return string
    *   The full company name which owns the shop.
+   *
+   * @YandexYmlXmlElement(name = "company")
    */
   public function getCompany() {
     return $this->company;
@@ -238,6 +216,8 @@ final class Shop {
    *
    * @return string
    *   The shop home page.
+   *
+   * @YandexYmlXmlElement(name = "url")
    */
   public function getUrl() {
     return $this->url;
@@ -272,6 +252,8 @@ final class Shop {
    *
    * @return string
    *   The platform name.
+   *
+   * @YandexYmlXmlElement(name = "platform")
    */
   public function getPlatform() {
     return $this->platform;
@@ -297,6 +279,8 @@ final class Shop {
    *
    * @return string
    *   The platform version.
+   *
+   * @YandexYmlXmlElement(name = "version")
    */
   public function getVersion() {
     return $this->version;
@@ -322,6 +306,8 @@ final class Shop {
    *
    * @return string
    *   The agency name which provides technical support for the shop.
+   *
+   * @YandexYmlXmlElement(name = "agency")
    */
   public function getAgency() {
     return $this->agency;
@@ -347,6 +333,8 @@ final class Shop {
    *
    * @return string
    *   The email of platform developers or technical support.
+   *
+   * @YandexYmlXmlElement(name = "email")
    */
   public function getEmail() {
     return $this->email;
@@ -372,6 +360,8 @@ final class Shop {
    *
    * @return \Drupal\yandex_yml\YandexYml\Currency\Currencies
    *   An array of supported currencies.
+   *
+   * @YandexYmlXmlElementWrapper(name = "currencies")
    */
   public function getCurrencies() {
     return $this->currencies;
@@ -397,6 +387,8 @@ final class Shop {
    *
    * @return \Drupal\yandex_yml\YandexYml\Category\Categories
    *   The categories info.
+   *
+   * @YandexYmlXmlElementWrapper(name = "categories")
    */
   public function getCategories() {
     return $this->categories;
@@ -422,6 +414,8 @@ final class Shop {
    *
    * @return \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions
    *   The delivery options.
+   *
+   * @YandexYmlXmlElementWrapper(name = "delivery-options")
    */
   public function getDeliveryOptions() {
     return $this->deliveryOptions;
@@ -450,6 +444,8 @@ final class Shop {
    *
    * @return \Drupal\yandex_yml\YandexYml\Pickup\PickupOptions
    *   The pickup options.
+   *
+   * @YandexYmlXmlElementWrapper(name = "pickup-options")
    */
   public function getPickupOptions() {
     return $this->pickupOptions;
@@ -475,6 +471,8 @@ final class Shop {
    *
    * @return bool
    *   The auto discount status.
+   *
+   * @YandexYmlXmlElement(name = "enable_auto_discounts")
    */
   public function getEnableAutoDiscounts() {
     return $this->enableAutoDiscounts;
@@ -500,6 +498,8 @@ final class Shop {
    *
    * @return \Drupal\yandex_yml\YandexYml\Offer\Offers
    *   The offers list.
+   *
+   * @YandexYmlXmlElementWrapper(name = "offers")
    */
   public function getOffers() {
     return $this->offers;

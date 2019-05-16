@@ -22,8 +22,6 @@ class Age {
    * The param unit.
    *
    * @var string
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $unit;
 
@@ -31,8 +29,6 @@ class Age {
    * The param value.
    *
    * @var string
-   *
-   * @YandexYmlXmlValue()
    */
   protected $value;
 
@@ -54,6 +50,8 @@ class Age {
    *
    * @return string
    *   The unit.
+   *
+   * @YandexYmlXmlAttribute(name = "unit")
    */
   public function getUnit() {
     return $this->unit;
@@ -79,6 +77,8 @@ class Age {
    *
    * @return string
    *   The value.
+   *
+   * @YandexYmlXmlValue(name = "value")
    */
   public function getValue() {
     return $this->value;

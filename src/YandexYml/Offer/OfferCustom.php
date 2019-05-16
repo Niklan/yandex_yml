@@ -19,8 +19,6 @@ class OfferCustom extends Offer {
    * The type.
    *
    * @var string
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $type;
 
@@ -28,8 +26,6 @@ class OfferCustom extends Offer {
    * The model.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $model;
 
@@ -37,8 +33,6 @@ class OfferCustom extends Offer {
    * The type prefix.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $typePrefix;
 
@@ -55,6 +49,8 @@ class OfferCustom extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlAttribute(name = "type")
    */
   public function getType() {
     return $this->type;
@@ -71,6 +67,8 @@ class OfferCustom extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "model")
    */
   public function getModel() {
     return $this->model;
@@ -87,6 +85,8 @@ class OfferCustom extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "typePrefix")
    */
   public function getTypePrefix() {
     return $this->typePrefix;

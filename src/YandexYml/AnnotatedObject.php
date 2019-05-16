@@ -82,7 +82,7 @@ class AnnotatedObject {
 
       foreach ($method_annotations as $method_annotation) {
         if ($method_annotation instanceof YandexYmlXmlBase) {
-          $this->propertyAnnotations[$method->getName()][] = $method_annotations;
+          $this->methodAnnotations[$method->getName()][] = $method_annotation;
         }
       }
     }
@@ -116,6 +116,22 @@ class AnnotatedObject {
         foreach ($property_annotations as $property_annotation) {
           if (get_class($property_annotation) === $annotation) {
             $result[] = $property_name;
+          }
+        }
+      }
+    }
+
+    return $result;
+  }
+
+  public function getMethodsWithAnnotation($annotation) {
+    $result = &drupal_static(__CLASS__ . ':' . __METHOD__ . ':' . $this->className . ':' . $annotation, []);
+
+    if (empty($result)) {
+      foreach ($this->methodAnnotations as $method_name => $method_annotations) {
+        foreach ($method_annotations as $method_annotation) {
+          if (get_class($method_annotation) === $annotation) {
+            $result[] = $method_name;
           }
         }
       }

@@ -2,6 +2,7 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
+use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
 use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions;
 use Drupal\yandex_yml\YandexYml\Param\Params;
 
@@ -288,7 +289,7 @@ interface OfferInterface {
    * @return bool
    *   The pickup possibillity.
    */
-  public function isPickup();
+  public function getPickup();
 
   /**
    * Sets possibility to buy without ordering.
@@ -410,7 +411,7 @@ interface OfferInterface {
    * @return bool
    *   The manufacturer warranty status.
    */
-  public function isManufacturerWarranty();
+  public function getManufacturerWarranty();
 
   /**
    * Sets the origin country.

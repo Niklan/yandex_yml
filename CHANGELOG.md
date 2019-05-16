@@ -6,7 +6,7 @@
 
 ## Current dev changes
 
-- Improved performance since alpha4. Tested on 20000 offers. Services has been replaced by Value Objects and object is no more converted to an array, the values get directly from objects. Performance test code: [alpha3](https://pastebin.com/VyDkvtLn) and [alpha4](#todo) (new)
+- Improved performance since alpha4. Tested on 20000 offers. Services has been replaced by Value Objects and object is no more converted to an array, the values get directly from objects. Performance test code: [alpha4](https://pastebin.com/VyDkvtLn) and [alpha5](#todo) (new)
 
   * Generation time reduced from 331 sec to TODO sec.
   * Memory peak usage reduced from 977 mb to TODO mb.

@@ -18,8 +18,6 @@ final class Currency {
    * The currency code.
    *
    * @var string
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $id;
 
@@ -27,8 +25,6 @@ final class Currency {
    * The currency exchange rate for single unit.
    *
    * @var int|float|string
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $rate;
 
@@ -50,6 +46,8 @@ final class Currency {
    *
    * @return string
    *   The currency id.
+   *
+   * @YandexYmlXmlAttribute(name = "id")
    */
   public function getId() {
     return $this->id;
@@ -77,6 +75,8 @@ final class Currency {
    *
    * @return int|float|string
    *   The exchange rate.
+   *
+   * @YandexYmlXmlAttribute(name = "rate")
    */
   public function getRate() {
     return $this->rate;

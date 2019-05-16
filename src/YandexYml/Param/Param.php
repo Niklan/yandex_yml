@@ -21,8 +21,6 @@ class Param {
    * The param name.
    *
    * @var string
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $name;
 
@@ -30,8 +28,6 @@ class Param {
    * The param unit.
    *
    * @var string
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $unit;
 
@@ -39,8 +35,6 @@ class Param {
    * The param value.
    *
    * @var string
-   *
-   * @YandexYmlXmlValue()
    */
   protected $value;
 
@@ -65,6 +59,8 @@ class Param {
    *
    * @return string
    *   The name.
+   *
+   * @YandexYmlXmlAttribute(name = "name")
    */
   public function getName() {
     return $this->name;
@@ -90,6 +86,8 @@ class Param {
    *
    * @return string
    *   The unit.
+   *
+   * @YandexYmlXmlAttribute(name = "unit")
    */
   public function getUnit() {
     return $this->unit;
@@ -115,6 +113,8 @@ class Param {
    *
    * @return string
    *   The value.
+   *
+   * @YandexYmlXmlValue(name = "value")
    */
   public function getValue() {
     return $this->value;

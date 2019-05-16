@@ -18,8 +18,6 @@ class DeliveryOption {
    * The delivery cost.
    *
    * @var int
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $cost;
 
@@ -27,8 +25,6 @@ class DeliveryOption {
    * The delivery duration.
    *
    * @var int|string
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $days;
 
@@ -36,8 +32,6 @@ class DeliveryOption {
    * The hour of order before.
    *
    * @var int
-   *
-   * @YandexYmlXmlAttribute(name = "order-before")
    */
   protected $orderBefore;
 
@@ -53,6 +47,8 @@ class DeliveryOption {
    *
    * @return int
    *   The delivery cost.
+   *
+   * @YandexYmlXmlAttribute(name = "cost")
    */
   public function getCost() {
     return $this->cost;
@@ -82,6 +78,8 @@ class DeliveryOption {
    *
    * @return int|string
    *   The delivery time.
+   *
+   * @YandexYmlXmlAttribute(name = "days")
    */
   public function getDays() {
     return $this->days;
@@ -115,6 +113,8 @@ class DeliveryOption {
    *
    * @return int
    *   The order before hour.
+   *
+   * @YandexYmlXmlAttribute(name = "order-before")
    */
   public function getOrderBefore() {
     return $this->orderBefore;

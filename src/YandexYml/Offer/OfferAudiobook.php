@@ -20,8 +20,6 @@ class OfferAudiobook extends Offer {
    * The publisher.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $publisher;
 
@@ -29,8 +27,6 @@ class OfferAudiobook extends Offer {
    * The ISBN id.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $isbn;
 
@@ -38,8 +34,6 @@ class OfferAudiobook extends Offer {
    * The author.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $author;
 
@@ -47,8 +41,6 @@ class OfferAudiobook extends Offer {
    * The series name.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $series;
 
@@ -56,8 +48,6 @@ class OfferAudiobook extends Offer {
    * The year of release.
    *
    * @var int
-   *
-   * @YandexYmlXmlElement()
    */
   protected $year;
 
@@ -65,8 +55,6 @@ class OfferAudiobook extends Offer {
    * The volume.
    *
    * @var int
-   *
-   * @YandexYmlXmlElement()
    */
   protected $volume;
 
@@ -74,8 +62,6 @@ class OfferAudiobook extends Offer {
    * The part.
    *
    * @var int
-   *
-   * @YandexYmlXmlElement()
    */
   protected $part;
 
@@ -83,8 +69,6 @@ class OfferAudiobook extends Offer {
    * The language.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $language;
 
@@ -92,8 +76,6 @@ class OfferAudiobook extends Offer {
    * The table of contents.
    *
    * @var string
-   *
-   * @@YandexYmlXmlElement(name = "table_of_contents")
    */
   protected $tableOfContents;
 
@@ -101,8 +83,6 @@ class OfferAudiobook extends Offer {
    * The type.
    *
    * @var string
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $type;
 
@@ -110,8 +90,6 @@ class OfferAudiobook extends Offer {
    * The performer.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement(name = "performed_by")
    */
   protected $performedBy;
 
@@ -119,8 +97,6 @@ class OfferAudiobook extends Offer {
    * The performance type.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement(name = "performance_type")
    */
   protected $performanceType;
 
@@ -128,8 +104,6 @@ class OfferAudiobook extends Offer {
    * The storage.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $storage;
 
@@ -137,8 +111,6 @@ class OfferAudiobook extends Offer {
    * The format.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $format;
 
@@ -146,8 +118,6 @@ class OfferAudiobook extends Offer {
    * The recording length.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement(name = "recording_length")
    */
   protected $recordingLength;
 
@@ -173,6 +143,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "publisher")
    */
   public function getPublisher() {
     return $this->publisher;
@@ -188,6 +160,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "isbn")
    */
   public function getIsbn() {
     return $this->isbn;
@@ -203,6 +177,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "author")
    */
   public function getAuthor() {
     return $this->author;
@@ -218,6 +194,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "series")
    */
   public function getSeries() {
     return $this->series;
@@ -233,6 +211,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "year")
    */
   public function getYear() {
     return $this->year;
@@ -248,6 +228,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "volume")
    */
   public function getVolume() {
     return $this->volume;
@@ -263,6 +245,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "part")
    */
   public function getPart() {
     return $this->part;
@@ -278,6 +262,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "language")
    */
   public function getLanguage() {
     return $this->language;
@@ -293,6 +279,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "table_of_contents")
    */
   public function getTableOfContents() {
     return $this->tableOfContents;
@@ -308,6 +296,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlAttribute(name = "type")
    */
   public function getType() {
     return $this->type;
@@ -323,6 +313,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "performed_by")
    */
   public function getPerformedBy() {
     return $this->performedBy;
@@ -338,6 +330,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "performance_type")
    */
   public function getPerformanceType() {
     return $this->performanceType;
@@ -353,6 +347,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "storage")
    */
   public function getStorage() {
     return $this->storage;
@@ -368,6 +364,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "format")
    */
   public function getFormat() {
     return $this->format;
@@ -383,6 +381,8 @@ class OfferAudiobook extends Offer {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "recording_length")
    */
   public function getRecordingLength() {
     return $this->recordingLength;

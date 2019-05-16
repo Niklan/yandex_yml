@@ -19,8 +19,6 @@ final class Category {
    * The category ID.
    *
    * @var int
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $id;
 
@@ -28,8 +26,6 @@ final class Category {
    * The category parent ID.
    *
    * @var int
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $parentId;
 
@@ -37,8 +33,6 @@ final class Category {
    * The category name.
    *
    * @var string
-   *
-   * @YandexYmlXmlValue()
    */
   protected $name;
 
@@ -63,6 +57,8 @@ final class Category {
    *
    * @return int
    *   The category id.
+   *
+   * @YandexYmlXmlAttribute(name = "id")
    */
   public function getId() {
     return $this->id;
@@ -90,6 +86,8 @@ final class Category {
    *
    * @return int
    *   The parent category id.
+   *
+   * @YandexYmlXmlAttribute(name = "parentId")
    */
   public function getParentId() {
     return $this->parentId;
@@ -119,6 +117,8 @@ final class Category {
    *
    * @return string
    *   The current category name.
+   *
+   * @YandexYmlXmlValue(name = "name")
    */
   public function getName() {
     return $this->name;

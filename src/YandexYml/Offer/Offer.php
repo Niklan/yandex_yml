@@ -23,8 +23,6 @@ abstract class Offer implements OfferInterface {
    * The product name.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $name;
 
@@ -32,8 +30,6 @@ abstract class Offer implements OfferInterface {
    * The product id.
    *
    * @var int|string
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $id;
 
@@ -41,8 +37,6 @@ abstract class Offer implements OfferInterface {
    * The status of bidding for offer.
    *
    * @var int
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $cbid;
 
@@ -50,8 +44,6 @@ abstract class Offer implements OfferInterface {
    * The bid amount.
    *
    * @var int|float
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $bid;
 
@@ -59,8 +51,6 @@ abstract class Offer implements OfferInterface {
    * The fee for order.
    *
    * @var int|float
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $fee;
 
@@ -68,8 +58,6 @@ abstract class Offer implements OfferInterface {
    * The product status.
    *
    * @var bool
-   *
-   * @YandexYmlXmlAttribute()
    */
   protected $available;
 
@@ -77,8 +65,6 @@ abstract class Offer implements OfferInterface {
    * The product url.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $url;
 
@@ -86,8 +72,6 @@ abstract class Offer implements OfferInterface {
    * The product price.
    *
    * @var int|float
-   *
-   * @YandexYmlXmlElement()
    */
   protected $price;
 
@@ -96,6 +80,7 @@ abstract class Offer implements OfferInterface {
    *
    * @var bool
    *
+   * @todo Price must be object than.
    * @YandexYmlXmlAttribute(
    *   name = "from",
    *   targetElement = "price"
@@ -107,10 +92,6 @@ abstract class Offer implements OfferInterface {
    * The product old price.
    *
    * @var int|float
-   *
-   * @YandexYmlXmlElement(
-   *   name = "oldprice"
-   * )
    */
   protected $oldPrice;
 
@@ -118,8 +99,6 @@ abstract class Offer implements OfferInterface {
    * The product vat.
    *
    * @var int|string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $vat;
 
@@ -127,8 +106,6 @@ abstract class Offer implements OfferInterface {
    * The product currency id.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $currencyId;
 
@@ -136,8 +113,6 @@ abstract class Offer implements OfferInterface {
    * The product category id.
    *
    * @var int
-   *
-   * @YandexYmlXmlElement()
    */
   protected $categoryId;
 
@@ -145,8 +120,6 @@ abstract class Offer implements OfferInterface {
    * The product picture.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $picture;
 
@@ -154,8 +127,6 @@ abstract class Offer implements OfferInterface {
    * The product delivery.
    *
    * @var bool
-   *
-   * @YandexYmlXmlElement()
    */
   protected $delivery;
 
@@ -163,8 +134,6 @@ abstract class Offer implements OfferInterface {
    * The list of delivery options.
    *
    * @var \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions
-   *
-   * @YandexYmlXmlElementWrapper(name = "delivery-options")
    */
   protected $deliveryOptions;
 
@@ -172,8 +141,6 @@ abstract class Offer implements OfferInterface {
    * The product available for pickup.
    *
    * @var bool
-   *
-   * @YandexYmlXmlElement()
    */
   protected $pickup;
 
@@ -181,8 +148,6 @@ abstract class Offer implements OfferInterface {
    * The product in stock status.
    *
    * @var bool
-   *
-   * @YandexYmlXmlElement()
    */
   protected $store;
 
@@ -190,8 +155,6 @@ abstract class Offer implements OfferInterface {
    * The product description.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $description;
 
@@ -199,10 +162,6 @@ abstract class Offer implements OfferInterface {
    * The product sales notes.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement(
-   *   name = "sales_notes"
-   * )
    */
   protected $salesNotes;
 
@@ -210,10 +169,6 @@ abstract class Offer implements OfferInterface {
    * The product min quantity.
    *
    * @var int|float
-   *
-   * @YandexYmlXmlElement(
-   *   name = "min-quantity"
-   * )
    */
   protected $minQuantity;
 
@@ -221,10 +176,6 @@ abstract class Offer implements OfferInterface {
    * The product quantity step.
    *
    * @var int|float
-   *
-   * @YandexYmlXmlElement(
-   *   name = "step-quantity"
-   * )
    */
   protected $stepQuantity;
 
@@ -232,10 +183,6 @@ abstract class Offer implements OfferInterface {
    * The product has manufacturer warranty.
    *
    * @var bool
-   *
-   * @YandexYmlXmlElement(
-   *   name = "manufacturer_warranty"
-   * )
    */
   protected $manufacturerWarranty;
 
@@ -243,10 +190,6 @@ abstract class Offer implements OfferInterface {
    * The product country of origin.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement(
-   *   name = "country_of_origin"
-   * )
    */
   protected $countryOfOrigin;
 
@@ -254,8 +197,6 @@ abstract class Offer implements OfferInterface {
    * The product for adults.
    *
    * @var bool
-   *
-   * @YandexYmlXmlElement()
    */
   protected $adult;
 
@@ -263,8 +204,6 @@ abstract class Offer implements OfferInterface {
    * The product barcode.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $barcode;
 
@@ -272,8 +211,6 @@ abstract class Offer implements OfferInterface {
    * The product cpa.
    *
    * @var int
-   *
-   * @YandexYmlXmlElement()
    */
   protected $cpa;
 
@@ -281,18 +218,13 @@ abstract class Offer implements OfferInterface {
    * The product params.
    *
    * @var \Drupal\yandex_yml\YandexYml\Param\Params
-   *
-   * @YandexYmlXmlList()
    */
   protected $params;
 
   /**
-   * The product expiration date.
+   * An expiration date in ISO8601 format.
    *
    * @var string
-   *   An expiration date in ISO8601 format.
-   *
-   * @YandexYmlXmlElement()
    */
   protected $expire;
 
@@ -300,8 +232,6 @@ abstract class Offer implements OfferInterface {
    * The product weight.
    *
    * @var int|float
-   *
-   * @YandexYmlXmlElement()
    */
   protected $weight;
 
@@ -309,8 +239,6 @@ abstract class Offer implements OfferInterface {
    * The product dimensions.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $dimensions;
 
@@ -318,8 +246,6 @@ abstract class Offer implements OfferInterface {
    * The product is downloadable.
    *
    * @var bool
-   *
-   * @YandexYmlXmlElement()
    */
   protected $downloadable;
 
@@ -327,8 +253,6 @@ abstract class Offer implements OfferInterface {
    * The product age for.
    *
    * @var \Drupal\yandex_yml\YandexYml\Param\Age
-   *
-   * @YandexYmlXmlElement()
    */
   protected $age;
 
@@ -336,8 +260,6 @@ abstract class Offer implements OfferInterface {
    * The product group id.
    *
    * @var int
-   *
-   * @YandexYmlXmlElement(name = "group-id")
    */
   protected $groupId;
 
@@ -345,8 +267,6 @@ abstract class Offer implements OfferInterface {
    * The product vendor.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $vendor;
 
@@ -354,8 +274,6 @@ abstract class Offer implements OfferInterface {
    * The product vendor code.
    *
    * @var string
-   *
-   * @YandexYmlXmlElement()
    */
   protected $vendorCode;
 
@@ -383,6 +301,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlAttribute(name = "id")
    */
   public function getId() {
     return $this->id;
@@ -407,6 +327,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlAttribute(name = "cbid")
    */
   public function getCbid() {
     return $this->cbid;
@@ -423,6 +345,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlAttribute(name = "bid")
    */
   public function getBid() {
     return $this->bid;
@@ -439,6 +363,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlAttribute(name = "fee")
    */
   public function getFee() {
     return $this->fee;
@@ -455,6 +381,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlAttribute(name = "available")
    */
   public function getAvailable() {
     return $this->available;
@@ -471,6 +399,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "url")
    */
   public function getUrl() {
     return $this->url;
@@ -493,6 +423,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "price")
    */
   public function getPrice() {
     return $this->price;
@@ -531,6 +463,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "oldprice")
    */
   public function getOldPrice() {
     return $this->oldPrice;
@@ -547,6 +481,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "vat")
    */
   public function getVat() {
     return $this->vat;
@@ -563,6 +499,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "currencyId")
    */
   public function getCurrencyId() {
     return $this->currencyId;
@@ -588,6 +526,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "categoryId")
    */
   public function getCategoryId() {
     return $this->categoryId;
@@ -610,6 +550,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "picture")
    */
   public function getPicture() {
     return $this->picture;
@@ -626,6 +568,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "delivery")
    */
   public function getDelivery() {
     return $this->delivery;
@@ -642,6 +586,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElementWrapper(name = "delivery-options")
    */
   public function getDeliveryOptions() {
     return $this->deliveryOptions;
@@ -658,8 +604,10 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "pickup")
    */
-  public function isPickup() {
+  public function getPickup() {
     return $this->pickup;
   }
 
@@ -673,6 +621,17 @@ abstract class Offer implements OfferInterface {
   }
 
   /**
+   * {@inheritDoc}
+   *
+   * @todo interface
+   *
+   * @YandexYmlXmlElement(name = "store")
+   */
+  public function getStore() {
+    return $this->store;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function setStore($store) {
@@ -683,6 +642,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "description")
    */
   public function getDescription() {
     return $this->description;
@@ -700,6 +661,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "sales_notes")
    */
   public function getSalesNotes() {
     return $this->salesNotes;
@@ -709,13 +672,19 @@ abstract class Offer implements OfferInterface {
    * {@inheritdoc}
    */
   public function setSalesNotes($sales_notes) {
-    $this->salesNotes = Unicode::truncate($sales_notes, 50);
+    if (mb_strlen($sales_notes) > 50) {
+      throw new \InvalidArgumentException('The sales notes must be lower than 50 chars.');
+    }
+
+    $this->salesNotes = $sales_notes;
 
     return $this;
   }
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "min-quantity")
    */
   public function getMinQuantity() {
     return $this->minQuantity;
@@ -732,6 +701,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "step-quantity")
    */
   public function getStepQuantity() {
     return $this->stepQuantity;
@@ -748,8 +719,10 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "manufacturer_warranty")
    */
-  public function isManufacturerWarranty() {
+  public function getManufacturerWarranty() {
     return $this->manufacturerWarranty;
   }
 
@@ -764,6 +737,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "country_of_origin")
    */
   public function getCountryOfOrigin() {
     return $this->countryOfOrigin;
@@ -780,6 +755,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "adult")
    */
   public function getAdult() {
     return $this->adult;
@@ -796,6 +773,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "barcode")
    */
   public function getBarcode() {
     return $this->barcode;
@@ -812,6 +791,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "cpa")
    */
   public function getCpa() {
     return $this->cpa;
@@ -828,6 +809,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlList()
    */
   public function getParams() {
     return $this->params;
@@ -844,6 +827,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "expire")
    */
   public function getExpire() {
     return $this->expire;
@@ -860,6 +845,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "weight")
    */
   public function getWeight() {
     return $this->weight;
@@ -876,6 +863,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "dimensions")
    */
   public function getDimensions() {
     return $this->dimensions;
@@ -892,6 +881,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "downloadable")
    */
   public function getDownloadable() {
     return $this->downloadable;
@@ -908,6 +899,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "age")
    */
   public function getAge() {
     return $this->age;
@@ -924,6 +917,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "group-id")
    */
   public function getGroupId() {
     return $this->groupId;
@@ -940,6 +935,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "name")
    */
   public function getName() {
     return $this->name;
@@ -956,6 +953,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "vendor")
    */
   public function getVendor() {
     return $this->vendor;
@@ -972,6 +971,8 @@ abstract class Offer implements OfferInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "vendorCode")
    */
   public function getVendorCode() {
     return $this->vendorCode;

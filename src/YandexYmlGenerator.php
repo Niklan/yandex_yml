@@ -163,7 +163,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     // If object is root xml element (contains another elements).
     if ($xml_root_element = $annotated_object->getClassAnnotation($this::XML_ROOT_ELEMENT)) {
       $this->writer->startElement($xml_root_element->getName());
-      $this->processProperties($element);
+      //$this->processProperties($element);
       $this->processMethods($element);
       $this->writer->fullEndElement();
     }
@@ -171,7 +171,9 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
       // @todo maybe need to handle a bit differently. For example looking only
       //   for attributes and value, not allows nested elements.
       $this->writer->startElement($xml_element->getName());
-      $this->processProperties($element);
+      // Maybe need to remove, since methods are now responsible for annotate
+      // values.
+      //$this->processProperties($element);
       $this->processMethods($element);
       $this->writer->fullEndElement();
     }
@@ -330,9 +332,110 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
 
   protected function processMethods($element) {
     $annotated_object = $this->getAnnotatedObject($element);
-    // @todo complete or remove. For now there is no methods with annotations
-    //   but in theory, this must be better solution then annotated protected
-    //   properties.
+
+    // Attributes.
+    $attribute_methods = $annotated_object->getMethodsWithAnnotation($this::XML_ATTRIBUTE);
+    foreach ($attribute_methods as $method_name) {
+      $method_annotation = $annotated_object->getMethodAnnotation($method_name, $this::XML_ATTRIBUTE);
+
+
+      $callable = [$element, $method_name];
+      if (!$callable) {
+        continue;
+      }
+
+      $method_value = call_user_func($callable);
+      if (!$method_value) {
+        continue;
+      }
+
+      $this->writer->writeAttribute($method_annotation->getName(), $method_value);
+    }
+
+    // Value.
+    $value_methods = $annotated_object->getMethodsWithAnnotation($this::XML_VALUE);
+    foreach ($value_methods as $method_name) {
+      $callable = [$element, $method_name];
+      if (!$callable) {
+        continue;
+      }
+
+      $method_value = call_user_func($callable);
+      if (!$method_value) {
+        continue;
+      }
+
+      $this->writer->text($method_value);
+    }
+
+    // Elements.
+    $element_methods = $annotated_object->getMethodsWithAnnotation($this::XML_ELEMENT);
+    foreach ($element_methods as $method_name) {
+      $method_annotation = $annotated_object->getMethodAnnotation($method_name, $this::XML_ELEMENT);
+
+      $callable = [$element, $method_name];
+      if (!$callable) {
+        continue;
+      }
+
+      $method_value = call_user_func($callable);
+      if (!$method_value) {
+        continue;
+      }
+
+      // If object, it must describe process itself. F.e. age in offer.
+      if (is_object($method_value)) {
+        $this->processClass($method_value);
+      }
+      else {
+        $this->preprocessValue($method_value);
+        $this->writer->startElement($method_annotation->getName());
+        $this->writer->text($method_value);
+        $this->writer->fullEndElement();
+      }
+    }
+
+    // Wrappers.
+    $element_wrapper_methods = $annotated_object->getMethodsWithAnnotation($this::XML_ELEMENT_WRAPPER);
+    foreach ($element_wrapper_methods as $method_name) {
+      $method_annotation = $annotated_object->getMethodAnnotation($method_name, $this::XML_ELEMENT_WRAPPER);
+
+      $callable = [$element, $method_name];
+      if (!$callable) {
+        continue;
+      }
+
+      // Wrappers means that value is multiple.
+      $method_values = call_user_func($callable);
+      if (!$method_values || !$method_values instanceof Traversable) {
+        continue;
+      }
+
+      $this->writer->startElement($method_annotation->getName());
+      foreach ($method_values as $method_value) {
+        $this->processClass($method_value);
+      }
+      $this->writer->fullEndElement();
+    }
+
+    // Lists.
+    $list_methods = $annotated_object->getMethodsWithAnnotation($this::XML_LIST);
+    foreach ($list_methods as $method_name) {
+      $callable = [$element, $method_name];
+      if (!$callable) {
+        continue;
+      }
+
+      // List means that value is multiple.
+      $method_values = call_user_func($callable);
+      if (!$method_values || !$method_values instanceof Traversable) {
+        continue;
+      }
+
+      foreach ($method_values as $method_value) {
+        $this->processClass($method_value);
+      }
+    }
   }
 
   /**
