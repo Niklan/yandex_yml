@@ -614,18 +614,16 @@ interface OfferInterface {
    *
    * @param string $age
    *   The age value.
-   * @param string $unit
-   *   The unit of age. Can be "year" or "month".
    *
    * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
-  public function setAge($age, $unit = 'year');
+  public function setAge($age);
 
   /**
    * Gets offer age.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Param\YandexYmlAge
+   * @return \Drupal\yandex_yml\YandexYml\Param\Age
    *   The age.
    */
   public function getAge();

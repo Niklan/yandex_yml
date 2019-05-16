@@ -29,6 +29,8 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
 
   const XML_LIST = 'Drupal\yandex_yml\Annotation\YandexYmlXmlList';
 
+  const XML_VALUE = 'Drupal\yandex_yml\Annotation\YandexYmlXmlValue';
+
   protected $counter;
 
   /**
@@ -175,10 +177,8 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     }
   }
 
-  // @todo split up method to simple or make this flexible.
-
   protected function getAnnotatedObject($object) {
-    $result = &drupal_static(__CLASS__ . ':annotated_object:' . get_class($object));
+    $result = &drupal_static(__CLASS__ . ':' . __METHOD__ . ':' . get_class($object));
 
     if (!isset($result)) {
       $result = new AnnotatedObject($object);
@@ -187,9 +187,10 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     return $result;
   }
 
-  // @todo YandexYmlXmlValue for <param>, <category>
+  // @todo split up method to simple or make this flexible.
   protected function processProperties($element) {
     $annotated_object = $this->getAnnotatedObject($element);
+
     // Attributes.
     $attribute_properties = $annotated_object->getPropertiesWithAnnotation($this::XML_ATTRIBUTE);
     foreach ($attribute_properties as $property_name) {
@@ -210,6 +211,22 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
       $this->writer->writeAttribute($attribute_name, $property_value);
     }
 
+    // Value.
+    $value_properties = $annotated_object->getPropertiesWithAnnotation($this::XML_VALUE);
+    foreach ($value_properties as $property_name) {
+      $callable = $this->getPropertyGetter($element, $property_name);
+      if (!$callable) {
+        continue;
+      }
+
+      $property_value = call_user_func($callable);
+      if (!$property_value) {
+        continue;
+      }
+
+      $this->writer->text($property_value);
+    }
+
     // Elements.
     $element_properties = $annotated_object->getPropertiesWithAnnotation($this::XML_ELEMENT);
     foreach ($element_properties as $property_name) {
@@ -227,10 +244,16 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
         continue;
       }
 
-      $this->preprocessValue($property_value);
-      $this->writer->startElement($element_name);
-      $this->writer->text($property_value);
-      $this->writer->fullEndElement();
+      // If object, it must describe process itself. F.e. age in offer.
+      if (is_object($property_value)) {
+        $this->processClass($property_value);
+      }
+      else {
+        $this->preprocessValue($property_value);
+        $this->writer->startElement($element_name);
+        $this->writer->text($property_value);
+        $this->writer->fullEndElement();
+      }
     }
 
     // Wrappers.
@@ -270,6 +293,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
       $property_values = call_user_func($callable);
       if (!$property_values || !$property_values instanceof Traversable) {
         continue;
+
       }
 
       foreach ($property_values as $property_value) {
@@ -279,18 +303,12 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   }
 
   protected function getPropertyGetter($element, $property_name) {
-    $result = &drupal_static(__CLASS__ . ':' . __METHOD__ . ':' . get_class($element) . ':' . $property_name);
+    $callable = [
+      $element,
+      Utils::predictGetterName($property_name),
+    ];
 
-    if (!isset($result)) {
-      $callable = [
-        $element,
-        Utils::predictGetterName($property_name),
-      ];
-
-      $result = is_callable($callable) ? $callable : NULL;
-    }
-
-    return $result;
+    return is_callable($callable) ? $callable : NULL;
   }
 
   /**

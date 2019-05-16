@@ -15,6 +15,8 @@ use ReflectionClass;
  */
 class AnnotatedObject {
 
+  protected $className;
+
   protected $annotationReader;
 
   protected $classAnnotations = [];
@@ -28,6 +30,7 @@ class AnnotatedObject {
       throw new InvalidArgumentException('The argument must be of object type.');
     }
 
+    $this->className = get_class($object);
     $this->annotationReader = new AnnotationReader();
     // Register the namespaces of classes that can be used for annotations.
     AnnotationRegistry::registerLoader('class_exists');
@@ -36,59 +39,6 @@ class AnnotatedObject {
 
     // Help GC to free memory when needed.
     unset($this->annotationReader);
-  }
-
-  public function getClassAnnotation($annotation) {
-    foreach ($this->classAnnotations as $class_annotation) {
-      if (get_class($class_annotation) === $annotation) {
-        return $class_annotation;
-      }
-    }
-
-    return NULL;
-  }
-
-  public function getPropertyAnnotation($property_name, $annotation) {
-    if (!isset($this->propertyAnnotations[$property_name])) {
-      return NULL;
-    }
-
-    foreach ($this->propertyAnnotations[$property_name] as $property_annotation) {
-      if (get_class($property_annotation) === $annotation) {
-        return $property_annotation;
-      }
-    }
-
-    return NULL;
-  }
-
-  public function getPropertiesWithAnnotation($annotation) {
-    // @todo possible place to static caching.
-    $result = [];
-
-    foreach ($this->propertyAnnotations as $property_name => $property_annotations) {
-      foreach ($property_annotations as $property_annotation) {
-        if (get_class($property_annotation) === $annotation) {
-          $result[] = $property_name;
-        }
-      }
-    }
-
-    return $result;
-  }
-
-  public function getMethodAnnotation($method_name, $annotation) {
-    if (!isset($this->methodAnnotations[$method_name])) {
-      return NULL;
-    }
-
-    foreach ($this->methodAnnotations[$method_name] as $method_annotation) {
-      if (get_class($method_annotation) === $annotation) {
-        return $method_annotation;
-      }
-    }
-
-    return NULL;
   }
 
   protected function processReflections($object) {
@@ -136,6 +86,56 @@ class AnnotatedObject {
         }
       }
     }
+  }
+
+  public function getClassAnnotation($annotation) {
+    foreach ($this->classAnnotations as $class_annotation) {
+      if (get_class($class_annotation) === $annotation) {
+        return $class_annotation;
+      }
+    }
+  }
+
+  public function getPropertyAnnotation($property_name, $annotation) {
+    if (!isset($this->propertyAnnotations[$property_name])) {
+      return NULL;
+    }
+
+    foreach ($this->propertyAnnotations[$property_name] as $property_annotation) {
+      if (get_class($property_annotation) === $annotation) {
+        return $property_annotation;
+      }
+    }
+  }
+
+  public function getPropertiesWithAnnotation($annotation) {
+    $result = &drupal_static(__CLASS__ . ':' . __METHOD__ . ':' . $this->className . ':' . $annotation, []);
+
+    if (empty($result)) {
+      foreach ($this->propertyAnnotations as $property_name => $property_annotations) {
+        foreach ($property_annotations as $property_annotation) {
+          if (get_class($property_annotation) === $annotation) {
+            $result[] = $property_name;
+          }
+        }
+      }
+    }
+
+    return $result;
+  }
+
+  public function getMethodAnnotation($method_name, $annotation) {
+    if (!isset($this->methodAnnotations[$method_name])) {
+      return NULL;
+    }
+
+    foreach ($this->methodAnnotations[$method_name] as $method_annotation) {
+      if (get_class($method_annotation) === $annotation) {
+        return $method_annotation;
+      }
+    }
+
+    return NULL;
   }
 
 }

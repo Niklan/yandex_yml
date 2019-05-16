@@ -2,27 +2,26 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
-use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
-use Drupal\yandex_yml\Annotation\YandexYmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
+use Drupal\yandex_yml\YandexYml\Param\Age;
 
 /**
  * Audiobook offer.
  *
- * @YandexYmlElement(
- *   name = "offer"
- * )
- *
  * @see https://yandex.ru/support/partnermarket/export/audiobooks.html
+ *
+ * @YandexYmlXmlRootElement(name = "offer")
  */
-class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOfferAudiobookInterface {
+class OfferAudiobook extends Offer {
 
   /**
    * The publisher.
    *
    * @var string
    *
-   * @YandexYmlElementWrapper()
+   * @YandexYmlXmlElement()
    */
   protected $publisher;
 
@@ -31,7 +30,7 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOff
    *
    * @var string
    *
-   * @YandexYmlElementWrapper()
+   * @YandexYmlXmlElement()
    */
   protected $isbn;
 
@@ -40,7 +39,7 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOff
    *
    * @var string
    *
-   * @YandexYmlElementWrapper()
+   * @YandexYmlXmlElement()
    */
   protected $author;
 
@@ -49,7 +48,7 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOff
    *
    * @var string
    *
-   * @YandexYmlElementWrapper()
+   * @YandexYmlXmlElement()
    */
   protected $series;
 
@@ -58,7 +57,7 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOff
    *
    * @var int
    *
-   * @YandexYmlElementWrapper()
+   * @YandexYmlXmlElement()
    */
   protected $year;
 
@@ -67,7 +66,7 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOff
    *
    * @var int
    *
-   * @YandexYmlElementWrapper()
+   * @YandexYmlXmlElement()
    */
   protected $volume;
 
@@ -76,7 +75,7 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOff
    *
    * @var int
    *
-   * @YandexYmlElementWrapper()
+   * @YandexYmlXmlElement()
    */
   protected $part;
 
@@ -85,7 +84,7 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOff
    *
    * @var string
    *
-   * @YandexYmlElementWrapper()
+   * @YandexYmlXmlElement()
    */
   protected $language;
 
@@ -94,9 +93,7 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOff
    *
    * @var string
    *
-   * @YandexYmlElementWrapper(
-   *   name = "table_of_contents"
-   * )
+   * @@YandexYmlXmlElement(name = "table_of_contents")
    */
   protected $tableOfContents;
 
@@ -105,7 +102,7 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOff
    *
    * @var string
    *
-   * @YandexYmlAttribute()
+   * @YandexYmlXmlAttribute()
    */
   protected $type;
 
@@ -114,9 +111,7 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOff
    *
    * @var string
    *
-   * @YandexYmlElementWrapper(
-   *   name = "performed_by"
-   * )
+   * @YandexYmlXmlElement(name = "performed_by")
    */
   protected $performedBy;
 
@@ -125,9 +120,7 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOff
    *
    * @var string
    *
-   * @YandexYmlElementWrapper(
-   *   name = "performance_type"
-   * )
+   * @YandexYmlXmlElement(name = "performance_type")
    */
   protected $performanceType;
 
@@ -136,7 +129,7 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOff
    *
    * @var string
    *
-   * @YandexYmlElementWrapper()
+   * @YandexYmlXmlElement()
    */
   protected $storage;
 
@@ -145,7 +138,7 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOff
    *
    * @var string
    *
-   * @YandexYmlElementWrapper()
+   * @YandexYmlXmlElement()
    */
   protected $format;
 
@@ -154,18 +147,20 @@ class YandexYmlOfferAudiobook extends YandexYmlOfferBase implements YandexYmlOff
    *
    * @var string
    *
-   * @YandexYmlElementWrapper(
-   *   name = "recording_length"
-   * )
+   * @YandexYmlXmlElement(name = "recording_length")
    */
   protected $recordingLength;
 
   /**
-   * YandexYmlOfferAudiobook constructor.
+   * {@inheritDoc}
    */
-  public function __construct() {
-    // Set default required values for this offer type.
+  public function __construct($id, $url, $price, $currency_id, $category_id, $name, $publisher, Age $age) {
+    parent::__construct($id, $url, $price, $currency_id, $category_id);
+
     $this->setType('audiobook');
+    $this->setName($name);
+    $this->setPublisher($publisher);
+    $this->setAge($age);
   }
 
   /**

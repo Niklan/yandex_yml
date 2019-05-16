@@ -8,6 +8,7 @@ use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlElementWrapper;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlList;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlValue;
 use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions;
 use Drupal\yandex_yml\YandexYml\Param\Params;
 
@@ -325,7 +326,7 @@ abstract class Offer implements OfferInterface {
   /**
    * The product age for.
    *
-   * @var \Drupal\yandex_yml\YandexYml\Param\YandexYmlAge
+   * @var \Drupal\yandex_yml\YandexYml\Param\Age
    *
    * @YandexYmlXmlElement()
    */
@@ -336,9 +337,7 @@ abstract class Offer implements OfferInterface {
    *
    * @var int
    *
-   * @YandexYmlXmlElement(
-   *   name = "group-id"
-   * )
+   * @YandexYmlXmlElement(name = "group-id")
    */
   protected $groupId;
 
@@ -917,14 +916,8 @@ abstract class Offer implements OfferInterface {
   /**
    * {@inheritdoc}
    */
-  public function setAge($age, $unit = 'year') {
-    /** @var \Drupal\yandex_yml\YandexYml\Param\YandexYmlAge $param_age */
-    $param_age = Drupal::service('yandex_yml.param.age');
-    $param_age->setValue($age);
-    if (!empty($unit)) {
-      $param_age->setUnit($unit);
-    }
-    $this->age[] = $param_age;
+  public function setAge($age) {
+    $this->age = $age;
 
     return $this;
   }

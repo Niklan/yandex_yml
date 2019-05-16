@@ -228,7 +228,7 @@ $generator->addOffer($offer_simple);
 ### Example
 
 ```php
-/** @var \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferCustom $offer_custom */
+/** @var \Drupal\yandex_yml\YandexYml\Offer\OfferCustom $offer_custom */
 $offer_custom = \Drupal::service('yandex_yml.offer.custom');
 $offer_custom->setId('123456')
   ->setType('vendor.model')
@@ -424,7 +424,7 @@ $generator->addOffer($offer_book);
 ### Example
 
 ```php
-/** @var \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferAudiobook $offer_audiobook */
+/** @var \Drupal\yandex_yml\YandexYml\Offer\OfferAudiobook $offer_audiobook */
 $offer_audiobook = \Drupal::service('yandex_yml.offer.audiobook');
 $offer_audiobook->setId(12342)
   ->setAvailable(TRUE)

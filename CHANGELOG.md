@@ -87,7 +87,7 @@ for ($i = 1; $i < 20; $i++) {
 
 
 for ($i = 1; $i < 20000; $i++) {
-  /** @var \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferCustom $offer_custom */
+  /** @var \Drupal\yandex_yml\YandexYml\Offer\OfferCustom $offer_custom */
   $offer_custom = \Drupal::service('yandex_yml.offer.custom');
   $offer_custom->setId($i)
     ->setType('vendor.model')
