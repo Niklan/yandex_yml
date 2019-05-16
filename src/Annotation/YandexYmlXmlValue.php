@@ -23,7 +23,7 @@ class YandexYmlXmlValue extends YandexYmlXmlBase {
    *   The attribute name.
    */
   public function getName() {
-    return $this->definition['name'];
+    return isset($this->definition['name']) ? $this->definition['name'] : NULL;
   }
 
 }
