@@ -2,34 +2,32 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
-use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
-use Drupal\yandex_yml\Annotation\YandexYmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 
 /**
  * Medicine offer.
  *
  * @see https://yandex.ru/support/partnermarket/export/medicine.html
  *
- * @YandexYmlElement(
- *   name = "offer"
- * )
+ * @YandexYmlXmlRootElement(name = "offer")
  */
-class YandexYmlOfferMedicine extends YandexYmlOfferBase implements YandexYmlOfferMedicineInterface {
+class OfferMedicine extends Offer {
 
   /**
    * The offer type.
    *
    * @var string
-   *
-   * @YandexYmlAttribute()
    */
   protected $type;
 
   /**
-   * YandexYmlOfferMedicine constructor.
+   * {@inheritDoc}
    */
-  public function __construct() {
-    // Required values for all medicine offers.
+  public function __construct($id, $url, $price, $currency_id, $category_id) {
+    parent::__construct($id, $url, $price, $currency_id, $category_id);
+
+    // Required default parameter for this offer type.
     $this->setType('medicine');
     $this->setPickup(TRUE);
     $this->setDelivery(FALSE);
@@ -45,6 +43,8 @@ class YandexYmlOfferMedicine extends YandexYmlOfferBase implements YandexYmlOffe
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlAttribute(name = "type")
    */
   public function getType() {
     return $this->type;

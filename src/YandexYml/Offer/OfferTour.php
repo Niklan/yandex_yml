@@ -2,27 +2,23 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
-use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
-use Drupal\yandex_yml\Annotation\YandexYmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 
 /**
  * Tour offer.
  *
  * @see https://yandex.ru/support/partnermarket/export/tours.html
  *
- * @YandexYmlElement(
- *   name = "offer"
- * )
+ * @YandexYmlXmlRootElement(name = "offer")
  */
-class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTourInterface {
+class OfferTour extends Offer {
 
   /**
    * The offer type.
    *
    * @var string
-   *
-   * @YandexYmlAttribute()
    */
   protected $type;
 
@@ -30,8 +26,6 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
    * The world region.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $worldRegion;
 
@@ -39,8 +33,6 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
    * The country.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $country;
 
@@ -48,8 +40,6 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
    * The region.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $region;
 
@@ -57,8 +47,6 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
    * The days.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $days;
 
@@ -66,8 +54,6 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
    * The data tour.
    *
    * @var array
-   *
-   * @YandexYmlElement()
    */
   protected $dataTour = [];
 
@@ -75,10 +61,6 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
    * The hotel stars.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper(
-   *   name = "hotel_stars"
-   * )
    */
   protected $hotelStars;
 
@@ -86,8 +68,6 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
    * The room.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $room;
 
@@ -95,8 +75,6 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
    * The meal.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $meal;
 
@@ -104,8 +82,6 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
    * The included.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $included;
 
@@ -113,8 +89,6 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
    * The transport.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $transport;
 
@@ -122,10 +96,6 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
    * The min price.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper(
-   *   name = "price_min"
-   * )
    */
   protected $priceMin;
 
@@ -133,10 +103,6 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
    * The price max.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper(
-   *   name = "price_max"
-   * )
    */
   protected $priceMax;
 
@@ -144,17 +110,19 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
    * The options.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $options;
 
   /**
-   * YandexYmlOfferTour constructor.
+   * {@inheritDoc}
    */
-  public function __construct() {
-    // Set default required values for this offer type.
+  public function __construct($id, $url, $price, $currency_id, $category_id, $name, $days) {
+    parent::__construct($id, $url, $price, $currency_id, $category_id);
+
+    // Required default parameter for this offer type.
     $this->setType('tour');
+    $this->setName($name);
+    $this->setDays($days);
   }
 
   /**
@@ -167,6 +135,8 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlAttribute(name = "type")
    */
   public function getType() {
     return $this->type;
@@ -182,6 +152,8 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "worldRegion")
    */
   public function getWorldRegion() {
     return $this->worldRegion;
@@ -197,6 +169,8 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "country")
    */
   public function getCountry() {
     return $this->country;
@@ -212,6 +186,8 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "region")
    */
   public function getRegion() {
     return $this->region;
@@ -227,6 +203,8 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
 
   /**
    * {@inheritdoc}
+   *
+   *  @YandexYmlXmlElement(name = "days")
    */
   public function getDays() {
     return $this->days;
@@ -245,6 +223,9 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
 
   /**
    * {@inheritdoc}
+   *
+   * @todo
+   * YandexYmlElement(name = "dataTour")
    */
   public function getDataTour() {
     return $this->dataTour;
@@ -260,6 +241,8 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "hotel_stars")
    */
   public function getHotelStars() {
     return $this->hotelStars;
@@ -275,6 +258,8 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "room")
    */
   public function getRoom() {
     return $this->room;
@@ -290,6 +275,8 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "meal")
    */
   public function getMeal() {
     return $this->meal;
@@ -305,6 +292,8 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "included")
    */
   public function getIncluded() {
     return $this->included;
@@ -320,6 +309,8 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "transport")
    */
   public function getTransport() {
     return $this->transport;
@@ -335,6 +326,8 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "price_min")
    */
   public function getPriceMin() {
     return $this->priceMin;
@@ -350,6 +343,8 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "price_max")
    */
   public function getPriceMax() {
     return $this->priceMax;
@@ -365,6 +360,8 @@ class YandexYmlOfferTour extends YandexYmlOfferBase implements YandexYmlOfferTou
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "options")
    */
   public function getOptions() {
     return $this->options;

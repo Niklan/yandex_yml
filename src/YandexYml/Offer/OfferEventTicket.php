@@ -71,7 +71,6 @@ class OfferEventTicket extends Offer {
    */
   protected $isKids;
 
-
   /**
    * {@inheritDoc}
    */

@@ -299,7 +299,7 @@ $generator->addOffer($offer_custom);
 ### Example
 
 ```php
-/** @var \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferMedicine $offer_custom */
+/** @var \Drupal\yandex_yml\YandexYml\Offer\OfferMedicine $offer_custom */
 $offer_medicine = \Drupal::service('yandex_yml.offer.medicine');
 $offer_medicine->setId(12345)
   ->setAvailable(TRUE)
@@ -480,7 +480,7 @@ $generator->addOffer($offer_audiobook);
 ### Example video
 
 ```php
-/** @var \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferMusicVideo $offer_video */
+/** @var \Drupal\yandex_yml\YandexYml\Offer\OfferMusicVideo $offer_video */
 $offer_video = \Drupal::service('yandex_yml.offer.music_video');
 $offer_video->setId(12342)
   ->setAvailable(TRUE)
@@ -532,7 +532,7 @@ $generator->addOffer($offer_video);
 ### Example music
 
 ```php
-/** @var \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferMusicVideo $offer_music */
+/** @var \Drupal\yandex_yml\YandexYml\Offer\OfferMusicVideo $offer_music */
 $offer_music = \Drupal::service('yandex_yml.offer.music_video');
 $offer_music->setId(12345)
   ->setAvailable(TRUE)
@@ -636,7 +636,7 @@ $generator->addOffer($offer_event_ticket);
 ### Example
 
 ```php
-/** @var \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferTour $offer_tour */
+/** @var \Drupal\yandex_yml\YandexYml\Offer\OfferTour $offer_tour */
 $offer_tour = \Drupal::service('yandex_yml.offer.tour');
 $offer_tour->setId(12341)
   ->setAvailable(TRUE)

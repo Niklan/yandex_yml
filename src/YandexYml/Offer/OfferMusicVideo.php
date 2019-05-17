@@ -2,27 +2,23 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
-use Drupal\yandex_yml\Annotation\YandexYmlAttribute;
-use Drupal\yandex_yml\Annotation\YandexYmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlElementWrapper;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 
 /**
  * Music and video offer.
  *
  * @see https://yandex.ru/support/partnermarket/export/music-video.html
  *
- * @YandexYmlElement(
- *   name = "offer"
- * )
+ * @YandexYmlXmlRootElement(name = "offer")
  */
-class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOfferMusicVideoInterface {
+class OfferMusicVideo extends Offer {
 
   /**
    * The offer type.
    *
    * @var string
-   *
-   * @YandexYmlAttribute()
    */
   protected $type;
 
@@ -30,8 +26,6 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
    * The artist.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $artist;
 
@@ -39,8 +33,6 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
    * The title.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $title;
 
@@ -48,8 +40,6 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
    * The year.
    *
    * @var string|int
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $year;
 
@@ -57,8 +47,6 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
    * The media device.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $media;
 
@@ -66,8 +54,6 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
    * The starring.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $starring;
 
@@ -75,8 +61,6 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
    * The director.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $director;
 
@@ -84,8 +68,6 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
    * The original name.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $originalName;
 
@@ -93,15 +75,15 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
    * The country.
    *
    * @var string
-   *
-   * @YandexYmlElementWrapper()
    */
   protected $country;
 
   /**
-   * YandexYmlOfferMusicVideo constructor.
+   * {@inheritDoc}
    */
-  public function __construct() {
+  public function __construct($id, $url, $price, $currency_id, $category_id) {
+    parent::__construct($id, $url, $price, $currency_id, $category_id);
+
     // Set default required values for this offer type.
     $this->setType('artist.title');
   }
@@ -116,6 +98,8 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlAttribute(name = "type")
    */
   public function getType() {
     return $this->type;
@@ -131,6 +115,8 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "artist")
    */
   public function getArtist() {
     return $this->artist;
@@ -146,6 +132,8 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "title")
    */
   public function getTitle() {
     return $this->title;
@@ -161,6 +149,8 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "year")
    */
   public function getYear() {
     return $this->year;
@@ -176,6 +166,8 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "media")
    */
   public function getMedia() {
     return $this->media;
@@ -191,6 +183,8 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "starring")
    */
   public function getStarring() {
     return $this->starring;
@@ -206,6 +200,8 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "dirctor")
    */
   public function getDirector() {
     return $this->director;
@@ -221,6 +217,8 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "originalName")
    */
   public function getOriginalName() {
     return $this->originalName;
@@ -236,6 +234,8 @@ class YandexYmlOfferMusicVideo extends YandexYmlOfferBase implements YandexYmlOf
 
   /**
    * {@inheritdoc}
+   *
+   * @YandexYmlXmlElement(name = "country")
    */
   public function getCountry() {
     return $this->country;
