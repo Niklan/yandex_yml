@@ -128,20 +128,13 @@ final class Shop {
    *   The platform name.
    * @param null|string $version
    *   The platform version.
-   * @param null|string $agency
-   *   The agency name which provides technical support for the shop.
-   * @param null|string $email
-   *   The email of platform developers or agency which provides technical
-   *   support for the shop.
    */
   public function __construct(
     $name,
     $company,
     $url = NULL,
     $platform = 'Drupal',
-    $version = Drupal::VERSION,
-    $agency = NULL,
-    $email = NULL
+    $version = Drupal::VERSION
   ) {
 
     $this->setName($name);
@@ -149,8 +142,6 @@ final class Shop {
     $this->setUrl($url);
     $this->setPlatform($platform);
     $this->setVersion($version);
-    $this->setAgency($agency);
-    $this->setEmail($email);
   }
 
   /**
@@ -232,7 +223,7 @@ final class Shop {
    * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
-  protected function setUrl($url) {
+  public function setUrl($url) {
     if (!$url) {
       $this->url = Drupal::request()->getSchemeAndHttpHost();
     }
@@ -322,7 +313,7 @@ final class Shop {
    * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
-  protected function setAgency($agency) {
+  public function setAgency($agency) {
     $this->agency = $agency;
 
     return $this;
@@ -349,7 +340,7 @@ final class Shop {
    * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
-  protected function setEmail($email) {
+  public function setEmail($email) {
     $this->email = $email;
 
     return $this;

@@ -43,13 +43,10 @@ final class Category {
    *   The category ID.
    * @param string $name
    *   The category name.
-   * @param null|int $parent_id
-   *   The category parent ID.
    */
-  public function __construct($id, $name, $parent_id = NULL) {
+  public function __construct($id, $name) {
     $this->setId($id);
     $this->setName($name);
-    $this->setParentId($parent_id);
   }
 
   /**
@@ -106,7 +103,7 @@ final class Category {
    * @return \Drupal\yandex_yml\YandexYml\Category\Category
    *   The current category.
    */
-  protected function setParentId($parentId) {
+  public function setParentId($parentId) {
     $this->parentId = $parentId;
 
     return $this;

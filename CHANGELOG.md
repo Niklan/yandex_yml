@@ -6,10 +6,14 @@
 
 ## [Unreleased][unreleased]
 
-- Improved performance since alpha4. Tested on 20000 offers. Services has been replaced by Value Objects and object is no more converted to an array, the values get directly from objects. Performance test code: [alpha4](https://pastebin.com/VyDkvtLn) and [alpha5](#todo) (new)
+- Improved performance since alpha4. Tested on 20000 offers. Services has been replaced by Value Objects and object is no more converted to an array, the values get directly from objects. Performance test code: [alpha4](https://pastebin.com/VyDkvtLn) and [alpha5](https://pastebin.com/Le1L9WZk) (new)
 
-  * Generation time reduced from 331 sec to TODO sec.
-  * Memory peak usage reduced from 977 mb to TODO mb.
+  * Generation time reduced from 331 sec to 1.7 sec.
+  * Memory peak usage reduced from 977 mb to 54 mb.
+  * More heavy [test](https://pastebin.com/4Em2RH3u) results:
+    - Total offers: 80000 (each type x10000)
+    - Time: 7.4 sec
+    - Memory peak: 109 mb.
 
 - Improved code quality.
 - Added support for `pickup-options`.
