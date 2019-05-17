@@ -354,7 +354,7 @@ $generator->addOffer($offer_medicine);
 ### Example
 
 ```php
-/** @var \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBook $offer_book */
+/** @var \Drupal\yandex_yml\YandexYml\Offer\OfferBook $offer_book */
 $offer_book = \Drupal::service('yandex_yml.offer.book');
 $offer_book->setId(12342)
   ->setAvailable(TRUE)
@@ -582,7 +582,7 @@ $generator->addOffer($offer_music);
 ### Example
 
 ```php
-/** @var \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferEventTicket $offer_event_ticket */
+/** @var \Drupal\yandex_yml\YandexYml\Offer\OfferEventTicket $offer_event_ticket */
 $offer_event_ticket = \Drupal::service('yandex_yml.offer.event_ticket');
 $offer_event_ticket->setId(1234)
   ->setAvailable(TRUE)
