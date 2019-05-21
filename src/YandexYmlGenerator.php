@@ -159,16 +159,15 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $annotated_object = $this->getAnnotatedObject($element);
     $xml_root_element = $annotated_object->getClassAnnotation($this::XML_ROOT_ELEMENT);
     $this->writer->startElement($xml_root_element->getName());
-    $this->processXmlAttribute($element);
-    $this->processXmlValue($element);
-    $this->processXmlElement($element);
-    $this->processXmlElementWrapper($element);
-    $this->processXmlList($element);
+    $this->processXmlAttribute($element, $annotated_object);
+    $this->processXmlValue($element, $annotated_object);
+    $this->processXmlElement($element, $annotated_object);
+    $this->processXmlElementWrapper($element, $annotated_object);
+    $this->processXmlList($element, $annotated_object);
     $this->writer->fullEndElement();
   }
 
-  protected function processXmlAttribute($element) {
-    $annotated_object = $this->getAnnotatedObject($element);
+  protected function processXmlAttribute($element, $annotated_object) {
     $attribute_methods = $annotated_object->getMethodsWithAnnotation($this::XML_ATTRIBUTE);
 
     foreach ($attribute_methods as $method_name) {
@@ -189,8 +188,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     }
   }
 
-  protected function processXmlValue($element) {
-    $annotated_object = $this->getAnnotatedObject($element);
+  protected function processXmlValue($element, $annotated_object) {
     $value_methods = $annotated_object->getMethodsWithAnnotation($this::XML_VALUE);
     foreach ($value_methods as $method_name) {
       $callable = [$element, $method_name];
@@ -207,8 +205,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     }
   }
 
-  protected function processXmlElement($element) {
-    $annotated_object = $this->getAnnotatedObject($element);
+  protected function processXmlElement($element, $annotated_object) {
     $element_methods = $annotated_object->getMethodsWithAnnotation($this::XML_ELEMENT);
     foreach ($element_methods as $method_name) {
       $method_annotation = $annotated_object->getMethodAnnotation($method_name, $this::XML_ELEMENT);
@@ -236,8 +233,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     }
   }
 
-  protected function processXmlElementWrapper($element) {
-    $annotated_object = $this->getAnnotatedObject($element);
+  protected function processXmlElementWrapper($element, $annotated_object) {
     $element_wrapper_methods = $annotated_object->getMethodsWithAnnotation($this::XML_ELEMENT_WRAPPER);
     foreach ($element_wrapper_methods as $method_name) {
       $method_annotation = $annotated_object->getMethodAnnotation($method_name, $this::XML_ELEMENT_WRAPPER);
@@ -261,8 +257,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     }
   }
 
-  protected function processXmlList($element) {
-    $annotated_object = $this->getAnnotatedObject($element);
+  protected function processXmlList($element, $annotated_object) {
     $list_methods = $annotated_object->getMethodsWithAnnotation($this::XML_LIST);
     foreach ($list_methods as $method_name) {
       $callable = [$element, $method_name];

@@ -76,6 +76,7 @@ class AnnotatedObject {
     }
   }
 
+  // @todo maybe store values by annotation class name as key.
   protected function setMethodAnnotations(ReflectionClass $reflection) {
     foreach ($reflection->getMethods() as $method) {
       $method_annotations = $this->annotationReader->getMethodAnnotations($method);
