@@ -2,8 +2,9 @@
 
 namespace Drupal\yandex_yml\YandexYml\Delivery;
 
-use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
+use Drupal\yandex_yml\Xml\Attribute;
+use Drupal\yandex_yml\Xml\Element;
 
 /**
  * Class DeliveryOption.
@@ -12,46 +13,13 @@ use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
  *
  * @YandexYmlXmlElement(name = "option")
  */
-class DeliveryOption {
+class DeliveryOption extends Element {
 
-  /**
-   * The delivery cost.
-   *
-   * @var int
-   */
-  protected $cost;
+  public function __construct($cost, $days) {
+    parent::__construct('option');
 
-  /**
-   * The delivery duration.
-   *
-   * @var int|string
-   */
-  protected $days;
-
-  /**
-   * The hour of order before.
-   *
-   * @var int
-   */
-  protected $orderBefore;
-
-
-  public function __construct($cost, $days, $order_before = NULL) {
     $this->setCost($cost);
     $this->setDays($days);
-    $this->setOrderBefore($order_before);
-  }
-
-  /**
-   * Gets delivery cost.
-   *
-   * @return int
-   *   The delivery cost.
-   *
-   * @YandexYmlXmlAttribute(name = "cost")
-   */
-  public function getCost() {
-    return $this->cost;
   }
 
   /**
@@ -63,26 +31,9 @@ class DeliveryOption {
    *
    * @param int $cost
    *   The delivery cost.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption
-   *   The current delivery.
    */
   protected function setCost($cost) {
-    $this->cost = $cost;
-
-    return $this;
-  }
-
-  /**
-   * Gets estimated delivery time.
-   *
-   * @return int|string
-   *   The delivery time.
-   *
-   * @YandexYmlXmlAttribute(name = "days")
-   */
-  public function getDays() {
-    return $this->days;
+    $this->addElementAttribute(new Attribute('cost', $cost));
   }
 
   /**
@@ -98,26 +49,9 @@ class DeliveryOption {
    *
    * @param int|string $days
    *   The delivery time.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption
-   *   The current delivery.
    */
   protected function setDays($days) {
-    $this->days = $days;
-
-    return $this;
-  }
-
-  /**
-   * Gets order before time.
-   *
-   * @return int
-   *   The order before hour.
-   *
-   * @YandexYmlXmlAttribute(name = "order-before")
-   */
-  public function getOrderBefore() {
-    return $this->orderBefore;
+    $this->addElementAttribute(new Attribute('days', $days));
   }
 
   /**
@@ -136,8 +70,8 @@ class DeliveryOption {
    * @return \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption
    *   The current delivery.
    */
-  protected function setOrderBefore($order_before) {
-    $this->orderBefore = $order_before;
+  public function setOrderBefore($order_before) {
+    $this->addElementAttribute(new Attribute('order-before', $order_before));
 
     return $this;
   }

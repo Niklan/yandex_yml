@@ -3,9 +3,7 @@
 namespace Drupal\yandex_yml\YandexYml\Shop;
 
 use Drupal;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlElementWrapper;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
+use Drupal\yandex_yml\Xml\Element;
 use Drupal\yandex_yml\YandexYml\Category\Categories;
 use Drupal\yandex_yml\YandexYml\Currency\Currencies;
 use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions;
@@ -17,103 +15,8 @@ use InvalidArgumentException;
  * Class Shop.
  *
  * @see https://yandex.ru/support/partnermarket/elements/shop.html
- *
- * @YandexYmlXmlRootElement(name = "shop")
  */
-final class Shop {
-
-  /**
-   * The short shop name.
-   *
-   * @var string
-   */
-  protected $name;
-
-  /**
-   * The full company name which owns the shop.
-   *
-   * @var string
-   */
-  protected $company;
-
-  /**
-   * The shop home page.
-   *
-   * @var string
-   */
-  protected $url;
-
-  /**
-   * The platform name.
-   *
-   * @var string
-   */
-  protected $platform;
-
-  /**
-   * The platform version.
-   *
-   * @var string
-   */
-  protected $version;
-
-  /**
-   * The agency name which provides technical support for the shop.
-   *
-   * @var string
-   */
-  protected $agency;
-
-  /**
-   * The email of platform developers or technical support.
-   *
-   * @var string
-   */
-  protected $email;
-
-  /**
-   * The list of currencies supported by shop.
-   *
-   * @var \Drupal\yandex_yml\YandexYml\Currency\Currencies
-   */
-  protected $currencies;
-
-  /**
-   * The list of categories of products.
-   *
-   * @var \Drupal\yandex_yml\YandexYml\Category\Categories
-   */
-  protected $categories;
-
-  /**
-   * The list of delivery options.
-   *
-   * @var \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions
-   */
-  protected $deliveryOptions;
-
-  /**
-   * The list of pickup options.
-   *
-   * @var \Drupal\yandex_yml\YandexYml\Pickup\PickupOptions;
-   */
-  protected $pickupOptions;
-
-  /**
-   * The auto discount status.
-   *
-   * @var bool
-   *
-   * @see https://yandex.ru/support/partnermarket/elements/shop-enable_auto_discounts.html
-   */
-  protected $enableAutoDiscounts;
-
-  /**
-   * The list of offers..
-   *
-   * @var \Drupal\yandex_yml\YandexYml\Offer\Offers
-   */
-  protected $offers;
+final class Shop extends Element {
 
   /**
    * Shop constructor.
@@ -132,28 +35,14 @@ final class Shop {
   public function __construct(
     $name,
     $company,
-    $url = NULL,
-    $platform = 'Drupal',
-    $version = Drupal::VERSION
+    $url = NULL
   ) {
+
+    parent::__construct('shop');
 
     $this->setName($name);
     $this->setCompany($company);
     $this->setUrl($url);
-    $this->setPlatform($platform);
-    $this->setVersion($version);
-  }
-
-  /**
-   * Gets name.
-   *
-   * @return string
-   *   The short shop name.
-   *
-   * @YandexYmlXmlElement(name = "name")
-   */
-  public function getName() {
-    return $this->name;
   }
 
   /**
@@ -170,21 +59,9 @@ final class Shop {
       throw new InvalidArgumentException('The shop name must be not longer than 20 chars.');
     }
 
-    $this->name = $name;
+    $this->addElementChild(new Element('name', $name));
 
     return $this;
-  }
-
-  /**
-   * Gets company.
-   *
-   * @return string
-   *   The full company name which owns the shop.
-   *
-   * @YandexYmlXmlElement(name = "company")
-   */
-  public function getCompany() {
-    return $this->company;
   }
 
   /**
@@ -197,21 +74,9 @@ final class Shop {
    *   The object instance.
    */
   protected function setCompany($company) {
-    $this->company = $company;
+    $this->addElementChild(new Element('company', $company));
 
     return $this;
-  }
-
-  /**
-   * Gets url.
-   *
-   * @return string
-   *   The shop home page.
-   *
-   * @YandexYmlXmlElement(name = "url")
-   */
-  public function getUrl() {
-    return $this->url;
   }
 
   /**
@@ -223,31 +88,18 @@ final class Shop {
    * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
-  public function setUrl($url) {
+  protected function setUrl($url) {
     if (!$url) {
-      $this->url = Drupal::request()->getSchemeAndHttpHost();
-    }
-    else {
-      $this->url = $url;
+      $url = Drupal::request()->getSchemeAndHttpHost();
     }
 
-    if (mb_strlen($this->url) > 50) {
+    if (mb_strlen($url) > 50) {
       throw new InvalidArgumentException('The length of shop url must be lower than 50 chars.');
     }
 
-    return $this;
-  }
+    $this->addElementChild(new Element('url', $url));
 
-  /**
-   * Gets platform.
-   *
-   * @return string
-   *   The platform name.
-   *
-   * @YandexYmlXmlElement(name = "platform")
-   */
-  public function getPlatform() {
-    return $this->platform;
+    return $this;
   }
 
   /**
@@ -259,22 +111,10 @@ final class Shop {
    * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
-  protected function setPlatform($platform) {
-    $this->platform = $platform;
+  public function setPlatform($platform) {
+    $this->addElementChild(new Element('platform', $platform));
 
     return $this;
-  }
-
-  /**
-   * Gets version.
-   *
-   * @return string
-   *   The platform version.
-   *
-   * @YandexYmlXmlElement(name = "version")
-   */
-  public function getVersion() {
-    return $this->version;
   }
 
   /**
@@ -286,22 +126,10 @@ final class Shop {
    * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
-  protected function setVersion($version) {
-    $this->version = $version;
+  public function setVersion($version) {
+    $this->addElementChild(new Element('version', $version));
 
     return $this;
-  }
-
-  /**
-   * Gets agency.
-   *
-   * @return string
-   *   The agency name which provides technical support for the shop.
-   *
-   * @YandexYmlXmlElement(name = "agency")
-   */
-  public function getAgency() {
-    return $this->agency;
   }
 
   /**
@@ -314,21 +142,9 @@ final class Shop {
    *   The object instance.
    */
   public function setAgency($agency) {
-    $this->agency = $agency;
+    $this->addElementChild(new Element('agency', $agency));
 
     return $this;
-  }
-
-  /**
-   * Get email.
-   *
-   * @return string
-   *   The email of platform developers or technical support.
-   *
-   * @YandexYmlXmlElement(name = "email")
-   */
-  public function getEmail() {
-    return $this->email;
   }
 
   /**
@@ -341,21 +157,9 @@ final class Shop {
    *   The object instance.
    */
   public function setEmail($email) {
-    $this->email = $email;
+    $this->addElementChild(new Element('email', $email));
 
     return $this;
-  }
-
-  /**
-   * Gets currencies.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Currency\Currencies
-   *   An array of supported currencies.
-   *
-   * @YandexYmlXmlElementWrapper(name = "currencies")
-   */
-  public function getCurrencies() {
-    return $this->currencies;
   }
 
   /**
@@ -368,21 +172,9 @@ final class Shop {
    *   The object instance.
    */
   public function setCurrencies(Currencies $currencies) {
-    $this->currencies = $currencies;
+    $this->addElementChild($currencies);
 
     return $this;
-  }
-
-  /**
-   * Gets categories.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Category\Categories
-   *   The categories info.
-   *
-   * @YandexYmlXmlElementWrapper(name = "categories")
-   */
-  public function getCategories() {
-    return $this->categories;
   }
 
   /**
@@ -395,21 +187,9 @@ final class Shop {
    *   The object instance.
    */
   public function setCategories(Categories $categories) {
-    $this->categories = $categories;
+    $this->addElementChild($categories);
 
     return $this;
-  }
-
-  /**
-   * Gets delivery options.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions
-   *   The delivery options.
-   *
-   * @YandexYmlXmlElementWrapper(name = "delivery-options")
-   */
-  public function getDeliveryOptions() {
-    return $this->deliveryOptions;
   }
 
   /**
@@ -422,78 +202,39 @@ final class Shop {
    *   The object instance.
    */
   public function setDeliveryOptions(DeliveryOptions $deliveryOptions) {
-    $this->deliveryOptions = $deliveryOptions;
+    $this->addElementChild($deliveryOptions);
 
     return $this;
-  }
-
-  /**
-   * Gets pickup options.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Pickup\PickupOptions
-   *   The pickup options.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Pickup\PickupOptions
-   *   The pickup options.
-   *
-   * @YandexYmlXmlElementWrapper(name = "pickup-options")
-   */
-  public function getPickupOptions() {
-    return $this->pickupOptions;
   }
 
   /**
    * Sets pickup options.
    *
-   * @param \Drupal\yandex_yml\YandexYml\Pickup\PickupOptions $pickupOptions
+   * @param \Drupal\yandex_yml\YandexYml\Pickup\PickupOptions $pickup_options
    *   The pickup options.
    *
    * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
-  public function setPickupOptions(PickupOptions $pickupOptions) {
-    $this->pickupOptions = $pickupOptions;
+  public function setPickupOptions(PickupOptions $pickup_options) {
+    $this->addElementChild($pickup_options);
 
     return $this;
-  }
-
-  /**
-   * Gets auto discount status.
-   *
-   * @return bool
-   *   The auto discount status.
-   *
-   * @YandexYmlXmlElement(name = "enable_auto_discounts")
-   */
-  public function getEnableAutoDiscounts() {
-    return $this->enableAutoDiscounts;
   }
 
   /**
    * Sets auto discount status.
    *
-   * @param bool $enableAutoDiscounts
+   * @param bool $enable_auto_discounts
    *   The auto discount status.
    *
    * @return \Drupal\yandex_yml\YandexYml\Shop\Shop
    *   The object instance.
    */
-  public function setEnableAutoDiscounts($enableAutoDiscounts) {
-    $this->enableAutoDiscounts = $enableAutoDiscounts;
+  public function setEnableAutoDiscounts($enable_auto_discounts) {
+    $this->addElementChild(new Element('enable_auto_discounts', $enable_auto_discounts));
 
     return $this;
-  }
-
-  /**
-   * Gets offers.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\Offers
-   *   The offers list.
-   *
-   * @YandexYmlXmlElementWrapper(name = "offers")
-   */
-  public function getOffers() {
-    return $this->offers;
   }
 
   /**
@@ -506,7 +247,7 @@ final class Shop {
    *   The object instance.
    */
   public function setOffers(Offers $offers) {
-    $this->offers = $offers;
+    $this->addElementChild($offers);
 
     return $this;
   }

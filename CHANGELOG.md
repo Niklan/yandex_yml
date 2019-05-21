@@ -1,9 +1,5 @@
 # Changelog
 
-## TODO
-
-- Spreadsheet with offer types, their possible values, what's required, and what's not. This will help to modify offers properties and objects to be more accurate and detect new and old properties.
-
 ## [Unreleased][unreleased]
 
 - Improved performance since alpha4. Tested on 20000 offers. Services has been replaced by Value Objects and object is no more converted to an array, the values get directly from objects. Performance test code: [alpha4](https://pastebin.com/VyDkvtLn) and [alpha5](https://pastebin.com/Le1L9WZk) (new)
@@ -18,6 +14,8 @@
 - Improved code quality.
 - Added support for `pickup-options`.
 - Added support for `enable_auto_discounts`.
+
+_Last commit with annotated objects with insane performance 15ccae07f88f972cfd028164caf16ec92ec6e383. 331 sec > 1.7 sec, 977mb > 54mb._
 
 ## [1.0-alpha4]
 

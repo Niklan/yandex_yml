@@ -2,6 +2,7 @@
 
 namespace Drupal\yandex_yml\YandexYml\Pickup;
 
+use Drupal\yandex_yml\Xml\Element;
 use Drupal\yandex_yml\YandexYml\YandexYmlArray;
 
 /**
@@ -9,9 +10,13 @@ use Drupal\yandex_yml\YandexYml\YandexYmlArray;
  *
  * Contains delivery options.
  *
- * @see https://yandex.ru/support/partnermarket/elements/delivery-options.html
+ * @see https://yandex.ru/support/partnermarket/elements/pickup-options.html
  */
-final class PickupOptions extends YandexYmlArray {
+final class PickupOptions extends Element {
+
+  public function __construct() {
+    parent::__construct('pickup-options');
+  }
 
   /**
    * Adds delivery option.
@@ -23,7 +28,7 @@ final class PickupOptions extends YandexYmlArray {
    *   The current object instance.
    */
   public function addOption(PickupOption $pickup_option) {
-    $this->values[] = $pickup_option;
+    $this->addElementChild($pickup_option);
 
     return $this;
   }

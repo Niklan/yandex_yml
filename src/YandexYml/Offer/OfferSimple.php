@@ -2,8 +2,7 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
-use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
+use Drupal\yandex_yml\Xml\Element;
 
 /**
  * Base object for simple offer.
@@ -15,45 +14,10 @@ use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 class OfferSimple extends Offer {
 
   /**
-   * The model.
-   *
-   * @var string
-   */
-  protected $model;
-
-  /**
-   * The vendor.
-   *
-   * @var string
-   */
-  protected $vendor;
-
-  /**
-   * The vendor code.
-   *
-   * @var string
-   */
-  protected $vendorCode;
-
-  /**
    * {@inheritDoc}
    */
-  public function __construct($id, $url, $price, $currency_id, $category_id, $name) {
-    parent::__construct($id, $url, $price, $currency_id, $category_id);
-
-    $this->setName($name);
-  }
-
-  /**
-   * Gets model.
-   *
-   * @return string
-   *   The model.
-   *
-   * @YandexYmlXmlElement(name = "model")
-   */
-  public function getModel() {
-    return $this->model;
+  public function __construct($id, $url, $price, $price_from, $currency_id, $category_id, $name) {
+    parent::__construct($id, $url, $price, $price_from, $currency_id, $category_id);
   }
 
   /**
@@ -66,61 +30,7 @@ class OfferSimple extends Offer {
    *   The current offer.
    */
   public function setModel($model) {
-    $this->model = $model;
-
-    return $this;
-  }
-
-  /**
-   * Gets vendor.
-   *
-   * @return string
-   *   The vendor.
-   *
-   * @YandexYmlXmlElement(name = "vendor")
-   */
-  public function getVendor() {
-    return $this->vendor;
-  }
-
-  /**
-   * Sets vendor.
-   *
-   * @param string $vendor
-   *   The vendor.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
-   *   The current offer.
-   */
-  public function setVendor($vendor) {
-    $this->vendor = $vendor;
-
-    return $this;
-  }
-
-  /**
-   * Gets vendor code.
-   *
-   * @return string
-   *   The vendor code.
-   *
-   * @YandexYmlXmlElement(name = "vendorCode")
-   */
-  public function getVendorCode() {
-    return $this->vendorCode;
-  }
-
-  /**
-   * Sets vendor code.
-   *
-   * @param string $vendor_code
-   *   The vendor code.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
-   *   The current offer.
-   */
-  public function setVendorCode($vendor_code) {
-    $this->vendorCode = $vendor_code;
+    $this->addElementChild(new Element('model', $model));
 
     return $this;
   }

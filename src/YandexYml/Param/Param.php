@@ -2,9 +2,8 @@
 
 namespace Drupal\yandex_yml\YandexYml\Param;
 
-use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlValue;
+use Drupal\yandex_yml\Xml\Attribute;
+use Drupal\yandex_yml\Xml\Element;
 
 /**
  * Param element.
@@ -12,31 +11,8 @@ use Drupal\yandex_yml\Annotation\YandexYmlXmlValue;
  * Used as abstraction for YML element.
  *
  * @see https://yandex.ru/support/partnermarket/elements/param.html
- *
- * @YandexYmlXmlElement(name = "param")
  */
-class Param {
-
-  /**
-   * The param name.
-   *
-   * @var string
-   */
-  protected $name;
-
-  /**
-   * The param unit.
-   *
-   * @var string
-   */
-  protected $unit;
-
-  /**
-   * The param value.
-   *
-   * @var string
-   */
-  protected $value;
+class Param extends Element {
 
   /**
    * Param constructor.
@@ -49,75 +25,11 @@ class Param {
    *   The param unit.
    */
   public function __construct($name, $value, $unit = NULL) {
+    parent::__construct('param');
+
     $this->setName($name);
     $this->setValue($value);
     $this->setUnit($unit);
-  }
-
-  /**
-   * Gets name.
-   *
-   * @return string
-   *   The name.
-   *
-   * @YandexYmlXmlAttribute(name = "name")
-   */
-  public function getName() {
-    return $this->name;
-  }
-
-  /**
-   * Sets name.
-   *
-   * @param string $name
-   *   The name.
-   *
-   * @return $this|\Drupal\yandex_yml\YandexYml\Param\Param
-   *   The current param instance.
-   */
-  protected function setName($name) {
-    $this->name = $name;
-
-    return $this;
-  }
-
-  /**
-   * Gets unit.
-   *
-   * @return string
-   *   The unit.
-   *
-   * @YandexYmlXmlAttribute(name = "unit")
-   */
-  public function getUnit() {
-    return $this->unit;
-  }
-
-  /**
-   * Sets unit.
-   *
-   * @param string $unit
-   *   The unit.
-   *
-   * @return $this|\Drupal\yandex_yml\YandexYml\Param\Param
-   *   The current param instance.
-   */
-  protected function setUnit($unit) {
-    $this->unit = $unit;
-
-    return $this;
-  }
-
-  /**
-   * Gets value.
-   *
-   * @return string
-   *   The value.
-   *
-   * @YandexYmlXmlValue(name = "value")
-   */
-  public function getValue() {
-    return $this->value;
   }
 
   /**
@@ -125,14 +37,31 @@ class Param {
    *
    * @param string $value
    *   The value.
-   *
-   * @return $this|\Drupal\yandex_yml\YandexYml\Param\Param
-   *   The current param instance.
    */
   protected function setValue($value) {
     $this->value = $value;
+  }
 
-    return $this;
+  /**
+   * Sets unit.
+   *
+   * @param string $unit
+   *   The unit.
+   */
+  protected function setUnit($unit = NULL) {
+    if ($unit) {
+      $this->addElementAttribute(new Attribute('unit', $unit));
+    }
+  }
+
+  /**
+   * Sets attribute name.
+   *
+   * @param string $name
+   *   The param name.
+   */
+  protected function setName($name) {
+    $this->addElementAttribute(new Attribute('name', $name));
   }
 
 }

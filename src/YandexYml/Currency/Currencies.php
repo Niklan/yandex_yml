@@ -2,7 +2,8 @@
 
 namespace Drupal\yandex_yml\YandexYml\Currency;
 
-use Drupal\yandex_yml\YandexYml\YandexYmlArray;
+use Drupal\yandex_yml\Xml\Element;
+use Drupal\yandex_yml\Xml\ElementInterface;
 
 /**
  * Class Currencies.
@@ -11,21 +12,14 @@ use Drupal\yandex_yml\YandexYml\YandexYmlArray;
  *
  * @see https://yandex.ru/support/partnermarket/currencies.html
  */
-final class Currencies extends YandexYmlArray {
+final class Currencies extends Element {
 
-  /**
-   * Adds currency.
-   *
-   * @param \Drupal\yandex_yml\YandexYml\Currency\Currency $currency
-   *   The currency info.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Currency\Currencies
-   *   The current object instance.
-   */
-  public function addCurrency(Currency $currency) {
-    $this->values[] = $currency;
+  public function __construct() {
+    parent::__construct('currencies');
+  }
 
-    return $this;
+  public function addCurrency(ElementInterface $currency) {
+    $this->addElementChild($currency);
   }
 
 }

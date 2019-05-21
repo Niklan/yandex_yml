@@ -2,7 +2,7 @@
 
 namespace Drupal\yandex_yml\YandexYml\Delivery;
 
-use Drupal\yandex_yml\YandexYml\YandexYmlArray;
+use Drupal\yandex_yml\Xml\Element;
 
 /**
  * Class DeliveryOptions.
@@ -11,7 +11,11 @@ use Drupal\yandex_yml\YandexYml\YandexYmlArray;
  *
  * @see https://yandex.ru/support/partnermarket/elements/delivery-options.html
  */
-final class DeliveryOptions extends YandexYmlArray {
+final class DeliveryOptions extends Element {
+
+  public function __construct() {
+    parent::__construct('delivery-options');
+  }
 
   /**
    * Adds delivery option.
@@ -23,7 +27,7 @@ final class DeliveryOptions extends YandexYmlArray {
    *   The current object instance.
    */
   public function addOption(DeliveryOption $delivery_option) {
-    $this->values[] = $delivery_option;
+    $this->addElementChild($delivery_option);
 
     return $this;
   }
