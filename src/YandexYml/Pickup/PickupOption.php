@@ -4,13 +4,14 @@ namespace Drupal\yandex_yml\YandexYml\Pickup;
 
 use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 
 /**
  * Class DeliveryOption.
  *
  * @see https://yandex.ru/support/partnermarket/elements/delivery-options.html
  *
- * @YandexYmlXmlElement(name = "option")
+ * @YandexYmlXmlRootElement(name = "option")
  */
 class PickupOption {
 

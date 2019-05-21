@@ -4,13 +4,14 @@ namespace Drupal\yandex_yml\YandexYml\Currency;
 
 use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 
 /**
  * Class Currency.
  *
  * @see https://yandex.ru/support/partnermarket/currencies.html
  *
- * @YandexYmlXmlElement(name = "currency")
+ * @YandexYmlXmlRootElement(name = "currency")
  */
 final class Currency {
 

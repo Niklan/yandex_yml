@@ -4,6 +4,7 @@ namespace Drupal\yandex_yml\YandexYml\Param;
 
 use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlValue;
 
 /**
@@ -13,7 +14,7 @@ use Drupal\yandex_yml\Annotation\YandexYmlXmlValue;
  *
  * @see https://yandex.ru/support/partnermarket/elements/param.html
  *
- * @YandexYmlXmlElement(name = "param")
+ * @YandexYmlXmlRootElement(name = "param")
  */
 class Param {
 

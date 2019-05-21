@@ -7,8 +7,6 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use Drupal;
 use Drupal\Component\Datetime\Time;
 use Drupal\Core\Datetime\DateFormatter;
-use Drupal\yandex_yml\Annotation\YandexYmlElement;
-use Drupal\yandex_yml\Utils\Utils;
 use Drupal\yandex_yml\YandexYml\AnnotatedObject;
 use Drupal\yandex_yml\YandexYml\Shop\Shop;
 use Traversable;
@@ -141,7 +139,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    */
   protected function buildData() {
     $this->writeHeader();
-    $this->processClass($this->getShop());
+    $this->processXmlRootElement($this->getShop());
     $this->writeFooter();
   }
 
@@ -157,184 +155,22 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writer->writeAttribute('date', $date);
   }
 
-  protected function processClass($element) {
+  protected function processXmlRootElement($element) {
     $annotated_object = $this->getAnnotatedObject($element);
-
-    // If object is root xml element (contains another elements).
-    if ($xml_root_element = $annotated_object->getClassAnnotation($this::XML_ROOT_ELEMENT)) {
-      $this->writer->startElement($xml_root_element->getName());
-      //$this->processProperties($element);
-      $this->processMethods($element);
-      $this->writer->fullEndElement();
-    }
-    elseif ($xml_element = $annotated_object->getClassAnnotation($this::XML_ELEMENT)) {
-      // @todo maybe need to handle a bit differently. For example looking only
-      //   for attributes and value, not allows nested elements.
-      $this->writer->startElement($xml_element->getName());
-      // Maybe need to remove, since methods are now responsible for annotate
-      // values.
-      //$this->processProperties($element);
-      $this->processMethods($element);
-      $this->writer->fullEndElement();
-    }
+    $xml_root_element = $annotated_object->getClassAnnotation($this::XML_ROOT_ELEMENT);
+    $this->writer->startElement($xml_root_element->getName());
+    $this->processXmlAttribute($element);
+    $this->processXmlValue($element);
+    $this->processXmlElement($element);
+    $this->processXmlElementWrapper($element);
+    $this->processXmlList($element);
+    $this->writer->fullEndElement();
   }
 
-  protected function getAnnotatedObject($object) {
-    $result = &drupal_static(__CLASS__ . ':' . __METHOD__ . ':' . get_class($object));
-
-    if (!isset($result)) {
-      $result = new AnnotatedObject($object);
-    }
-
-    return $result;
-  }
-
-  // @todo split up method to simple or make this flexible.
-  protected function processProperties($element) {
+  protected function processXmlAttribute($element) {
     $annotated_object = $this->getAnnotatedObject($element);
-
-    // Attributes.
-    $attribute_properties = $annotated_object->getPropertiesWithAnnotation($this::XML_ATTRIBUTE);
-    foreach ($attribute_properties as $property_name) {
-      $property_annotation = $annotated_object->getPropertyAnnotation($property_name, $this::XML_ATTRIBUTE);
-
-      // Annotation can override attribute name. Property name used as default.
-      $attribute_name = $property_annotation->getName() ?: $property_name;
-      $callable = $this->getPropertyGetter($element, $property_name);
-      if (!$callable) {
-        continue;
-      }
-
-      $property_value = call_user_func($callable);
-      if (!$property_value) {
-        continue;
-      }
-
-      $this->writer->writeAttribute($attribute_name, $property_value);
-    }
-
-    // Value.
-    $value_properties = $annotated_object->getPropertiesWithAnnotation($this::XML_VALUE);
-    foreach ($value_properties as $property_name) {
-      $callable = $this->getPropertyGetter($element, $property_name);
-      if (!$callable) {
-        continue;
-      }
-
-      $property_value = call_user_func($callable);
-      if (!$property_value) {
-        continue;
-      }
-
-      $this->writer->text($property_value);
-    }
-
-    // Elements.
-    $element_properties = $annotated_object->getPropertiesWithAnnotation($this::XML_ELEMENT);
-    foreach ($element_properties as $property_name) {
-      $property_annotation = $annotated_object->getPropertyAnnotation($property_name, $this::XML_ELEMENT);
-
-      // Annotation can override element name. Property name used as default.
-      $element_name = $property_annotation->getName() ?: $property_name;
-      $callable = $this->getPropertyGetter($element, $property_name);
-      if (!$callable) {
-        continue;
-      }
-
-      $property_value = call_user_func($callable);
-      if (!$property_value) {
-        continue;
-      }
-
-      // If object, it must describe process itself. F.e. age in offer.
-      if (is_object($property_value)) {
-        $this->processClass($property_value);
-      }
-      else {
-        $this->preprocessValue($property_value);
-        $this->writer->startElement($element_name);
-        $this->writer->text($property_value);
-        $this->writer->fullEndElement();
-      }
-    }
-
-    // Wrappers.
-    $element_wrapper_properties = $annotated_object->getPropertiesWithAnnotation($this::XML_ELEMENT_WRAPPER);
-    foreach ($element_wrapper_properties as $wrapper_property_name) {
-      $property_annotation = $annotated_object->getPropertyAnnotation($wrapper_property_name, $this::XML_ELEMENT_WRAPPER);
-
-      // Annotation can override element name. Property name used as default.
-      $element_name = $property_annotation->getName() ?: $wrapper_property_name;
-      $callable = $this->getPropertyGetter($element, $wrapper_property_name);
-      if (!$callable) {
-        continue;
-      }
-
-      // Wrappers means that value is multiple.
-      $property_values = call_user_func($callable);
-      if (!$property_values || !$property_values instanceof Traversable) {
-        continue;
-      }
-
-      $this->writer->startElement($element_name);
-      foreach ($property_values as $property_value) {
-        $this->processClass($property_value);
-      }
-      $this->writer->fullEndElement();
-    }
-
-    // Lists.
-    $list_properties = $annotated_object->getPropertiesWithAnnotation($this::XML_LIST);
-    foreach ($list_properties as $list_property_name) {
-      $callable = $this->getPropertyGetter($element, $list_property_name);
-      if (!$callable) {
-        continue;
-      }
-
-      // List means that value is multiple.
-      $property_values = call_user_func($callable);
-      if (!$property_values || !$property_values instanceof Traversable) {
-        continue;
-
-      }
-
-      foreach ($property_values as $property_value) {
-        $this->processClass($property_value);
-      }
-    }
-  }
-
-  protected function getPropertyGetter($element, $property_name) {
-    $callable = [
-      $element,
-      Utils::predictGetterName($property_name),
-    ];
-
-    return is_callable($callable) ? $callable : NULL;
-  }
-
-  /**
-   * Several additional processes for values.
-   *
-   * @param mixed $value
-   *   The value to process of.
-   */
-  protected function preprocessValue(&$value) {
-    if (is_bool($value)) {
-      $value = $value ? 'true' : 'false';
-    }
-    str_replace('"', '&quot;', $value);
-    str_replace('&', '&amp;', $value);
-    str_replace('>', '&gt;', $value);
-    str_replace('<', '&lt;', $value);
-    str_replace("'", '&apos;', $value);
-  }
-
-  protected function processMethods($element) {
-    $annotated_object = $this->getAnnotatedObject($element);
-
-    // Attributes.
     $attribute_methods = $annotated_object->getMethodsWithAnnotation($this::XML_ATTRIBUTE);
+
     foreach ($attribute_methods as $method_name) {
       $method_annotation = $annotated_object->getMethodAnnotation($method_name, $this::XML_ATTRIBUTE);
 
@@ -351,8 +187,10 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
 
       $this->writer->writeAttribute($method_annotation->getName(), $method_value);
     }
+  }
 
-    // Value.
+  protected function processXmlValue($element) {
+    $annotated_object = $this->getAnnotatedObject($element);
     $value_methods = $annotated_object->getMethodsWithAnnotation($this::XML_VALUE);
     foreach ($value_methods as $method_name) {
       $callable = [$element, $method_name];
@@ -367,8 +205,10 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
 
       $this->writer->text($method_value);
     }
+  }
 
-    // Elements.
+  protected function processXmlElement($element) {
+    $annotated_object = $this->getAnnotatedObject($element);
     $element_methods = $annotated_object->getMethodsWithAnnotation($this::XML_ELEMENT);
     foreach ($element_methods as $method_name) {
       $method_annotation = $annotated_object->getMethodAnnotation($method_name, $this::XML_ELEMENT);
@@ -385,7 +225,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
 
       // If object, it must describe process itself. F.e. age in offer.
       if (is_object($method_value)) {
-        $this->processClass($method_value);
+        $this->processXmlRootElement($method_value);
       }
       else {
         $this->preprocessValue($method_value);
@@ -394,8 +234,10 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
         $this->writer->fullEndElement();
       }
     }
+  }
 
-    // Wrappers.
+  protected function processXmlElementWrapper($element) {
+    $annotated_object = $this->getAnnotatedObject($element);
     $element_wrapper_methods = $annotated_object->getMethodsWithAnnotation($this::XML_ELEMENT_WRAPPER);
     foreach ($element_wrapper_methods as $method_name) {
       $method_annotation = $annotated_object->getMethodAnnotation($method_name, $this::XML_ELEMENT_WRAPPER);
@@ -413,12 +255,14 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
 
       $this->writer->startElement($method_annotation->getName());
       foreach ($method_values as $method_value) {
-        $this->processClass($method_value);
+        $this->processXmlRootElement($method_value);
       }
       $this->writer->fullEndElement();
     }
+  }
 
-    // Lists.
+  protected function processXmlList($element) {
+    $annotated_object = $this->getAnnotatedObject($element);
     $list_methods = $annotated_object->getMethodsWithAnnotation($this::XML_LIST);
     foreach ($list_methods as $method_name) {
       $callable = [$element, $method_name];
@@ -433,9 +277,36 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
       }
 
       foreach ($method_values as $method_value) {
-        $this->processClass($method_value);
+        $this->processXmlRootElement($method_value);
       }
     }
+  }
+
+  protected function getAnnotatedObject($object) {
+    $result = &drupal_static(__CLASS__ . ':' . __METHOD__ . ':' . get_class($object));
+
+    if (!isset($result)) {
+      $result = new AnnotatedObject($object);
+    }
+
+    return $result;
+  }
+
+  /**
+   * Several additional processes for values.
+   *
+   * @param mixed $value
+   *   The value to process of.
+   */
+  protected function preprocessValue(&$value) {
+    if (is_bool($value)) {
+      $value = $value ? 'true' : 'false';
+    }
+    str_replace('"', '&quot;', $value);
+    str_replace('&', '&amp;', $value);
+    str_replace('>', '&gt;', $value);
+    str_replace('<', '&lt;', $value);
+    str_replace("'", '&apos;', $value);
   }
 
   /**

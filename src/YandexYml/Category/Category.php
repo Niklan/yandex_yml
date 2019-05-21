@@ -3,7 +3,7 @@
 namespace Drupal\yandex_yml\YandexYml\Category;
 
 use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlValue;
 
 /**
@@ -11,7 +11,7 @@ use Drupal\yandex_yml\Annotation\YandexYmlXmlValue;
  *
  * @see https://yandex.ru/support/partnermarket/categories.html
  *
- * @YandexYmlXmlElement(name = "category")
+ * @YandexYmlXmlRootElement(name = "category")
  */
 final class Category {
 
@@ -115,7 +115,7 @@ final class Category {
    * @return string
    *   The current category name.
    *
-   * @YandexYmlXmlValue(name = "name")
+   * @YandexYmlXmlValue()
    */
   public function getName() {
     return $this->name;
