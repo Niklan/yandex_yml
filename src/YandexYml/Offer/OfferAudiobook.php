@@ -2,390 +2,332 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
-use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
-use Drupal\yandex_yml\YandexYml\Param\Age;
+use Drupal\yandex_yml\Xml\Attribute;
+use Drupal\yandex_yml\Xml\Element;
+use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions;
 
 /**
  * Audiobook offer.
  *
  * @see https://yandex.ru/support/partnermarket/export/audiobooks.html
- *
- * @YandexYmlXmlRootElement(name = "offer")
  */
 class OfferAudiobook extends Offer {
 
   /**
-   * The publisher.
-   *
-   * @var string
-   */
-  protected $publisher;
-
-  /**
-   * The ISBN id.
-   *
-   * @var string
-   */
-  protected $isbn;
-
-  /**
-   * The author.
-   *
-   * @var string
-   */
-  protected $author;
-
-  /**
-   * The series name.
-   *
-   * @var string
-   */
-  protected $series;
-
-  /**
-   * The year of release.
-   *
-   * @var int
-   */
-  protected $year;
-
-  /**
-   * The volume.
-   *
-   * @var int
-   */
-  protected $volume;
-
-  /**
-   * The part.
-   *
-   * @var int
-   */
-  protected $part;
-
-  /**
-   * The language.
-   *
-   * @var string
-   */
-  protected $language;
-
-  /**
-   * The table of contents.
-   *
-   * @var string
-   */
-  protected $tableOfContents;
-
-  /**
-   * The type.
-   *
-   * @var string
-   */
-  protected $type;
-
-  /**
-   * The performer.
-   *
-   * @var string
-   */
-  protected $performedBy;
-
-  /**
-   * The performance type.
-   *
-   * @var string
-   */
-  protected $performanceType;
-
-  /**
-   * The storage.
-   *
-   * @var string
-   */
-  protected $storage;
-
-  /**
-   * The format.
-   *
-   * @var string
-   */
-  protected $format;
-
-  /**
-   * The recording length.
-   *
-   * @var string
-   */
-  protected $recordingLength;
-
-  /**
    * {@inheritDoc}
    */
-  public function __construct($id, $url, $price, $currency_id, $category_id, $name, $publisher, Age $age) {
-    parent::__construct($id, $url, $price, $currency_id, $category_id);
+  public function __construct($id, $url, $price, $currency_id, $category_id, $name, $publisher, $age, $age_unit = 'year', $price_from = NULL) {
+    parent::__construct($id, $url, $price, $currency_id, $category_id, $price_from);
 
     $this->setType('audiobook');
     $this->setName($name);
     $this->setPublisher($publisher);
-    $this->setAge($age);
+    $this->setAge($age, $age_unit);
   }
 
   /**
-   * {@inheritdoc}
+   * Sets offer type.
+   *
+   * @param string $type
+   *   The offer type.
    */
-  public function setPublisher($publisher) {
-    $this->publisher = $publisher;
+  protected function setType($type) {
+    $this->addElementAttribute(new Attribute('type', $type));
+  }
+
+  /**
+   * Sets the offer name.
+   *
+   * @param string $name
+   *   The offer name.
+   */
+  protected function setName($name) {
+    $this->addElementChild(new Element('name', $name));
+  }
+
+  /**
+   * Sets publisher.
+   *
+   * @param string $publisher
+   *   The publisher.
+   *
+   * @return $this
+   */
+  protected function setPublisher($publisher) {
+    $this->addElementChild(new Element('publisher', $publisher));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets offer age for.
    *
-   * @YandexYmlXmlElement(name = "publisher")
+   * @param string $age
+   *   The age value.
+   * @param string $unit
+   *   The age unit. Can be "year" or "month".
    */
-  public function getPublisher() {
-    return $this->publisher;
+  protected function setAge($age, $unit = 'year') {
+    $age = new Element('age', $age);
+    $age->addElementAttribute(new Attribute('unit', $unit));
+
+    $this->addElementChild($age);
   }
 
   /**
-   * {@inheritdoc}
+   * Sets product availability.
+   *
+   * @param bool $available
+   *   The availability status.
+   *
+   * @return $this
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html
    */
-  public function setIsbn($isbn) {
-    $this->isbn = $isbn;
+  public function setAvailable($available) {
+    $this->addElementAttribute(new Attribute('available', $available));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets delivery options.
    *
-   * @YandexYmlXmlElement(name = "isbn")
+   * @param \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions $delivery_options
+   *   The delivery options.
+   *
+   * @return $this
    */
-  public function getIsbn() {
-    return $this->isbn;
+  public function setDeliveryOptions(DeliveryOptions $delivery_options) {
+    $this->addElementChild($delivery_options);
+
+    return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets manufacturer warranty.
+   *
+   * @param bool $manufacturer_warranty
+   *   The manufacturer warranty status.
+   *
+   * @return $this
+   */
+  public function setManufacturerWarranty($manufacturer_warranty) {
+    $this->addElementChild(new Element('manufacturer_warranty', $manufacturer_warranty));
+
+    return $this;
+  }
+
+  /**
+   * Sets product adult status.
+   *
+   * @param bool $adult
+   *   The adult status.
+   *
+   * @return $this
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/adult.html
+   */
+  public function setAdult($adult) {
+    $this->addElementChild(new Element('adult', $adult));
+
+    return $this;
+  }
+
+  /**
+   * Sets downloadable.
+   *
+   * @param bool $downloadable
+   *   The downloadable status.
+   *
+   * @return $this
+   */
+  public function setDownloadable($downloadable) {
+    $this->addElementChild(new Element('downloadable', $downloadable));
+
+    return $this;
+  }
+
+  /**
+   * Sets book ISBN.
+   *
+   * @param string $isbn
+   *   The ISBN number.
+   *
+   * @return $this
+   */
+  public function setISBN($isbn) {
+    $this->addElementChild(new Element('isbn', $isbn));
+
+    return $this;
+  }
+
+  /**
+   * Sets book author.
+   *
+   * @param string $author
+   *   The author name.
+   *
+   * @return $this
    */
   public function setAuthor($author) {
-    $this->author = $author;
+    $this->addElementChild(new Element('author', $author));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets book series.
    *
-   * @YandexYmlXmlElement(name = "author")
-   */
-  public function getAuthor() {
-    return $this->author;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $series
+   *   The book series name.
+   *
+   * @return $this
    */
   public function setSeries($series) {
-    $this->series = $series;
+    $this->addElementChild(new Element('series', $series));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets the year.
    *
-   * @YandexYmlXmlElement(name = "series")
-   */
-  public function getSeries() {
-    return $this->series;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $year
+   *   The year.
+   *
+   * @return $this
    */
   public function setYear($year) {
-    $this->year = $year;
+    $this->addElementChild(new Element('year', $year));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets the volume.
    *
-   * @YandexYmlXmlElement(name = "year")
-   */
-  public function getYear() {
-    return $this->year;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $volume
+   *   The volume.
+   *
+   * @return $this
    */
   public function setVolume($volume) {
-    $this->volume = $volume;
+    $this->addElementChild(new Element('volume', $volume));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets the part.
    *
-   * @YandexYmlXmlElement(name = "volume")
-   */
-  public function getVolume() {
-    return $this->volume;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $part
+   *   The part.
+   *
+   * @return $this
    */
   public function setPart($part) {
-    $this->part = $part;
+    $this->addElementChild(new Element('part', $part));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets the language.
    *
-   * @YandexYmlXmlElement(name = "part")
-   */
-  public function getPart() {
-    return $this->part;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $language
+   *   The language.
+   *
+   * @return $this
    */
   public function setLanguage($language) {
-    $this->language = $language;
+    $this->addElementChild(new Element('language', $language));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * The table of contents.
    *
-   * @YandexYmlXmlElement(name = "language")
-   */
-  public function getLanguage() {
-    return $this->language;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $table_of_contents
+   *   The table of contents.
+   *
+   * @return $this
    */
   public function setTableOfContents($table_of_contents) {
-    $this->tableOfContents = $table_of_contents;
+    $this->addElementChild(new Element('table_of_contents', $table_of_contents));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets performed by.
    *
-   * @YandexYmlXmlElement(name = "table_of_contents")
-   */
-  public function getTableOfContents() {
-    return $this->tableOfContents;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setType($type) {
-    $this->type = $type;
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $performed_by
+   *   The name.
    *
-   * @YandexYmlXmlAttribute(name = "type")
-   */
-  public function getType() {
-    return $this->type;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @return $this
    */
   public function setPerformedBy($performed_by) {
-    $this->performedBy = $performed_by;
+    $this->addElementChild(new Element('performed_by', $performed_by));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets performance type.
    *
-   * @YandexYmlXmlElement(name = "performed_by")
-   */
-  public function getPerformedBy() {
-    return $this->performedBy;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $performance_type
+   *   The performance type.
+   *
+   * @return $this
    */
   public function setPerformanceType($performance_type) {
-    $this->performanceType = $performance_type;
+    $this->addElementChild(new Element('performance_type', $performance_type));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets storage.
    *
-   * @YandexYmlXmlElement(name = "performance_type")
-   */
-  public function getPerformanceType() {
-    return $this->performanceType;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $storage
+   *   The book storage.
+   *
+   * @return $this
    */
   public function setStorage($storage) {
-    $this->storage = $storage;
+    $this->addElementChild(new Element('storage', $storage));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets format.
    *
-   * @YandexYmlXmlElement(name = "storage")
-   */
-  public function getStorage() {
-    return $this->storage;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $format
+   *   The book format.
+   *
+   * @return $this
    */
   public function setFormat($format) {
-    $this->format = $format;
+    $this->addElementChild(new Element('format', $format));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets recording length.
    *
-   * @YandexYmlXmlElement(name = "format")
-   */
-  public function getFormat() {
-    return $this->format;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $recording_length
+   *   The recording length.
+   *
+   * @return $this
    */
   public function setRecordingLength($recording_length) {
-    $this->recordingLength = $recording_length;
-    return $this;
-  }
+    $this->addElementChild(new Element('recording_length', $recording_length));
 
-  /**
-   * {@inheritdoc}
-   *
-   * @YandexYmlXmlElement(name = "recording_length")
-   */
-  public function getRecordingLength() {
-    return $this->recordingLength;
+    return $this;
   }
 
 }
