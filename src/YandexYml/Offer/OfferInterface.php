@@ -25,19 +25,6 @@ interface OfferInterface {
   public function setBid($bid);
 
   /**
-   * Sets product availability.
-   *
-   * @param bool $available
-   *   The availability status.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
-   *   The current offer.
-   * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html#available
-   *
-   */
-  public function setAvailable($available);
-
-  /**
    * Sets old price.
    *
    * @param int $old_price
@@ -75,17 +62,6 @@ interface OfferInterface {
    *
    */
   public function setDelivery($delivery);
-
-  /**
-   * Sets delivery options.
-   *
-   * @param \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions $delivery_options
-   *   The delivery options.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
-   *   The current offer.
-   */
-  public function setDeliveryOptions(DeliveryOptions $delivery_options);
 
   /**
    * Sets possibility of pickup from the issuance points.
@@ -147,45 +123,9 @@ interface OfferInterface {
   public function setSalesNotes($sales_notes);
 
   /**
-   * Sets minimal quantity for order.
-   *
-   * This value used only in "Tires", "Truck tires", "Motor tires",
-   * "Disks (car)".
-   *
-   * @param int|float $min_quantity
-   *   The minimum order quantity.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
-   *   The current offer.
-   */
-  public function setMinQuantity($min_quantity);
-
-  /**
-   * Sets step for quantity.
-   *
-   * @param int|float $step_quantity
-   *   The step quantity.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
-   *   The current offer.
-   */
-  public function setStepQuantity($step_quantity);
-
-  /**
-   * Sets manufacturer warranty.
-   *
-   * @param bool $manufacturer_warranty
-   *   The manufacturer warranty status.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
-   *   The current offer.
-   */
-  public function setManufacturerWarranty($manufacturer_warranty);
-
-  /**
    * Sets the origin country.
    *
-   * @param string $country_oforigin
+   * @param string $country_of_origin
    *   The country name.
    *
    * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
@@ -193,20 +133,7 @@ interface OfferInterface {
    * @see https://partner.market.yandex.ru/pages/help/Countries.pdf
    *
    */
-  public function setCountryOfOrigin($country_oforigin);
-
-  /**
-   * Sets product adult status.
-   *
-   * @param bool $adult
-   *   The adult status.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
-   *   The current offer.
-   * @see https://yandex.ru/support/partnermarket/elements/adult.html
-   *
-   */
-  public function setAdult($adult);
+  public function setCountryOfOrigin($country_of_origin);
 
   /**
    * Sets barcode.
@@ -280,72 +207,5 @@ interface OfferInterface {
    *
    */
   public function setDimensions($dimensions);
-
-  /**
-   * Sets downloadable.
-   *
-   * @param bool $downloadable
-   *   The downloadable status.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
-   *   The current offer.
-   */
-  public function setDownloadable($downloadable);
-
-  /**
-   * Sets offer age for.
-   *
-   * @param string $age
-   *   The age value.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
-   *   The current offer.
-   */
-  public function setAge($age);
-
-  /**
-   * Sets group id.
-   *
-   * @param int $group_id
-   *   The group id.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
-   *   The current offer.
-   */
-  public function setGroupId($group_id);
-
-  /**
-   * Sets name.
-   *
-   * @param string $name
-   *   The offer name.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
-   *   The current offer.
-   */
-  public function setName($name);
-
-  /**
-   * Sets vendor.
-   *
-   * @param string $vendor
-   *   The vendor name.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
-   *   The current offer.
-   * @see https://yandex.ru/support/partnermarket/elements/vendor-name-model.html
-   */
-  public function setVendor($vendor);
-
-  /**
-   * Sets vendor code.
-   *
-   * @param string $vendor_code
-   *   The vendor code.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
-   *   The current offer.
-   */
-  public function setVendorCode($vendor_code);
 
 }

@@ -5,12 +5,14 @@ namespace Drupal\yandex_yml\YandexYml\Offer;
 use Drupal\Component\Utility\Unicode;
 use Drupal\yandex_yml\Xml\Attribute;
 use Drupal\yandex_yml\Xml\Element;
-use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions;
 use Drupal\yandex_yml\YandexYml\Param\Param;
+use Drupal\yandex_yml\YandexYml\Pickup\PickupOptions;
 use InvalidArgumentException;
 
 /**
  * Base object for other offers.
+ *
+ * The base offer contains all available information valid to all offer types.
  *
  * @see https://yandex.ru/support/partnermarket/offers.html
  */
@@ -25,14 +27,14 @@ abstract class Offer extends Element implements OfferInterface {
    *   The offer URL.
    * @param $price
    *   The offer price.
-   * @param bool|null $price_from
-   *   The price from or not.
    * @param $currency_id
    *   The currency for price.
    * @param $category_id
    *   The category ID.
+   * @param bool|null $price_from
+   *   The price from or not.
    */
-  public function __construct($id, $url, $price, $price_from, $currency_id, $category_id) {
+  public function __construct($id, $url, $price, $currency_id, $category_id, $price_from = NULL) {
     parent::__construct('offer');
 
     $this->setId($id);
@@ -134,16 +136,6 @@ abstract class Offer extends Element implements OfferInterface {
   /**
    * {@inheritdoc}
    */
-  public function setAvailable($available) {
-    $this->addElementAttribute(new Attribute('available', $available));
-
-    return $this;
-  }
-
-
-  /**
-   * {@inheritdoc}
-   */
   public function setOldPrice($old_price) {
     $this->addElementChild(new Element('oldprice', $old_price));
 
@@ -164,15 +156,6 @@ abstract class Offer extends Element implements OfferInterface {
    */
   public function setDelivery($delivery) {
     $this->addElementChild(new Element('delivery', $delivery));
-
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setDeliveryOptions(DeliveryOptions $delivery_options) {
-    $this->addElementChild($delivery_options);
 
     return $this;
   }
@@ -221,44 +204,8 @@ abstract class Offer extends Element implements OfferInterface {
   /**
    * {@inheritdoc}
    */
-  public function setMinQuantity($min_quantity) {
-    $this->addElementChild(new Element('min-quantity', $min_quantity));
-
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setStepQuantity($step_quantity) {
-    $this->addElementChild(new Element('step-quantity', $step_quantity));
-
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setManufacturerWarranty($manufacturer_warranty) {
-    $this->addElementChild(new Element('manufacturer_warranty', $manufacturer_warranty));
-
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function setCountryOfOrigin($country_of_origin) {
     $this->addElementChild(new Element('country_of_origin', $country_of_origin));
-
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setAdult($adult) {
-    $this->addElementChild(new Element('adult', $adult));
 
     return $this;
   }
@@ -308,56 +255,21 @@ abstract class Offer extends Element implements OfferInterface {
     return $this;
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function setDownloadable($downloadable) {
-    $this->addElementChild(new Element('downloadable', $downloadable));
-
-    return $this;
+  public function setEnableAutoDiscounts($enable_auto_discounts) {
+    $this->addElementChild(new Element('enable_auto_discounts', $enable_auto_discounts));
   }
 
   /**
-   * {@inheritdoc}
+   * Sets pickup options.
+   *
+   * @param \Drupal\yandex_yml\YandexYml\Pickup\PickupOptions $pickup_options
+   *   The pickup options.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Offer\Offer
+   *   The object instance.
    */
-  public function setAge($age) {
-    $this->addElementChild(new Element('age', $age));
-
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setGroupId($group_id) {
-    $this->addElementChild(new Element('group-id', $group_id));
-
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setName($name) {
-    $this->addElementChild(new Element('name', $name));
-
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setVendor($vendor) {
-    $this->addElementChild(new Element('vendor', $vendor));
-
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setVendorCode($vendor_code) {
-    $this->addElementChild(new Element('vendorCode', $vendor_code));
+  public function setPickupOptions(PickupOptions $pickup_options) {
+    $this->addElementChild($pickup_options);
 
     return $this;
   }
