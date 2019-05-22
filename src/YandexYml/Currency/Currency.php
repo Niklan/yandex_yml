@@ -2,32 +2,15 @@
 
 namespace Drupal\yandex_yml\YandexYml\Currency;
 
-use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
+use Drupal\yandex_yml\Xml\Attribute;
+use Drupal\yandex_yml\Xml\Element;
 
 /**
  * Class Currency.
  *
  * @see https://yandex.ru/support/partnermarket/currencies.html
- *
- * @YandexYmlXmlRootElement(name = "currency")
  */
-final class Currency {
-
-  /**
-   * The currency code.
-   *
-   * @var string
-   */
-  protected $id;
-
-  /**
-   * The currency exchange rate for single unit.
-   *
-   * @var int|float|string
-   */
-  protected $rate;
+final class Currency extends Element {
 
   /**
    * Currency constructor.
@@ -38,20 +21,10 @@ final class Currency {
    *   The rate value.
    */
   public function __construct($id, $rate) {
+    parent::__construct('currency');
+
     $this->setId($id);
     $this->setRate($rate);
-  }
-
-  /**
-   * Gets currency code.
-   *
-   * @return string
-   *   The currency id.
-   *
-   * @YandexYmlXmlAttribute(name = "id")
-   */
-  public function getId() {
-    return $this->id;
   }
 
   /**
@@ -66,21 +39,7 @@ final class Currency {
    *
    */
   protected function setId($id) {
-    $this->id = $id;
-
-    return $this;
-  }
-
-  /**
-   * Gets exchange rate.
-   *
-   * @return int|float|string
-   *   The exchange rate.
-   *
-   * @YandexYmlXmlAttribute(name = "rate")
-   */
-  public function getRate() {
-    return $this->rate;
+    $this->addElementAttribute(new Attribute('id', $id));
   }
 
   /**
@@ -102,9 +61,7 @@ final class Currency {
    *   The current currency.
    */
   protected function setRate($rate) {
-    $this->rate = $rate;
-
-    return $this;
+    $this->addElementAttribute(new Attribute('rate', $rate));
   }
 
 }

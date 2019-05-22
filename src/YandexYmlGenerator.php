@@ -7,27 +7,14 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use Drupal;
 use Drupal\Component\Datetime\Time;
 use Drupal\Core\Datetime\DateFormatter;
-use Drupal\yandex_yml\YandexYml\AnnotatedObject;
+use Drupal\yandex_yml\Xml\ElementInterface;
 use Drupal\yandex_yml\YandexYml\Shop\Shop;
-use Traversable;
 use XMLWriter;
 
 /**
  * Class YandexYmlGenerator.
  */
 class YandexYmlGenerator implements YandexYmlGeneratorInterface {
-
-  const XML_ROOT_ELEMENT = 'Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement';
-
-  const XML_ELEMENT = 'Drupal\yandex_yml\Annotation\YandexYmlXmlElement';
-
-  const XML_ELEMENT_WRAPPER = 'Drupal\yandex_yml\Annotation\YandexYmlXmlElementWrapper';
-
-  const XML_ATTRIBUTE = 'Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute';
-
-  const XML_LIST = 'Drupal\yandex_yml\Annotation\YandexYmlXmlList';
-
-  const XML_VALUE = 'Drupal\yandex_yml\Annotation\YandexYmlXmlValue';
 
   protected $counter;
 
@@ -67,41 +54,6 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   protected $dateFormatter;
 
   /**
-   * The currencies.
-   *
-   * @var \Drupal\yandex_yml\YandexYml\Currency\Currency[]
-   */
-  protected $currencies = [];
-
-  /**
-   * The categories.
-   *
-   * @var \Drupal\yandex_yml\YandexYml\Category\Category[]
-   */
-  protected $categories = [];
-
-  /**
-   * The delivery options.
-   *
-   * @var \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption[]
-   */
-  protected $deliveryOptions = [];
-
-  /**
-   * The offers.
-   *
-   * @var \Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBaseInterface[]
-   */
-  protected $offers = [];
-
-  /**
-   * The annotation reader.
-   *
-   * @var \Doctrine\Common\Annotations\AnnotationReader
-   */
-  protected $annotationReader;
-
-  /**
    * Constructs a new YandexYmlGenerator object.
    *
    * @param \Drupal\Component\Datetime\Time $date_time
@@ -113,6 +65,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->dateTime = $date_time;
     $this->dateFormatter = $date_formatter;
     // Prepare temporary file.
+    // @todo DI
     $this->tempFilePath = Drupal::service('file_system')
       ->tempnam('temporary://yandex_yml', 'yml_');
     // Initialization of file.
@@ -120,10 +73,6 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writer->openURI($this->tempFilePath);
     $this->writer->setIndentString("\t");
     $this->writer->setIndent(TRUE);
-
-    $this->annotationReader = new AnnotationReader();
-    // Register the namespaces of classes that can be used for annotations.
-    AnnotationRegistry::registerLoader('class_exists');
   }
 
   /**
@@ -139,7 +88,7 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    */
   protected function buildData() {
     $this->writeHeader();
-    $this->processXmlRootElement($this->getShop());
+    $this->processElement($this->getShop());
     $this->writeFooter();
   }
 
@@ -155,153 +104,33 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writer->writeAttribute('date', $date);
   }
 
-  protected function processXmlRootElement($element) {
-    $annotated_object = $this->getAnnotatedObject($element);
-    $xml_root_element = $annotated_object->getClassAnnotation($this::XML_ROOT_ELEMENT);
-    $this->writer->startElement($xml_root_element->getName());
-    $this->processXmlAttribute($element, $annotated_object);
-    $this->processXmlValue($element, $annotated_object);
-    $this->processXmlElement($element, $annotated_object);
-    $this->processXmlElementWrapper($element, $annotated_object);
-    $this->processXmlList($element, $annotated_object);
+  protected function processElement(ElementInterface $element) {
+    $this->writer->startElement($element->getElementName());
+    $this->processAttributes($element);
+    $this->processValue($element);
+    $this->processChildren($element);
     $this->writer->fullEndElement();
   }
 
-  protected function processXmlAttribute($element, $annotated_object) {
-    $attribute_methods = $annotated_object->getMethodsWithAnnotation($this::XML_ATTRIBUTE);
-
-    foreach ($attribute_methods as $method_name) {
-      $method_annotation = $annotated_object->getMethodAnnotation($method_name, $this::XML_ATTRIBUTE);
-
-
-      $callable = [$element, $method_name];
-      if (!$callable) {
-        continue;
-      }
-
-      $method_value = call_user_func($callable);
-      if (!$method_value) {
-        continue;
-      }
-
-      $this->writer->writeAttribute($method_annotation->getName(), $method_value);
+  protected function processAttributes(ElementInterface $element) {
+    /** @var \Drupal\yandex_yml\Xml\AttributeInterface $attribute */
+    foreach ($element->getElementAttributes() as $attribute) {
+      $this->writer->writeAttribute($attribute->getName(), $attribute->getValue());
     }
   }
 
-  protected function processXmlValue($element, $annotated_object) {
-    $value_methods = $annotated_object->getMethodsWithAnnotation($this::XML_VALUE);
-    foreach ($value_methods as $method_name) {
-      $callable = [$element, $method_name];
-      if (!$callable) {
-        continue;
-      }
-
-      $method_value = call_user_func($callable);
-      if (!$method_value) {
-        continue;
-      }
-
-      $this->writer->text($method_value);
+  protected function processValue(ElementInterface $element) {
+    if (!$element->getElementValue()) {
+      return;
     }
+
+    $this->writer->text($element->getElementValue());
   }
 
-  protected function processXmlElement($element, $annotated_object) {
-    $element_methods = $annotated_object->getMethodsWithAnnotation($this::XML_ELEMENT);
-    foreach ($element_methods as $method_name) {
-      $method_annotation = $annotated_object->getMethodAnnotation($method_name, $this::XML_ELEMENT);
-
-      $callable = [$element, $method_name];
-      if (!$callable) {
-        continue;
-      }
-
-      $method_value = call_user_func($callable);
-      if (!$method_value) {
-        continue;
-      }
-
-      // If object, it must describe process itself. F.e. age in offer.
-      if (is_object($method_value)) {
-        $this->processXmlRootElement($method_value);
-      }
-      else {
-        $this->preprocessValue($method_value);
-        $this->writer->startElement($method_annotation->getName());
-        $this->writer->text($method_value);
-        $this->writer->fullEndElement();
-      }
+  protected function processChildren(ElementInterface $element) {
+    foreach ($element->getElementChildren() as $child) {
+      $this->processElement($child);
     }
-  }
-
-  protected function processXmlElementWrapper($element, $annotated_object) {
-    $element_wrapper_methods = $annotated_object->getMethodsWithAnnotation($this::XML_ELEMENT_WRAPPER);
-    foreach ($element_wrapper_methods as $method_name) {
-      $method_annotation = $annotated_object->getMethodAnnotation($method_name, $this::XML_ELEMENT_WRAPPER);
-
-      $callable = [$element, $method_name];
-      if (!$callable) {
-        continue;
-      }
-
-      // Wrappers means that value is multiple.
-      $method_values = call_user_func($callable);
-      if (!$method_values || !$method_values instanceof Traversable) {
-        continue;
-      }
-
-      $this->writer->startElement($method_annotation->getName());
-      foreach ($method_values as $method_value) {
-        $this->processXmlRootElement($method_value);
-      }
-      $this->writer->fullEndElement();
-    }
-  }
-
-  protected function processXmlList($element, $annotated_object) {
-    $list_methods = $annotated_object->getMethodsWithAnnotation($this::XML_LIST);
-    foreach ($list_methods as $method_name) {
-      $callable = [$element, $method_name];
-      if (!$callable) {
-        continue;
-      }
-
-      // List means that value is multiple.
-      $method_values = call_user_func($callable);
-      if (!$method_values || !$method_values instanceof Traversable) {
-        continue;
-      }
-
-      foreach ($method_values as $method_value) {
-        $this->processXmlRootElement($method_value);
-      }
-    }
-  }
-
-  protected function getAnnotatedObject($object) {
-    $result = &drupal_static(__CLASS__ . ':' . __METHOD__ . ':' . get_class($object));
-
-    if (!isset($result)) {
-      $result = new AnnotatedObject($object);
-    }
-
-    return $result;
-  }
-
-  /**
-   * Several additional processes for values.
-   *
-   * @param mixed $value
-   *   The value to process of.
-   */
-  protected function preprocessValue(&$value) {
-    if (is_bool($value)) {
-      $value = $value ? 'true' : 'false';
-    }
-    str_replace('"', '&quot;', $value);
-    str_replace('&', '&amp;', $value);
-    str_replace('>', '&gt;', $value);
-    str_replace('<', '&lt;', $value);
-    str_replace("'", '&apos;', $value);
   }
 
   /**
@@ -336,6 +165,33 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->buildData();
 
     return $this->writer->outputMemory();
+  }
+
+  protected function getAnnotatedObject($object) {
+    $result = &drupal_static(__CLASS__ . ':' . __METHOD__ . ':' . get_class($object));
+
+    if (!isset($result)) {
+      $result = new AnnotatedObject($object);
+    }
+
+    return $result;
+  }
+
+  /**
+   * Several additional processes for values.
+   *
+   * @param mixed $value
+   *   The value to process of.
+   */
+  protected function preprocessValue(&$value) {
+    if (is_bool($value)) {
+      $value = $value ? 'true' : 'false';
+    }
+    str_replace('"', '&quot;', $value);
+    str_replace('&', '&amp;', $value);
+    str_replace('>', '&gt;', $value);
+    str_replace('<', '&lt;', $value);
+    str_replace("'", '&apos;', $value);
   }
 
 }

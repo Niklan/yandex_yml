@@ -2,7 +2,8 @@
 
 namespace Drupal\yandex_yml\YandexYml\Category;
 
-use Drupal\yandex_yml\YandexYml\YandexYmlArray;
+use Drupal\yandex_yml\Xml\Element;
+use Drupal\yandex_yml\Xml\ElementInterface;
 
 /**
  * Class Categories.
@@ -11,21 +12,14 @@ use Drupal\yandex_yml\YandexYml\YandexYmlArray;
  *
  * @see https://yandex.ru/support/partnermarket/elements/categories.html
  */
-final class Categories extends YandexYmlArray {
+final class Categories extends Element {
 
-  /**
-   * Adds category.
-   *
-   * @param \Drupal\yandex_yml\YandexYml\Category\Category $category
-   *   The category info.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Category\Categories
-   *   The current object instance.
-   */
-  public function addCategory(Category $category) {
-    $this->values[] = $category;
+  public function __construct() {
+    parent::__construct('categories');
+  }
 
-    return $this;
+  public function addCategory(ElementInterface $category) {
+    $this->addElementChild($category);
   }
 
 }

@@ -3,38 +3,19 @@
 namespace Drupal\yandex_yml\YandexYml\Category;
 
 use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
+use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
 use Drupal\yandex_yml\Annotation\YandexYmlXmlValue;
+use Drupal\yandex_yml\Xml\Attribute;
+use Drupal\yandex_yml\Xml\Element;
 
 /**
  * Class Category.
  *
  * @see https://yandex.ru/support/partnermarket/categories.html
  *
- * @YandexYmlXmlRootElement(name = "category")
+ * @YandexYmlXmlElement(name = "category")
  */
-final class Category {
-
-  /**
-   * The category ID.
-   *
-   * @var int
-   */
-  protected $id;
-
-  /**
-   * The category parent ID.
-   *
-   * @var int
-   */
-  protected $parentId;
-
-  /**
-   * The category name.
-   *
-   * @var string
-   */
-  protected $name;
+final class Category extends Element {
 
   /**
    * Category constructor.
@@ -45,20 +26,10 @@ final class Category {
    *   The category name.
    */
   public function __construct($id, $name) {
+    parent::__construct('category');
+
     $this->setId($id);
     $this->setName($name);
-  }
-
-  /**
-   * Gets category id.
-   *
-   * @return int
-   *   The category id.
-   *
-   * @YandexYmlXmlAttribute(name = "id")
-   */
-  public function getId() {
-    return $this->id;
   }
 
   /**
@@ -68,26 +39,9 @@ final class Category {
    *
    * @param int $id
    *   The category id.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Category\Category
-   *   This category object.
    */
   protected function setId($id) {
-    $this->id = $id;
-
-    return $this;
-  }
-
-  /**
-   * Gets parent category id.
-   *
-   * @return int
-   *   The parent category id.
-   *
-   * @YandexYmlXmlAttribute(name = "parentId")
-   */
-  public function getParentId() {
-    return $this->parentId;
+    $this->addElementAttribute(new Attribute('id', $id));
   }
 
   /**
@@ -97,28 +51,16 @@ final class Category {
    * denoted as root category. This value must represent the previous parent
    * category ID, so you must keep hierarchy.
    *
-   * @param int $parentId
+   * @param int $parent_id
    *   The parent category id.
    *
    * @return \Drupal\yandex_yml\YandexYml\Category\Category
    *   The current category.
    */
-  public function setParentId($parentId) {
-    $this->parentId = $parentId;
+  public function setParentId($parent_id) {
+    $this->addElementAttribute(new Attribute('parentId', $parent_id));
 
     return $this;
-  }
-
-  /**
-   * Gets category name.
-   *
-   * @return string
-   *   The current category name.
-   *
-   * @YandexYmlXmlValue()
-   */
-  public function getName() {
-    return $this->name;
   }
 
   /**
@@ -126,14 +68,9 @@ final class Category {
    *
    * @param string $name
    *   The category name.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Category\Category
-   *   The current category.
    */
   protected function setName($name) {
-    $this->name = $name;
-
-    return $this;
+    $this->setElementValue($name);
   }
 
 }

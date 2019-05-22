@@ -2,112 +2,113 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
-use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
+use Drupal\yandex_yml\Xml\Attribute;
+use Drupal\yandex_yml\Xml\Element;
+use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions;
 
 /**
  * Base object for simple offer.
  *
  * @see https://yandex.ru/support/partnermarket/offers.html
- *
- * @YandexYmlXmlRootElement(name = "offer")
  */
 class OfferSimple extends Offer {
 
   /**
-   * The model.
-   *
-   * @var string
-   */
-  protected $model;
-
-  /**
-   * The vendor.
-   *
-   * @var string
-   */
-  protected $vendor;
-
-  /**
-   * The vendor code.
-   *
-   * @var string
-   */
-  protected $vendorCode;
-
-  /**
    * {@inheritDoc}
    */
-  public function __construct($id, $url, $price, $currency_id, $category_id, $name) {
-    parent::__construct($id, $url, $price, $currency_id, $category_id);
+  public function __construct($id, $url, $price, $currency_id, $category_id, $name, $price_from = NULL) {
+    parent::__construct($id, $url, $price, $currency_id, $category_id, $price_from);
 
     $this->setName($name);
   }
 
   /**
-   * Gets model.
+   * Sets the offer name.
    *
-   * @return string
-   *   The model.
-   *
-   * @YandexYmlXmlElement(name = "model")
+   * @param string $name
+   *   The offer name.
    */
-  public function getModel() {
-    return $this->model;
-  }
-
-  /**
-   * Sets model.
-   *
-   * @param string $model
-   *   The model.
-   *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
-   *   The current offer.
-   */
-  public function setModel($model) {
-    $this->model = $model;
-
-    return $this;
-  }
-
-  /**
-   * Gets vendor.
-   *
-   * @return string
-   *   The vendor.
-   *
-   * @YandexYmlXmlElement(name = "vendor")
-   */
-  public function getVendor() {
-    return $this->vendor;
+  protected function setName($name) {
+    $this->addElementChild(new Element('name', $name));
   }
 
   /**
    * Sets vendor.
    *
    * @param string $vendor
-   *   The vendor.
+   *   The vendor name.
    *
    * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
    *   The current offer.
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/vendor-name-model.html
    */
   public function setVendor($vendor) {
-    $this->vendor = $vendor;
+    $this->addElementChild(new Element('vendor', $vendor));
 
     return $this;
   }
 
   /**
-   * Gets vendor code.
+   * Sets offer age for.
    *
-   * @return string
-   *   The vendor code.
+   * @param string $age
+   *   The age value.
    *
-   * @YandexYmlXmlElement(name = "vendorCode")
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
+   *   The current offer.
    */
-  public function getVendorCode() {
-    return $this->vendorCode;
+  public function setAge($age) {
+    $this->addElementChild(new Element('age', $age));
+
+    return $this;
+  }
+
+  /**
+   * Sets product availability.
+   *
+   * @param bool $available
+   *   The availability status.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
+   *   The current offer.
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html
+   */
+  public function setAvailable($available) {
+    $this->addElementAttribute(new Attribute('available', $available));
+
+    return $this;
+  }
+
+  /**
+   * Sets delivery options.
+   *
+   * @param \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions $delivery_options
+   *   The delivery options.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
+   *   The current offer.
+   */
+  public function setDeliveryOptions(DeliveryOptions $delivery_options) {
+    $this->addElementChild($delivery_options);
+
+    return $this;
+  }
+
+  /**
+   * Sets manufacturer warranty.
+   *
+   * @param bool $manufacturer_warranty
+   *   The manufacturer warranty status.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
+   *   The current offer.
+   */
+  public function setManufacturerWarranty($manufacturer_warranty) {
+    $this->addElementChild(new Element('manufacturer_warranty', $manufacturer_warranty));
+
+    return $this;
   }
 
   /**
@@ -120,7 +121,72 @@ class OfferSimple extends Offer {
    *   The current offer.
    */
   public function setVendorCode($vendor_code) {
-    $this->vendorCode = $vendor_code;
+    $this->addElementChild(new Element('vendorCode', $vendor_code));
+
+    return $this;
+  }
+
+  /**
+   * Sets minimal quantity for order.
+   *
+   * This value used only in "Tires", "Truck tires", "Motor tires",
+   * "Disks (car)".
+   *
+   * @param int|float $min_quantity
+   *   The minimum order quantity.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
+   *   The current offer.
+   */
+  public function setMinQuantity($min_quantity) {
+    $this->addElementChild(new Element('min-quantity', $min_quantity));
+
+    return $this;
+  }
+
+  /**
+   * Sets product adult status.
+   *
+   * @param bool $adult
+   *   The adult status.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
+   *   The current offer.
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/adult.html
+   */
+  public function setAdult($adult) {
+    $this->addElementChild(new Element('adult', $adult));
+
+    return $this;
+  }
+
+  /**
+   * Sets downloadable.
+   *
+   * @param bool $downloadable
+   *   The downloadable status.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
+   *   The current offer.
+   */
+  public function setDownloadable($downloadable) {
+    $this->addElementChild(new Element('downloadable', $downloadable));
+
+    return $this;
+  }
+
+  /**
+   * Sets group id.
+   *
+   * @param int $group_id
+   *   The group id.
+   *
+   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
+   *   The current offer.
+   */
+  public function setGroupId($group_id) {
+    $this->addElementChild(new Element('group-id', $group_id));
 
     return $this;
   }
