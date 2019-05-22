@@ -38,8 +38,7 @@ class OfferSimple extends Offer {
    * @param string $vendor
    *   The vendor name.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
-   *   The current offer.
+   * @return $this
    *
    * @see https://yandex.ru/support/partnermarket/elements/vendor-name-model.html
    */
@@ -54,12 +53,16 @@ class OfferSimple extends Offer {
    *
    * @param string $age
    *   The age value.
+   * @param string $unit
+   *   The age unit. Can be "year" or "month".
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
-   *   The current offer.
+   * @return $this
    */
-  public function setAge($age) {
-    $this->addElementChild(new Element('age', $age));
+  public function setAge($age, $unit = 'year') {
+    $age = new Element('age', $age);
+    $age->addElementAttribute(new Attribute('unit', $unit));
+
+    $this->addElementChild($age);
 
     return $this;
   }
@@ -70,8 +73,7 @@ class OfferSimple extends Offer {
    * @param bool $available
    *   The availability status.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
-   *   The current offer.
+   * @return $this
    *
    * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html
    */
@@ -87,8 +89,7 @@ class OfferSimple extends Offer {
    * @param \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions $delivery_options
    *   The delivery options.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
-   *   The current offer.
+   * @return $this
    */
   public function setDeliveryOptions(DeliveryOptions $delivery_options) {
     $this->addElementChild($delivery_options);
@@ -102,8 +103,7 @@ class OfferSimple extends Offer {
    * @param bool $manufacturer_warranty
    *   The manufacturer warranty status.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
-   *   The current offer.
+   * @return $this
    */
   public function setManufacturerWarranty($manufacturer_warranty) {
     $this->addElementChild(new Element('manufacturer_warranty', $manufacturer_warranty));
@@ -117,8 +117,7 @@ class OfferSimple extends Offer {
    * @param string $vendor_code
    *   The vendor code.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
-   *   The current offer.
+   * @return $this
    */
   public function setVendorCode($vendor_code) {
     $this->addElementChild(new Element('vendorCode', $vendor_code));
@@ -135,8 +134,7 @@ class OfferSimple extends Offer {
    * @param int|float $min_quantity
    *   The minimum order quantity.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
-   *   The current offer.
+   * @return $this
    */
   public function setMinQuantity($min_quantity) {
     $this->addElementChild(new Element('min-quantity', $min_quantity));
@@ -150,8 +148,7 @@ class OfferSimple extends Offer {
    * @param bool $adult
    *   The adult status.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
-   *   The current offer.
+   * @return $this
    *
    * @see https://yandex.ru/support/partnermarket/elements/adult.html
    */
@@ -167,8 +164,7 @@ class OfferSimple extends Offer {
    * @param bool $downloadable
    *   The downloadable status.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
-   *   The current offer.
+   * @return $this
    */
   public function setDownloadable($downloadable) {
     $this->addElementChild(new Element('downloadable', $downloadable));
@@ -182,8 +178,7 @@ class OfferSimple extends Offer {
    * @param int $group_id
    *   The group id.
    *
-   * @return \Drupal\yandex_yml\YandexYml\Offer\OfferSimple
-   *   The current offer.
+   * @return $this
    */
   public function setGroupId($group_id) {
     $this->addElementChild(new Element('group-id', $group_id));
