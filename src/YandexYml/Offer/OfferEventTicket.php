@@ -2,228 +2,230 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
-use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
+use Drupal\yandex_yml\Xml\Attribute;
+use Drupal\yandex_yml\Xml\Element;
+use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions;
 
 /**
  * Event ticket offer.
  *
  * @see https://yandex.ru/support/partnermarket/export/event-tickets.html
- *
- * @YandexYmlXmlRootElement(name = "offer")
  */
 class OfferEventTicket extends Offer {
 
   /**
-   * The event type.
-   *
-   * @var string
-   */
-  protected $type;
-
-  /**
-   * The event name.
-   *
-   * @var string
-   */
-  protected $name;
-
-  /**
-   * The event place.
-   *
-   * @var string
-   */
-  protected $place;
-
-  /**
-   * The hall.
-   *
-   * @var string
-   */
-  protected $hall;
-
-  /**
-   * The hall part.
-   *
-   * @var string
-   */
-  protected $hallPart;
-
-  /**
-   * The date.
-   *
-   * @var string
-   */
-  protected $date;
-
-  /**
-   * The event is premiere.
-   *
-   * @var bool
-   */
-  protected $isPremiere;
-
-  /**
-   * The event is for kids.
-   *
-   * @var bool
-   */
-  protected $isKids;
-
-  /**
    * {@inheritDoc}
    */
-  public function __construct($id, $url, $price, $currency_id, $category_id, $name, $place, $date) {
-    parent::__construct($id, $url, $price, $currency_id, $category_id);
+  public function __construct($id, $url, $price, $currency_id, $category_id, $name, $place, $date, $price_from = NULL) {
+    parent::__construct($id, $url, $price, $currency_id, $category_id, $price_from);
 
-    // Required default parameter for this offer type.
-    $this->setType('event-ticket');
+    $this->setType('audiobook');
     $this->setName($name);
     $this->setPlace($place);
-    $this->setDate($date);
   }
 
   /**
-   * {@inheritdoc}
+   * Sets offer type.
    *
-   * @YandexYmlXmlAttribute(name = "type")
+   * @param string $type
+   *   The offer type.
    */
-  public function getType() {
-    return $this->type;
+  protected function setType($type) {
+    $this->addElementAttribute(new Attribute('type', $type));
   }
 
   /**
-   * {@inheritdoc}
+   * Sets the offer name.
+   *
+   * @param string $name
+   *   The offer name.
    */
-  public function setType($type) {
-    $this->type = $type;
+  protected function setName($name) {
+    $this->addElementChild(new Element('name', $name));
+  }
+
+  /**
+   * Sets event place.
+   *
+   * @param string $place
+   *   The event place.
+   */
+  protected function setPlace($place) {
+    $this->addElementChild(new Element('place', $place));
+  }
+
+  /**
+   * Sets event date.
+   *
+   * @param string $date
+   *   The event date.
+   */
+  protected function setDate($date) {
+    $this->addElementChild(new Element('date', $date));
+  }
+
+  /**
+   * Sets offer age for.
+   *
+   * @param string $age
+   *   The age value.
+   * @param string $unit
+   *   The age unit. Can be "year" or "month".
+   *
+   * @return $this
+   */
+  public function setAge($age, $unit = 'year') {
+    $age = new Element('age', $age);
+    $age->addElementAttribute(new Attribute('unit', $unit));
+
+    $this->addElementChild($age);
 
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets product availability.
    *
-   * @YandexYmlXmlElement(name = "name")
+   * @param bool $available
+   *   The availability status.
+   *
+   * @return $this
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html
    */
-  public function getName() {
-    return $this->name;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setName($name) {
-    $this->name = $name;
+  public function setAvailable($available) {
+    $this->addElementAttribute(new Attribute('available', $available));
 
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets delivery options.
    *
-   * @YandexYmlXmlElement(name = "place")
+   * @param \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions $delivery_options
+   *   The delivery options.
+   *
+   * @return $this
    */
-  public function getPlace() {
-    return $this->place;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setPlace($place) {
-    $this->place = $place;
+  public function setDeliveryOptions(DeliveryOptions $delivery_options) {
+    $this->addElementChild($delivery_options);
 
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets manufacturer warranty.
    *
-   * @YandexYmlXmlElement(name = "hall")
+   * @param bool $manufacturer_warranty
+   *   The manufacturer warranty status.
+   *
+   * @return $this
    */
-  public function getHall() {
-    return $this->hall;
+  public function setManufacturerWarranty($manufacturer_warranty) {
+    $this->addElementChild(new Element('manufacturer_warranty', $manufacturer_warranty));
+
+    return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets minimal quantity for order.
+   *
+   * This value used only in "Tires", "Truck tires", "Motor tires",
+   * "Disks (car)".
+   *
+   * @param int|float $min_quantity
+   *   The minimum order quantity.
+   *
+   * @return $this
+   */
+  public function setMinQuantity($min_quantity) {
+    $this->addElementChild(new Element('min-quantity', $min_quantity));
+
+    return $this;
+  }
+
+  /**
+   * Sets product adult status.
+   *
+   * @param bool $adult
+   *   The adult status.
+   *
+   * @return $this
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/adult.html
+   */
+  public function setAdult($adult) {
+    $this->addElementChild(new Element('adult', $adult));
+
+    return $this;
+  }
+
+  /**
+   * Sets downloadable.
+   *
+   * @param bool $downloadable
+   *   The downloadable status.
+   *
+   * @return $this
+   */
+  public function setDownloadable($downloadable) {
+    $this->addElementChild(new Element('downloadable', $downloadable));
+
+    return $this;
+  }
+
+  /**
+   * Sets hall.
+   *
+   * @param string $hall
+   *   The hall.
+   *
+   * @return $this
    */
   public function setHall($hall) {
-    $this->hall = $hall;
+    $this->addElementChild(new Element('hall', $hall));
 
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets hall part.
    *
-   * @YandexYmlXmlElement(name = "hall_part")
-   */
-  public function getHallPart() {
-    return $this->hallPart;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $hall_part
+   *   The hall part.
+   *
+   * @return $this
    */
   public function setHallPart($hall_part) {
-    $this->hallPart = $hall_part;
+    $this->addElementChild(new Element('hall_part', $hall_part));
 
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets is premiere.
    *
-   * @YandexYmlXmlElement(name = "date")
-   */
-  public function getDate() {
-    return $this->date;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setDate($date) {
-    $this->date = $date;
-
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param bool $is_premiere
+   *   The premiere status.
    *
-   * @YandexYmlXmlElement(name = "is_premiere")
-   */
-  public function getIsPremiere() {
-    return $this->isPremiere;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @return $this
    */
   public function setIsPremiere($is_premiere) {
-    $this->isPremiere = $is_premiere;
+    $this->addElementChild(new Element('is_premiere', $is_premiere));
 
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets is kids.
    *
-   * @YandexYmlXmlElement(name = "is_kids")
-   */
-  public function getIsKids() {
-    return $this->isKids;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param bool $is_kids
+   *   The kids status.
+   *
+   * @return $this
    */
   public function setIsKids($is_kids) {
-    $this->isKids = $is_kids;
+    $this->addElementChild(new Element('is_kids', $is_kids));
 
     return $this;
   }
