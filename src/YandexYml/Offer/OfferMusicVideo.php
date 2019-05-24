@@ -2,243 +2,240 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
-use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
+use Drupal\yandex_yml\Xml\Attribute;
+use Drupal\yandex_yml\Xml\Element;
+use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions;
 
 /**
  * Music and video offer.
  *
  * @see https://yandex.ru/support/partnermarket/export/music-video.html
- *
- * @YandexYmlXmlRootElement(name = "offer")
  */
 class OfferMusicVideo extends Offer {
 
   /**
-   * The offer type.
-   *
-   * @var string
-   */
-  protected $type;
-
-  /**
-   * The artist.
-   *
-   * @var string
-   */
-  protected $artist;
-
-  /**
-   * The title.
-   *
-   * @var string
-   */
-  protected $title;
-
-  /**
-   * The year.
-   *
-   * @var string|int
-   */
-  protected $year;
-
-  /**
-   * The media device.
-   *
-   * @var string
-   */
-  protected $media;
-
-  /**
-   * The starring.
-   *
-   * @var string
-   */
-  protected $starring;
-
-  /**
-   * The director.
-   *
-   * @var string
-   */
-  protected $director;
-
-  /**
-   * The original name.
-   *
-   * @var string
-   */
-  protected $originalName;
-
-  /**
-   * The country.
-   *
-   * @var string
-   */
-  protected $country;
-
-  /**
    * {@inheritDoc}
    */
-  public function __construct($id, $url, $price, $currency_id, $category_id) {
-    parent::__construct($id, $url, $price, $currency_id, $category_id);
+  public function __construct($id, $url, $price, $currency_id, $category_id, $title, $price_from = NULL) {
+    parent::__construct($id, $url, $price, $currency_id, $category_id, $price_from);
 
-    // Set default required values for this offer type.
+    // Required default parameter for this offer type.
     $this->setType('artist.title');
+    $this->setTitle($title);
   }
 
   /**
-   * {@inheritdoc}
+   * Sets offer type.
+   *
+   * @param string $type
+   *   The offer type.
    */
-  public function setType($type) {
-    $this->type = $type;
+  protected function setType($type) {
+    $this->addElementAttribute(new Attribute('type', $type));
+  }
+
+  /**
+   * Sets the offer title.
+   *
+   * @param string $name
+   *   The offer title.
+   */
+  protected function setTitle($name) {
+    $this->addElementChild(new Element('title', $name));
+  }
+
+  /**
+   * Sets offer age for.
+   *
+   * @param string $age
+   *   The age value.
+   * @param string $unit
+   *   The age unit. Can be "year" or "month".
+   *
+   * @return $this
+   */
+  public function setAge($age, $unit = 'year') {
+    $age = new Element('age', $age);
+    $age->addElementAttribute(new Attribute('unit', $unit));
+
+    $this->addElementChild($age);
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets product availability.
    *
-   * @YandexYmlXmlAttribute(name = "type")
+   * @param bool $available
+   *   The availability status.
+   *
+   * @return $this
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html
    */
-  public function getType() {
-    return $this->type;
-  }
+  public function setAvailable($available) {
+    $this->addElementAttribute(new Attribute('available', $available));
 
-  /**
-   * {@inheritdoc}
-   */
-  public function setArtist($artist) {
-    $this->artist = $artist;
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets delivery options.
    *
-   * @YandexYmlXmlElement(name = "artist")
+   * @param \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions $delivery_options
+   *   The delivery options.
+   *
+   * @return $this
    */
-  public function getArtist() {
-    return $this->artist;
-  }
+  public function setDeliveryOptions(DeliveryOptions $delivery_options) {
+    $this->addElementChild($delivery_options);
 
-  /**
-   * {@inheritdoc}
-   */
-  public function setTitle($title) {
-    $this->title = $title;
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets manufacturer warranty.
    *
-   * @YandexYmlXmlElement(name = "title")
+   * @param bool $manufacturer_warranty
+   *   The manufacturer warranty status.
+   *
+   * @return $this
    */
-  public function getTitle() {
-    return $this->title;
+  public function setManufacturerWarranty($manufacturer_warranty) {
+    $this->addElementChild(new Element('manufacturer_warranty', $manufacturer_warranty));
+
+    return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets minimal quantity for order.
+   *
+   * This value used only in "Tires", "Truck tires", "Motor tires",
+   * "Disks (car)".
+   *
+   * @param int|float $min_quantity
+   *   The minimum order quantity.
+   *
+   * @return $this
+   */
+  public function setMinQuantity($min_quantity) {
+    $this->addElementChild(new Element('min-quantity', $min_quantity));
+
+    return $this;
+  }
+
+  /**
+   * Sets product adult status.
+   *
+   * @param bool $adult
+   *   The adult status.
+   *
+   * @return $this
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/adult.html
+   */
+  public function setAdult($adult) {
+    $this->addElementChild(new Element('adult', $adult));
+
+    return $this;
+  }
+
+  /**
+   * Sets the year.
+   *
+   * @param string $year
+   *   The year.
+   *
+   * @return $this
    */
   public function setYear($year) {
-    $this->year = $year;
+    $this->addElementChild(new Element('year', $year));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets artist.
    *
-   * @YandexYmlXmlElement(name = "year")
+   * @param string $artist
+   *   The artist name.
+   *
+   * @return $this
    */
-  public function getYear() {
-    return $this->year;
+  public function setArtist($artist) {
+    $this->addElementChild(new Element('artist', $artist));
+
+    return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets media.
+   *
+   * @param string $media
+   *   The media.
+   *
+   * @return $this
    */
   public function setMedia($media) {
-    $this->media = $media;
+    $this->addElementChild(new Element('media', $media));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets starring.
    *
-   * @YandexYmlXmlElement(name = "media")
+   * @param string $starring
+   *   The starring.
+   *
+   * @return $this
    */
-  public function getMedia() {
-    return $this->media;
-  }
+  public function setStarring($starring) {
+    $this->addElementChild(new Element('starring', $starring));
 
-  /**
-   * {@inheritdoc}
-   */
-  public function setStarring(array $starring) {
-    $this->starring = implode(', ', $starring);
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets director.
    *
-   * @YandexYmlXmlElement(name = "starring")
-   */
-  public function getStarring() {
-    return $this->starring;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $director
+   *   The director.
+   *
+   * @return $this
    */
   public function setDirector($director) {
-    $this->director = $director;
+    $this->addElementChild(new Element('director', $director));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets original name.
    *
-   * @YandexYmlXmlElement(name = "dirctor")
-   */
-  public function getDirector() {
-    return $this->director;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $original_name
+   *   The original name.
+   *
+   * @return $this
    */
   public function setOriginalName($original_name) {
-    $this->originalName = $original_name;
+    $this->addElementChild(new Element('original_name', $original_name));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets country.
    *
-   * @YandexYmlXmlElement(name = "originalName")
-   */
-  public function getOriginalName() {
-    return $this->originalName;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $country
+   *   The country name.
+   *
+   * @return $this
    */
   public function setCountry($country) {
-    $this->country = $country;
-    return $this;
-  }
+    $this->addElementChild(new Element('country', $country));
 
-  /**
-   * {@inheritdoc}
-   *
-   * @YandexYmlXmlElement(name = "country")
-   */
-  public function getCountry() {
-    return $this->country;
+    return $this;
   }
 
 }

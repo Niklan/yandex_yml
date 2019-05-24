@@ -16,14 +16,13 @@ class OfferMedicine extends Offer {
    * {@inheritDoc}
    */
   public function __construct($id, $url, $price, $currency_id, $category_id, $name, $price_from = NULL) {
-    parent::__construct($id, $url, $price, $currency_id, $category_id);
+    parent::__construct($id, $url, $price, $currency_id, $category_id, $price_from);
 
     // Required default parameter for this offer type.
     $this->setType('medicine');
+    $this->setName($name);
     $this->setPickup(TRUE);
     $this->setDelivery(FALSE);
-    $this->setName($name);
-    $this->setPrice($price, $price_from);
   }
 
   /**

@@ -39,9 +39,9 @@ abstract class Offer extends Element implements OfferInterface {
 
     $this->setId($id);
     $this->setUrl($url);
-    $this->setPrice($price, $price_from);
     $this->setCurrencyId($currency_id);
     $this->setCategoryId($category_id);
+    $this->setPrice($price, $price_from);
   }
 
   /**
