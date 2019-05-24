@@ -22,6 +22,8 @@ class OfferEventTicket extends Offer {
     $this->setType('audiobook');
     $this->setName($name);
     $this->setPlace($place);
+    $this->setDate($date);
+    $this->setPrice($price, $price_from);
   }
 
   /**

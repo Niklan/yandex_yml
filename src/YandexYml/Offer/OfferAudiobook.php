@@ -23,6 +23,7 @@ class OfferAudiobook extends Offer {
     $this->setName($name);
     $this->setPublisher($publisher);
     $this->setAge($age, $age_unit);
+    $this->setPrice($price, $price_from);
   }
 
   /**

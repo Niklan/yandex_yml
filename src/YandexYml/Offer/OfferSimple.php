@@ -20,6 +20,7 @@ class OfferSimple extends Offer {
     parent::__construct($id, $url, $price, $currency_id, $category_id, $price_from);
 
     $this->setName($name);
+    $this->setPrice($price, $price_from);
   }
 
   /**

@@ -22,6 +22,7 @@ class OfferCustom extends Offer {
     $this->setType('vendor.model');
     $this->setVendor($vendor);
     $this->setModel($model);
+    $this->setPrice($price, $price_from);
   }
 
   /**
