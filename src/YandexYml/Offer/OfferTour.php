@@ -2,369 +2,328 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
-use Drupal\yandex_yml\Annotation\YandexYmlXmlAttribute;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlElement;
-use Drupal\yandex_yml\Annotation\YandexYmlXmlRootElement;
+use Drupal\yandex_yml\Xml\Attribute;
+use Drupal\yandex_yml\Xml\Element;
+use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions;
 
 /**
  * Tour offer.
  *
  * @see https://yandex.ru/support/partnermarket/export/tours.html
- *
- * @YandexYmlXmlRootElement(name = "offer")
  */
 class OfferTour extends Offer {
 
   /**
-   * The offer type.
-   *
-   * @var string
-   */
-  protected $type;
-
-  /**
-   * The world region.
-   *
-   * @var string
-   */
-  protected $worldRegion;
-
-  /**
-   * The country.
-   *
-   * @var string
-   */
-  protected $country;
-
-  /**
-   * The region.
-   *
-   * @var string
-   */
-  protected $region;
-
-  /**
-   * The days.
-   *
-   * @var string
-   */
-  protected $days;
-
-  /**
-   * The data tour.
-   *
-   * @var array
-   */
-  protected $dataTour = [];
-
-  /**
-   * The hotel stars.
-   *
-   * @var string
-   */
-  protected $hotelStars;
-
-  /**
-   * The room.
-   *
-   * @var string
-   */
-  protected $room;
-
-  /**
-   * The meal.
-   *
-   * @var string
-   */
-  protected $meal;
-
-  /**
-   * The included.
-   *
-   * @var string
-   */
-  protected $included;
-
-  /**
-   * The transport.
-   *
-   * @var string
-   */
-  protected $transport;
-
-  /**
-   * The min price.
-   *
-   * @var string
-   */
-  protected $priceMin;
-
-  /**
-   * The price max.
-   *
-   * @var string
-   */
-  protected $priceMax;
-
-  /**
-   * The options.
-   *
-   * @var string
-   */
-  protected $options;
-
-  /**
    * {@inheritDoc}
    */
-  public function __construct($id, $url, $price, $currency_id, $category_id, $name, $days) {
-    parent::__construct($id, $url, $price, $currency_id, $category_id);
+  public function __construct($id, $url, $price, $currency_id, $category_id, $name, $days, $included, $transport, $price_from = NULL) {
+    parent::__construct($id, $url, $price, $currency_id, $category_id, $price_from);
 
-    // Required default parameter for this offer type.
-    $this->setType('tour');
+    $this->setType('audiobook');
     $this->setName($name);
     $this->setDays($days);
+    $this->setIncluded($included);
+    $this->setTransport($transport);
   }
 
   /**
-   * {@inheritdoc}
+   * Sets offer type.
+   *
+   * @param string $type
+   *   The offer type.
    */
-  public function setType($type) {
-    $this->type = $type;
+  protected function setType($type) {
+    $this->addElementAttribute(new Attribute('type', $type));
+  }
+
+  /**
+   * Sets the offer name.
+   *
+   * @param string $name
+   *   The offer name.
+   */
+  protected function setName($name) {
+    $this->addElementChild(new Element('name', $name));
+  }
+
+  /**
+   * Sets days.
+   *
+   * @param string $days
+   *   The tour days.
+   */
+  protected function setDays($days) {
+    $this->addElementChild(new Element('days', $days));
+  }
+
+  /**
+   * Sets included.
+   *
+   * @param string $included
+   *   Whats included in tour.
+   */
+  protected function setIncluded($included) {
+    $this->addElementChild(new Element('included', $included));
+  }
+
+  /**
+   * Sets transport type.
+   *
+   * @param string $transport
+   *   The transport type.
+   */
+  protected function setTransport($transport) {
+    $this->addElementChild(new Element('transport', $transport));
+  }
+
+  /**
+   * Sets offer age for.
+   *
+   * @param string $age
+   *   The age value.
+   * @param string $unit
+   *   The age unit. Can be "year" or "month".
+   *
+   * @return $this
+   */
+  public function setAge($age, $unit = 'year') {
+    $age = new Element('age', $age);
+    $age->addElementAttribute(new Attribute('unit', $unit));
+
+    $this->addElementChild($age);
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets product availability.
    *
-   * @YandexYmlXmlAttribute(name = "type")
+   * @param bool $available
+   *   The availability status.
+   *
+   * @return $this
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/id-type-available.html
    */
-  public function getType() {
-    return $this->type;
-  }
+  public function setAvailable($available) {
+    $this->addElementAttribute(new Attribute('available', $available));
 
-  /**
-   * {@inheritdoc}
-   */
-  public function setWorldRegion($world_region) {
-    $this->worldRegion = $world_region;
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets delivery options.
    *
-   * @YandexYmlXmlElement(name = "worldRegion")
+   * @param \Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions $delivery_options
+   *   The delivery options.
+   *
+   * @return $this
    */
-  public function getWorldRegion() {
-    return $this->worldRegion;
+  public function setDeliveryOptions(DeliveryOptions $delivery_options) {
+    $this->addElementChild($delivery_options);
+
+    return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets manufacturer warranty.
+   *
+   * @param bool $manufacturer_warranty
+   *   The manufacturer warranty status.
+   *
+   * @return $this
+   */
+  public function setManufacturerWarranty($manufacturer_warranty) {
+    $this->addElementChild(new Element('manufacturer_warranty', $manufacturer_warranty));
+
+    return $this;
+  }
+
+  /**
+   * Sets minimal quantity for order.
+   *
+   * This value used only in "Tires", "Truck tires", "Motor tires",
+   * "Disks (car)".
+   *
+   * @param int|float $min_quantity
+   *   The minimum order quantity.
+   *
+   * @return $this
+   */
+  public function setMinQuantity($min_quantity) {
+    $this->addElementChild(new Element('min-quantity', $min_quantity));
+
+    return $this;
+  }
+
+  /**
+   * Sets product adult status.
+   *
+   * @param bool $adult
+   *   The adult status.
+   *
+   * @return $this
+   *
+   * @see https://yandex.ru/support/partnermarket/elements/adult.html
+   */
+  public function setAdult($adult) {
+    $this->addElementChild(new Element('adult', $adult));
+
+    return $this;
+  }
+
+  /**
+   * Sets downloadable.
+   *
+   * @param bool $downloadable
+   *   The downloadable status.
+   *
+   * @return $this
+   */
+  public function setDownloadable($downloadable) {
+    $this->addElementChild(new Element('downloadable', $downloadable));
+
+    return $this;
+  }
+
+  /**
+   * Sets country.
+   *
+   * @param string $country
+   *   The country name.
+   *
+   * @return $this
    */
   public function setCountry($country) {
-    $this->country = $country;
+    $this->addElementChild(new Element('country', $country));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets world region.
    *
-   * @YandexYmlXmlElement(name = "country")
+   * @param string $world_region
+   *   The world region.
+   *
+   * @return $this
    */
-  public function getCountry() {
-    return $this->country;
+  public function setWorldRegion($world_region) {
+    $this->addElementChild(new Element('worldRegion', $world_region));
+
+    return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets region.
+   *
+   * @param string $region
+   *   The region.
+   *
+   * @return $this
    */
   public function setRegion($region) {
-    $this->region = $region;
+    $this->addElementChild(new Element('region', $region));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets data tour.
    *
-   * @YandexYmlXmlElement(name = "region")
+   * @param string $data_tour
+   *   The data tour.
+   *
+   * @return $this
    */
-  public function getRegion() {
-    return $this->region;
-  }
+  public function setDataTour($data_tour) {
+    $this->addElementChild(new Element('data_tour', $data_tour));
 
-  /**
-   * {@inheritdoc}
-   */
-  public function setDays($days) {
-    $this->days = $days;
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets hotel stars.
    *
-   *  @YandexYmlXmlElement(name = "days")
-   */
-  public function getDays() {
-    return $this->days;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function addDataTour($data_tour) {
-    /** @var \Drupal\yandex_yml\YandexYml\Param\YandexYmlDataTour $data_tour */
-    $data_tour = \Drupal::service('yandex_yml.param.data_tour');
-    $data_tour->setValue($data_tour);
-    $this->dataTour[] = $data_tour;
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $hotel_stars
+   *   The hotel stars.
    *
-   * @todo
-   * YandexYmlElement(name = "dataTour")
-   */
-  public function getDataTour() {
-    return $this->dataTour;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @return $this
    */
   public function setHotelStars($hotel_stars) {
-    $this->hotelStars = $hotel_stars;
+    $this->addElementChild(new Element('hotel_stars', $hotel_stars));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets room.
    *
-   * @YandexYmlXmlElement(name = "hotel_stars")
-   */
-  public function getHotelStars() {
-    return $this->hotelStars;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $room
+   *   The room type.
+   *
+   * @return $this
    */
   public function setRoom($room) {
-    $this->room = $room;
+    $this->addElementChild(new Element('room', $room));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets meal.
    *
-   * @YandexYmlXmlElement(name = "room")
-   */
-  public function getRoom() {
-    return $this->room;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $meal
+   *   The meal type.
+   *
+   * @return $this
    */
   public function setMeal($meal) {
-    $this->meal = $meal;
+    $this->addElementChild(new Element('meal', $meal));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets minimum price.
    *
-   * @YandexYmlXmlElement(name = "meal")
-   */
-  public function getMeal() {
-    return $this->meal;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setIncluded(array $included) {
-    $this->included = implode(', ', $included);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param int $price_min
+   *   The minimum price.
    *
-   * @YandexYmlXmlElement(name = "included")
-   */
-  public function getIncluded() {
-    return $this->included;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setTransport($transport) {
-    $this->transport = $transport;
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   *
-   * @YandexYmlXmlElement(name = "transport")
-   */
-  public function getTransport() {
-    return $this->transport;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @return $this
    */
   public function setPriceMin($price_min) {
-    $this->priceMin = $price_min;
+    $this->addElementChild(new Element('price_min', $price_min));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets maximum price.
    *
-   * @YandexYmlXmlElement(name = "price_min")
-   */
-  public function getPriceMin() {
-    return $this->priceMin;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $price_max
+   *   The maximum price.
+   *
+   * @return $this
    */
   public function setPriceMax($price_max) {
-    $this->priceMax = $price_max;
+    $this->addElementChild(new Element('price_max', $price_max));
+
     return $this;
   }
 
   /**
-   * {@inheritdoc}
+   * Sets tour options.
    *
-   * @YandexYmlXmlElement(name = "price_max")
-   */
-  public function getPriceMax() {
-    return $this->priceMax;
-  }
-
-  /**
-   * {@inheritdoc}
+   * @param string $options
+   *   The tour options.
+   *
+   * @return $this
    */
   public function setOptions($options) {
-    $this->options = $options;
-    return $this;
-  }
+    $this->addElementChild(new Element('options', $options));
 
-  /**
-   * {@inheritdoc}
-   *
-   * @YandexYmlXmlElement(name = "options")
-   */
-  public function getOptions() {
-    return $this->options;
+    return $this;
   }
 
 }
