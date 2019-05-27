@@ -2,10 +2,6 @@
 
 namespace Drupal\yandex_yml;
 
-use Drupal\yandex_yml\YandexYml\Category\Category;
-use Drupal\yandex_yml\YandexYml\Currency\Currency;
-use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOption;
-use Drupal\yandex_yml\YandexYml\Offer\YandexYmlOfferBase;
 use Drupal\yandex_yml\YandexYml\Shop\Shop;
 
 /**

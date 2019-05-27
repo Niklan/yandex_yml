@@ -104,6 +104,12 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writer->writeAttribute('date', $date);
   }
 
+  /**
+   * Process XML <element> representation.
+   *
+   * @param \Drupal\yandex_yml\Xml\ElementInterface $element
+   *   The element objects.
+   */
   protected function processElement(ElementInterface $element) {
     $this->writer->startElement($element->getElementName());
     $this->processAttributes($element);
@@ -112,6 +118,12 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->writer->fullEndElement();
   }
 
+  /**
+   * Process attributes for an element.
+   *
+   * @param \Drupal\yandex_yml\Xml\ElementInterface $element
+   *   The element which attributes must be processed.
+   */
   protected function processAttributes(ElementInterface $element) {
     /** @var \Drupal\yandex_yml\Xml\AttributeInterface $attribute */
     foreach ($element->getElementAttributes() as $attribute) {
@@ -119,14 +131,31 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     }
   }
 
+  /**
+   * Process element plain value.
+   *
+   * @param \Drupal\yandex_yml\Xml\ElementInterface $element
+   *   The element which value must be processed.
+   */
   protected function processValue(ElementInterface $element) {
-    if (!$element->getElementValue()) {
+    $value = $element->getElementValue();
+    if (!$value) {
       return;
     }
 
-    $this->writer->text($element->getElementValue());
+    if (is_bool($value)) {
+      $value = $value ? 'true' : 'false';
+    }
+
+    $this->writer->text((string) $value);
   }
 
+  /**
+   * Process children.
+   *
+   * @param \Drupal\yandex_yml\Xml\ElementInterface $element
+   *   The element which children must be processed.
+   */
   protected function processChildren(ElementInterface $element) {
     foreach ($element->getElementChildren() as $child) {
       $this->processElement($child);
@@ -165,33 +194,6 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->buildData();
 
     return $this->writer->outputMemory();
-  }
-
-  protected function getAnnotatedObject($object) {
-    $result = &drupal_static(__CLASS__ . ':' . __METHOD__ . ':' . get_class($object));
-
-    if (!isset($result)) {
-      $result = new AnnotatedObject($object);
-    }
-
-    return $result;
-  }
-
-  /**
-   * Several additional processes for values.
-   *
-   * @param mixed $value
-   *   The value to process of.
-   */
-  protected function preprocessValue(&$value) {
-    if (is_bool($value)) {
-      $value = $value ? 'true' : 'false';
-    }
-    str_replace('"', '&quot;', $value);
-    str_replace('&', '&amp;', $value);
-    str_replace('>', '&gt;', $value);
-    str_replace('<', '&lt;', $value);
-    str_replace("'", '&apos;', $value);
   }
 
 }

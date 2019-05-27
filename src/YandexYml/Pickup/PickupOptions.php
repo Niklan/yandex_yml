@@ -14,6 +14,9 @@ use Drupal\yandex_yml\YandexYml\YandexYmlArray;
  */
 final class PickupOptions extends Element {
 
+  /**
+   * {@inheritDoc}
+   */
   public function __construct() {
     parent::__construct('pickup-options');
   }

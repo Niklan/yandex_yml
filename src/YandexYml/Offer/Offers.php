@@ -13,6 +13,9 @@ use Drupal\yandex_yml\Xml\Element;
  */
 final class Offers extends Element {
 
+  /**
+   * {@inheritDoc}
+   */
   public function __construct() {
     parent::__construct('offers');
   }

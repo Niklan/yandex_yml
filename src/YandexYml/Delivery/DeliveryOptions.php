@@ -13,6 +13,9 @@ use Drupal\yandex_yml\Xml\Element;
  */
 final class DeliveryOptions extends Element {
 
+  /**
+   * {@inheritDoc}
+   */
   public function __construct() {
     parent::__construct('delivery-options');
   }

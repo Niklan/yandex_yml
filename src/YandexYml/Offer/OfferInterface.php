@@ -2,14 +2,13 @@
 
 namespace Drupal\yandex_yml\YandexYml\Offer;
 
-use Drupal\yandex_yml\YandexYml\Delivery\DeliveryOptions;
+use Drupal\yandex_yml\Xml\ElementInterface;
 use Drupal\yandex_yml\YandexYml\Param\Param;
-use Drupal\yandex_yml\YandexYml\Param\Params;
 
 /**
  * Defines interface with common methods for all Yandex yml offers.
  */
-interface OfferInterface {
+interface OfferInterface extends ElementInterface {
 
   /**
    * Sets default bid for click.
