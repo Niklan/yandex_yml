@@ -1,4 +1,4 @@
 services:
   yandex_yml.generator:
     class: Drupal\yandex_yml\YandexYmlGenerator
-    arguments: ['@datetime.time', '@date.formatter']
+    arguments: ['@datetime.time', '@date.formatter', '@file_system']

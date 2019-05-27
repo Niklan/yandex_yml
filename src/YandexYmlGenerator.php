@@ -7,6 +7,7 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use Drupal;
 use Drupal\Component\Datetime\Time;
 use Drupal\Core\Datetime\DateFormatter;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\yandex_yml\Xml\ElementInterface;
 use Drupal\yandex_yml\YandexYml\Shop\Shop;
 use XMLWriter;
@@ -54,20 +55,34 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
   protected $dateFormatter;
 
   /**
+   * The file system.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  protected $fileSystem;
+
+  /**
    * Constructs a new YandexYmlGenerator object.
    *
    * @param \Drupal\Component\Datetime\Time $date_time
    *   The datetime.
    * @param \Drupal\Core\Datetime\DateFormatter $date_formatter
    *   The date formatter.
+   * @param \Drupal\Core\File\FileSystemInterface $file_system
+   *   The file system service.
    */
-  public function __construct(Time $date_time, DateFormatter $date_formatter) {
+  public function __construct(
+    Time $date_time,
+    DateFormatter $date_formatter,
+    FileSystemInterface $file_system
+  ) {
+
     $this->dateTime = $date_time;
     $this->dateFormatter = $date_formatter;
+    $this->fileSystem = $file_system;
+
     // Prepare temporary file.
-    // @todo DI
-    $this->tempFilePath = Drupal::service('file_system')
-      ->tempnam('temporary://yandex_yml', 'yml_');
+    $this->tempFilePath = $this->fileSystem->tempnam('temporary://yandex_yml', 'yml_');
     // Initialization of file.
     $this->writer = new XMLWriter();
     $this->writer->openURI($this->tempFilePath);
@@ -80,7 +95,11 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    */
   public function generateFile($filename = 'products.xml', $destination_path = 'public://') {
     $this->buildData();
-    file_unmanaged_copy($this->tempFilePath, $destination_path . $filename, FILE_EXISTS_REPLACE);
+    $this->fileSystem->copy(
+      $this->tempFilePath,
+      $destination_path . $filename,
+      FileSystemInterface::EXISTS_REPLACE
+    );
   }
 
   /**
