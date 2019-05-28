@@ -2,6 +2,6 @@ site_name: 'Yandex YML — Drupal module'
 pages:
   - 'Home': index.md
   - 'Installation': installation.md
-  - 'How it works': how-it-works.md
-  - 'Generate YML': generate-yml.md
-  - 'Real world examples': real-examples.md
+  - 'API overview': api-overview.md
+  - 'Generator service': generator-service.md
+  - 'Element objects': element-objects.md

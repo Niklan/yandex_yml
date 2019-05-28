@@ -2,9 +2,6 @@
 
 namespace Drupal\yandex_yml;
 
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\AnnotationRegistry;
-use Drupal;
 use Drupal\Component\Datetime\Time;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\Core\File\FileSystemInterface;
@@ -92,6 +89,9 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @todo maybe return path URI as result. Also, maybe it is good to handle
+   *   leading dashes for path.
    */
   public function generateFile($filename = 'products.xml', $destination_path = 'public://') {
     $this->buildData();
