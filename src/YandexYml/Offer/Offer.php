@@ -90,6 +90,8 @@ abstract class Offer extends Element implements OfferInterface {
       $price->addElementAttribute(new Attribute('from', $from));
     }
 
+    $this->addElementChild($price);
+
     return $this;
   }
 
