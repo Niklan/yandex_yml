@@ -13,6 +13,8 @@ Object represents an attribute for the element. Each attribute is object.
 This example:
 
 ```php
+<?php
+
 $element = new Element('element-name');
 
 $element
@@ -35,6 +37,8 @@ The element object cant contains `Attribute` objects as attributes and `Element`
 This example
 
 ```php
+<?php
+
 $element = new Element('element-name');
 $element
   ->addElementAttribute(new Attribute('foo', 'bar'))
@@ -67,6 +71,8 @@ Below are simple examples of using those objects.
 [Documentation](https://yandex.ru/support/partnermarket/elements/shop.html)
 
 ```php
+<?php
+
 // Third argument is URL and will be set fom request object if you leave
 // it NULL.
 $shop_info = new Shop('BestSeller', 'The Best inc.');
@@ -128,6 +134,8 @@ Result example
 [Documentation](https://yandex.ru/support/partnermarket/elements/currencies.html)
 
 ```php
+<?php
+
 $currencies = new Currencies();
 $currencies
   ->addCurrency(new Currency('RUB', 1))
@@ -146,6 +154,8 @@ $currencies
 [Documentation](https://yandex.ru/support/partnermarket/elements/categories.html)
 
 ```php
+<?php
+
 $categories = new Categories();
 
 $categories->addCategory(new Category('1', 'Electronic'));
@@ -167,6 +177,8 @@ $categories->addCategory($another_category);
 [Documentation](https://yandex.ru/support/partnermarket/elements/delivery-options.html)
 
 ```php
+<?php
+
 $delivery_options = new DeliveryOptions();
 $delivery_options->addOption(new DeliveryOption('300', '1'));
 
@@ -188,6 +200,8 @@ $delivery_options->addOption($delivery_option);
 [Documentation](https://yandex.ru/support/partnermarket/elements/pickup-options.html)
 
 ```php
+<?php
+
 $pickup_options = new PickupOptions();
 $pickup_options->addOption(new PickupOption('300', '1'));
 
@@ -208,6 +222,8 @@ $pickup_options->addOption($pickup_option);
 Just simple collection for offers and wrapper for them in XML.
 
 ```php
+<?php
+
 $offers = new Offers();
 ```
 
@@ -222,6 +238,8 @@ $offers = new Offers();
 [Documentation](https://yandex.ru/support/partnermarket/offers.html)
 
 ```php
+<?php
+
 $offer_id = 12341;
 $offer_url = 'http://best.seller.ru/product_page.asp?pid=12345';
 $offer_price = 8990;
