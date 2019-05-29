@@ -133,6 +133,8 @@ abstract class Offer extends Element implements OfferInterface {
    */
   public function setBid($bid) {
     $this->addElementAttribute(new Attribute('bid', $bid));
+
+    return $this;
   }
 
   /**
@@ -183,9 +185,9 @@ abstract class Offer extends Element implements OfferInterface {
   /**
    * {@inheritdoc}
    */
-  public function setDescription($description) {
+  public function setDescription($description, $contains_html = FALSE) {
     $description = Unicode::truncate($description, 3000);
-    $this->addElementChild(new Element('description', $description));
+    $this->addElementChild(new Element('description', $description, $contains_html));
 
     return $this;
   }

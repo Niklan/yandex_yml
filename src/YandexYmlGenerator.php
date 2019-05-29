@@ -158,15 +158,23 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    */
   protected function processValue(ElementInterface $element) {
     $value = $element->getElementValue();
-    if (!$value) {
-      return;
-    }
 
     if (is_bool($value)) {
       $value = $value ? 'true' : 'false';
     }
 
-    $this->writer->text((string) $value);
+    if (!$value) {
+      return;
+    }
+
+    if ($element->getCdata()) {
+      $this->writer->writeCdata($value);
+    }
+    else {
+      // Custom sanitization since XMLWriter can't handle single quote escaping.
+      $value = htmlspecialchars($value, ENT_QUOTES | ENT_XML1, 'UTF-8');
+      $this->writer->writeRaw($value);
+    }
   }
 
   /**

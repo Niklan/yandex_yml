@@ -38,16 +38,48 @@ class Element implements ElementInterface {
   protected $children = [];
 
   /**
+   * The CDATA processing value mark.
+   *
+   * @var bool
+   */
+  protected $cdata;
+
+  /**
    * Element constructor.
    *
    * @param string $name
    *   The element name.
    * @param null|string $value
    *   The element value.
+   * @param bool $cdata
+   *   The value of element must be write as CDATA or processed.
+   *
+   * @see https://yandex.ru/support/partnermarket/export/yml.html#requirements
    */
-  public function __construct($name, $value = NULL) {
+  public function __construct($name, $value = NULL, $cdata = FALSE) {
+    $this->setCdata($cdata);
     $this->setElementName($name);
     $this->setElementValue($value);
+  }
+
+  /**
+   * Sets element name.
+   *
+   * @param string $name
+   *   The element name.
+   */
+  protected function setElementName($name) {
+    $this->name = $name;
+  }
+
+  /**
+   * Sets element value.
+   *
+   * @param null|string $value
+   *   The element value.
+   */
+  protected function setElementValue($value = NULL) {
+    $this->value = $value;
   }
 
   /**
@@ -90,16 +122,6 @@ class Element implements ElementInterface {
   }
 
   /**
-   * Sets element name.
-   *
-   * @param string $name
-   *   The element name.
-   */
-  protected function setElementName($name) {
-    $this->name = $name;
-  }
-
-  /**
    * {@inheritDoc}
    */
   public function getElementValue() {
@@ -107,13 +129,20 @@ class Element implements ElementInterface {
   }
 
   /**
-   * Sets element value.
-   *
-   * @param null|string $value
-   *   The element value.
+   * {@inheritDoc}
    */
-  protected function setElementValue($value = NULL) {
-    $this->value = $value;
+  public function getCdata() {
+    return $this->cdata;
+  }
+
+  /**
+   * Sets CDATA status.
+   *
+   * @param bool $cdata
+   *   The CDATA status.
+   */
+  protected function setCdata($cdata) {
+    $this->cdata = $cdata;
   }
 
 }

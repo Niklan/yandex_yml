@@ -93,13 +93,16 @@ interface OfferInterface extends ElementInterface {
    *
    * @param string $description
    *   The description.
+   * @param bool $contains_html
+   *   The html status. If description contains HTML it must be TRUE, in such
+   *   way this value will be wrapped as CDATA, otherwise will be escaped.
    *
    * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    * @see https://yandex.ru/support/partnermarket/elements/description.html
-   *
+   * @see https://yandex.ru/support/partnermarket/export/yml.html#requirements
    */
-  public function setDescription($description);
+  public function setDescription($description, $contains_html = TRUE);
 
   /**
    * Sets sales notes.

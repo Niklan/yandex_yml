@@ -63,4 +63,12 @@ interface ElementInterface {
    */
   public function getElementValue();
 
+  /**
+   * Gets CDATA status mark.
+   *
+   * @return bool
+   *   The CDATA status.
+   */
+  public function getCdata();
+
 }
