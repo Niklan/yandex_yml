@@ -235,8 +235,8 @@ abstract class Offer extends Element implements OfferInterface {
   /**
    * {@inheritdoc}
    */
-  public function setExpire($expire) {
-    $this->addElementChild(new Element('expire', $expire));
+  public function setExpiry($expiry) {
+    $this->addElementChild(new Element('expiry', $expiry));
 
     return $this;
   }

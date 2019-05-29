@@ -237,7 +237,7 @@ class OfferTour extends Offer {
    * @return $this
    */
   public function setDataTour($data_tour) {
-    $this->addElementChild(new Element('data_tour', $data_tour));
+    $this->addElementChild(new Element('dataTour', $data_tour));
 
     return $this;
   }

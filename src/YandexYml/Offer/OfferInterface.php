@@ -171,13 +171,13 @@ interface OfferInterface extends ElementInterface {
    *   days, 2 hours and 30 minutes.
    * - For expiration date / service life — YYYY-MM-DDThh:mm.
    *
-   * @param string $expire
+   * @param string $expiry
    *   The expiration date.
    *
    * @return \Drupal\yandex_yml\YandexYml\Offer\OfferInterface
    *   The current offer.
    */
-  public function setExpire($expire);
+  public function setExpiry($expiry);
 
   /**
    * Sets weight.
