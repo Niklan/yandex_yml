@@ -1,4 +1,6 @@
 site_name: 'Yandex YML — Drupal module'
+theme:
+  name: 'material'
 pages:
   - 'Home': index.md
   - 'Installation': installation.md
