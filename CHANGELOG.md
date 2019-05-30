@@ -2,6 +2,8 @@
 
 ## [Unreleased][unreleased]
 
+## [1.0-alpha5]
+
 **This release is not BC with alpha4.**
 
 - Improved performance since alpha4.
@@ -41,7 +43,8 @@ No breaking changes.
 - Fixed annotation for Shop info.
 
 
-[unreleased]: https://github.com/Niklan/yandex_yml/compare/8.x-1.0-alpha4...HEAD
+[unreleased]: https://github.com/Niklan/yandex_yml/compare/8.x-1.0-alpha5...HEAD
+[1.0-alpha5]: https://github.com/Niklan/yandex_yml/compare/8.x-1.0-alpha4...8.x-1.0-alpha5
 [1.0-alpha4]: https://github.com/Niklan/yandex_yml/compare/8.x-1.0-alpha3...8.x-1.0-alpha4
 [1.0-alpha3]: https://github.com/Niklan/yandex_yml/compare/8.x-1.0-alpha1...8.x-1.0-alpha3
 [1.0-alpha2]: https://github.com/Niklan/yandex_yml/compare/8.x-1.0-alpha1...8.x-1.0-alpha2
