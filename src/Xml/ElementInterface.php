@@ -58,7 +58,7 @@ interface ElementInterface {
   /**
    * Gets element value.
    *
-   * @return null|string
+   * @return mixed
    *   An element value.
    */
   public function getElementValue();
