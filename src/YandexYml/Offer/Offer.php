@@ -23,13 +23,13 @@ abstract class Offer extends Element implements OfferInterface {
    *
    * @param int|string $id
    *   The offer internal ID
-   * @param $url
+   * @param string $url
    *   The offer URL.
-   * @param $price
+   * @param string $price
    *   The offer price.
-   * @param $currency_id
+   * @param string $currency_id
    *   The currency for price.
-   * @param $category_id
+   * @param string $category_id
    *   The category ID.
    * @param bool|null $price_from
    *   The price from or not.

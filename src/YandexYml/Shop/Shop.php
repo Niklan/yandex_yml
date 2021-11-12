@@ -27,10 +27,6 @@ final class Shop extends Element {
    *   The full company name which owns the shop.
    * @param null|string $url
    *   The shop home page.
-   * @param null|string $platform
-   *   The platform name.
-   * @param null|string $version
-   *   The platform version.
    */
   public function __construct(
     $name,

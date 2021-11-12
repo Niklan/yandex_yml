@@ -17,7 +17,7 @@ final class Currency extends Element {
    *
    * @param string $id
    *   The currency ID.
-   * @param $rate
+   * @param string|int $rate
    *   The rate value.
    */
   public function __construct($id, $rate) {
@@ -32,14 +32,14 @@ final class Currency extends Element {
    *
    * @param string $id
    *   The currency id.
-   *
    * @return \Drupal\yandex_yml\YandexYml\Currency\Currency
    *   The current currency.
-   * @example RUR, RUB, USD, EUR, UAH, KZT.
    *
+   * @example RUR, RUB, USD, EUR, UAH, KZT.
    */
   protected function setId($id) {
     $this->addElementAttribute(new Attribute('id', $id));
+    return $this;
   }
 
   /**
@@ -62,6 +62,7 @@ final class Currency extends Element {
    */
   protected function setRate($rate) {
     $this->addElementAttribute(new Attribute('rate', $rate));
+    return $this;
   }
 
 }

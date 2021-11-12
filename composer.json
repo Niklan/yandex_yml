@@ -1,16 +1,19 @@
 {
-  "name": "drupal/yandex_yml",
-  "type": "drupal-module",
-  "description": "Yandex YML (Yandex Market Language) generator.",
-  "keywords": ["Drupal"],
-  "license": "GPL-2.0+",
-  "homepage": "https://www.drupal.org/project/yandex_yml",
-  "minimum-stability": "dev",
-  "support": {
-    "issues": "https://www.drupal.org/project/issues/yandex_yml",
-    "source": "http://cgit.drupalcode.org/yandex_yml"
-  },
-  "require": {
-    "php": ">=5.6"
-  }
+    "name": "drupal/yandex_yml",
+    "type": "drupal-module",
+    "description": "Yandex YML (Yandex Market Language) generator.",
+    "keywords": [
+        "Drupal"
+    ],
+    "license": "GPL-2.0+",
+    "homepage": "https://www.drupal.org/project/yandex_yml",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/yandex_yml",
+        "source": "http://cgit.drupalcode.org/yandex_yml"
+    },
+    "require": {
+        "php": ">=5.6",
+        "drupal/core": "^8.7.7 || ^9"
+    }
 }
