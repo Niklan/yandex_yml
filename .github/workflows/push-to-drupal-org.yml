@@ -33,6 +33,9 @@ jobs:
       - name: Add remote
         run: git remote add drupalorg $DRUPAL_ORG_REPO
 
+      - name: Fetch remote
+        run: git fetch drupalorg
+
       - name: Push changes
         run: git push drupalorg --all
 
