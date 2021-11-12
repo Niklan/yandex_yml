@@ -12,15 +12,18 @@ jobs:
   push:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Create SSH key'
+      - name: Create SSH key
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           cat >>~/.ssh/config <<END
 
-      - name: 'Added remote'
+      - name: Check out repository
+        uses: actions/checkout
+
+      - name: Add remote
         run: git remote add drupalorg $DRUPAL_ORG_REPO
 
-      - name: 'Push changes'
+      - name: Push changes
         run: git push drupalorg --all
