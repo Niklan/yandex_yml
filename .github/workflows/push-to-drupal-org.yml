@@ -1,0 +1,26 @@
+name: Push changes to drupal.org
+
+on:
+  workflow_dispatch:
+  push:
+
+env:
+  SSH_KEY: ${{ secrets.drupal_org_key }}
+  DRUPAL_ORG_REPO: git@git.drupal.org:project/yandex_yml.git
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Create SSH key'
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          cat >>~/.ssh/config <<END
+
+      - name: 'Added remote'
+        run: git remote add drupalorg $DRUPAL_ORG_REPO
+
+      - name: 'Push changes'
+        run: git push drupalorg --all
