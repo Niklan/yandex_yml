@@ -20,7 +20,7 @@ jobs:
           cat >>~/.ssh/config <<END
 
       - name: Check out repository
-        uses: actions/checkout
+        uses: actions/checkout@v2
 
       - name: Add remote
         run: git remote add drupalorg $DRUPAL_ORG_REPO
