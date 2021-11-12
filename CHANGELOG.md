@@ -2,6 +2,18 @@
 
 ## [Unreleased][unreleased]
 
+## [1.2]
+
+* PR [#4](https://github.com/Niklan/yandex_yml/pull/4): Create temporary file only when generating the writer output.
+
+## [1.1]
+
+* Improved Drupal 9 support.
+
+## [1.0]
+
+* Drupal 9 support.
+
 ## [1.0-alpha5]
 
 **This release is not BC with alpha4.**
@@ -48,3 +60,6 @@ No breaking changes.
 [1.0-alpha4]: https://github.com/Niklan/yandex_yml/compare/8.x-1.0-alpha3...8.x-1.0-alpha4
 [1.0-alpha3]: https://github.com/Niklan/yandex_yml/compare/8.x-1.0-alpha1...8.x-1.0-alpha3
 [1.0-alpha2]: https://github.com/Niklan/yandex_yml/compare/8.x-1.0-alpha1...8.x-1.0-alpha2
+[1.0]: https://github.com/Niklan/yandex_yml/compare/8.x-1.0-alpha5...8.x-1.0
+[1.1]: https://github.com/Niklan/yandex_yml/compare/8.x-1.0...8.x-1.1
+[1.2]: https://github.com/Niklan/yandex_yml/compare/8.x-1.1...8.x-1.2
