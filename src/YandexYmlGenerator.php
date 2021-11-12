@@ -14,8 +14,6 @@ use XMLWriter;
  */
 class YandexYmlGenerator implements YandexYmlGeneratorInterface {
 
-  protected $counter;
-
   /**
    * The XML writer.
    *
@@ -77,14 +75,6 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
     $this->dateTime = $date_time;
     $this->dateFormatter = $date_formatter;
     $this->fileSystem = $file_system;
-
-    // Prepare temporary file.
-    $this->tempFilePath = $this->fileSystem->tempnam('temporary://yandex_yml', 'yml_');
-    // Initialization of file.
-    $this->writer = new XMLWriter();
-    $this->writer->openURI($this->tempFilePath);
-    $this->writer->setIndentString("\t");
-    $this->writer->setIndent(TRUE);
   }
 
   /**
@@ -94,12 +84,36 @@ class YandexYmlGenerator implements YandexYmlGeneratorInterface {
    *   leading dashes for path.
    */
   public function generateFile($filename = 'products.xml', $destination_path = 'public://') {
-    $this->buildData();
+    $this->prepareTemporaryFile()
+      ->setWriter()
+      ->buildData();
+
     $this->fileSystem->copy(
       $this->tempFilePath,
       $destination_path . $filename,
       FileSystemInterface::EXISTS_REPLACE
     );
+  }
+
+  /**
+   * Prepare temporary file.
+   */
+  protected function prepareTemporaryFile() {
+    $this->tempFilePath = $this->fileSystem->tempnam('temporary://yandex_yml', 'yml_');
+
+    return $this;
+  }
+
+  /**
+   * Initialize the XML writer.
+   */
+  protected function setWriter() {
+    $this->writer = new XMLWriter();
+    $this->writer->openURI($this->tempFilePath);
+    $this->writer->setIndentString("\t");
+    $this->writer->setIndent(TRUE);
+
+    return $this;
   }
 
   /**
