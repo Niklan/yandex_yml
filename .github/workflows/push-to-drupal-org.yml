@@ -3,6 +3,7 @@ name: Push changes to drupal.org
 on:
   workflow_dispatch:
   push:
+  create:
 
 env:
   SSH_USER: git
@@ -29,6 +30,8 @@ jobs:
 
       - name: Check out repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Add remote
         run: git remote add drupalorg $DRUPAL_ORG_REPO
