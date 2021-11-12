@@ -8,7 +8,7 @@ env:
   SSH_USER: git
   SSH_HOST: git.drupal.org
   SSH_KEY: ${{ secrets.drupal_org_key }}
-  DRUPAL_ORG_REPO: git@git.drupal.org:project/yandex_yml.git
+  DRUPAL_ORG_REPO: git@drupal-org:project/yandex_yml.git
 
 jobs:
   push:
@@ -20,7 +20,7 @@ jobs:
           echo "$SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           cat >>~/.ssh/config <<END
-          Host drupalorg
+          Host drupal-org
             HostName $SSH_HOST
             User $SSH_USER
             IdentityFile ~/.ssh/id_rsa
