@@ -18,6 +18,17 @@ interface ElementInterface {
   public function getElementAttributes();
 
   /**
+   * Sets element attributes.
+   *
+   * @param array $attributes
+   *   An array with attribute elements.
+   *
+   * @return \Drupal\yandex_yml\Xml\ElementInterface
+   *   The current instance of element.
+   */
+  public function setElementAttributes(array $attributes);
+
+  /**
    * Adds attribute for element.
    *
    * @param \Drupal\yandex_yml\Xml\AttributeInterface $attribute
