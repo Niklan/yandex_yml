@@ -92,6 +92,15 @@ class Element implements ElementInterface {
   /**
    * {@inheritDoc}
    */
+  public function setElementAttributes(array $attributes) {
+    $this->attributes = $attributes;
+
+    return $this;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   public function addElementAttribute(AttributeInterface $attribute) {
     $this->attributes[] = $attribute;
 
